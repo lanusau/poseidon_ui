@@ -1,0 +1,45 @@
+<h2>List of servers</h2>
+
+<div class="rowlist_page">
+
+  <div id="server_list">
+
+    <table class="rowlist_table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>Heartbeat Date</th>
+        <th>Functions</th>
+      </tr>
+
+      <% @servers.each_with_index do |server,index| %>
+        <tr class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+          <td><%= server.id %> </td>
+          <td><%= server.name %></td>
+          <td><%= server.location %></td>
+          <td><%= server.status_code == "A"? "Active":"Inactive" %> </td>
+          <td><%= server.heartbeat_sysdate %></td>
+          <td>
+            [
+            <%= link_to 'Edit', edit_server_path(server) %>
+            |
+            <% if true #if server.targets.empty? %>
+              <%= link_to 'Delete', server, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% else %>
+              Remove
+            <% end %>
+            ]
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <br />
+
+    <%= link_to 'New Server', new_server_path %>
+
+  </div>
+
+</div>

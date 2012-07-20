@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Poseidon</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <div id="page">
+
+    <!-- Header here! -->
+    <div id="header">
+      <img src="/assets/poseidon.png" alt="Poseidon"/>
+      <h1>Poseidon</h1>
+    </div> 
+
+    <!-- Content here -->
+    <div id="content">
+
+      <!-- Notices if any -->
+      <% if flash[:notice] -%>
+        <div class="flash_note"><%= flash[:notice] %></div>
+      <% end -%>
+
+      <%= yield %>
+
+    </div>
+
+    <!-- Footer here -->
+    <div id="footer">
+      <p/>
+      <hr/>
+      <% if current_user  %>
+        You are logged in as <%= current_user.login %>
+        | <%= link_to "Logout", logout_path, :method=>:delete %>
+
+      <% end %>
+    </div>
+
+  </div>
+
+</body>
+</html>

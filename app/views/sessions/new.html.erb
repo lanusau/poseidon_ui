@@ -1,0 +1,36 @@
+<div class="editform_page">
+
+  <% if flash[:error] %>
+    <div class="errors">
+      <%=  flash[:error] %>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <form action="<%= login_path %>" method="post">
+
+      <fieldset>
+        <legend> Enter login information</legend>
+
+        <div>
+          <label for="login">Login</label>
+          <input id="login" maxlength="40" name="login" size="20" type="text" />
+          <p class="note">Enter your login name </p>
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input id="password" maxlength="40" name="password" size="20" type="password" />
+          <p class="note">Enter your login name </p>
+        </div>
+
+        <input name="commit" type="submit" value="Login" />
+
+      </fieldset>
+
+    </form>
+
+  </div>
+
+</div>

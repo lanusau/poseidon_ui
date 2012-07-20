@@ -1,0 +1,49 @@
+<div class="editform_page">
+
+  <% if @server.errors.any? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @server.errors.full_messages.each do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@server) do |f| %>
+
+      <fieldset>
+        <legend> Enter information about this server</legend>
+
+        <div>
+          <%= f.label :name, "Server Name" %>
+          <%= f.text_field :name, {"size"=>50,"maxlength"=>200}%>
+          <p class="note">Unique server name </p>
+        </div>
+
+        <div>
+          <%= f.label :location, "Location" %>
+          <%= f.text_field :location, {"size"=>30,"maxlength"=>200}%>
+          <p class="note">Description of location (like dbmon.puc)</p>
+        </div>
+
+        <div>
+          <%= f.label :status_code, "Status" %>
+          <%= f.select :status_code, {"Inactive"=>"I","Active"=>"A"} %>
+          <p class="note">Pick status code</p>
+        </div>
+
+        <%= submit_tag("Save") %>
+        <%= submit_tag("Cancel") %>
+
+      </fieldset>
+
+    <% end %>
+
+  </div>
+
+</div>

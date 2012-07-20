@@ -1,0 +1,308 @@
+body {
+    background-color: #ffffff;
+    padding: 0px;
+    margin: 0px;
+}
+
+hr {
+    height: 1px;
+    background: #ccc;
+    border: none;
+}
+
+ul.compact {
+    margin: 0;
+    padding-left: 20px;
+}
+
+
+/* Settings that apply to main page in the window */
+#page {
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin: 0 auto;
+    padding: 0 0;
+    width: 90%;
+    color: #000;
+}
+
+/* Header (Menu)*/
+#header {
+    padding-left: 0px;
+    margin: 0px;
+    width: 100%;
+
+    img {
+        border: 0;
+        float: left;
+        margin: 5px;
+    }
+
+    h1 {
+        font-size:22px;
+        float: left;
+        margin-left: 20px;
+        margin-top: 40px;
+        width: 100px;
+    }
+}
+
+/* Main page excluding header */
+#content {
+    font-size:14px;
+    padding-left: 0px;
+    margin-top:15px;
+    float:left;
+    clear:both;
+
+    h2 {
+        color: #4E463F;
+    }
+
+    div.flash_note {
+        border: #FC6 1px solid;
+        background-color: #FFC;
+        padding: 5px;
+    }
+}
+
+/* Page where single record is displayed */
+.viewform_page {
+    font-size:14px;
+    padding-left: 0px;
+
+    em {
+        font-weight:bold;
+    }
+
+    ul {
+        list-style-type:none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+}
+
+/* Floats */
+.left_float {
+    float: left;
+}
+.right-float {
+    float: right;
+}
+
+/* Tag to clear floats */
+.clear-float {
+    clear:both;
+}
+
+
+/* Page where list of rows will be displayed */
+.rowlist_page {
+    padding-left: 0px;
+    font-size:12px;
+}
+
+/* Simple list using UL */
+.rowlist_ul {
+    list-style-type:none;
+    padding-left: 0;
+    margin-left: 0;
+
+    li {
+        padding-left: 0px;
+    }
+
+    em {
+        font-weight:bold;
+        font-style:normal;
+    }
+}
+
+/* Table representing list of rows */
+.rowlist_table{
+    margin: -3px;
+
+    td{
+        padding-right: 10px;
+   
+      /* Indentations in the table for tree like structure*/
+        level1 {
+            padding-left: 10px;
+        }
+        level2 {
+            padding-left: 20px;
+        }
+        level3 {
+            padding-left: 30px;
+        }
+        level4 {
+            padding-left: 40px;
+        }
+        level5 {
+            padding-left: 50px;
+        }
+     
+        &.red {
+            color: red;
+        }
+
+        &.green {
+            color: green;
+        }
+
+    }
+
+    th{
+        padding-right: 10px;
+        text-align: left;
+    }
+
+    /* Different background for even rows*/
+    tr.even {
+        background-color: #f5f5f5;
+    }
+
+}
+
+
+/* Tiny text for the lists where we have to cram bunch of data inside */
+.rowlist_tiny_text {
+    font-size:0.82em;
+}
+
+/* Page containing editing forms */
+.editform_page {
+    padding-left: 0px;
+    width: 100%;
+    float:left;
+}
+
+/* Help page */
+.help_page {
+    font-family:"Times New Roman", Times, serif;
+    font-size:12px;
+    padding-left: 0px;
+}
+
+.help_page_ul {
+    list-style-type:none;
+    padding-left: 0px;
+
+    li {
+        padding-left: 5px;
+        margin-bottom: 5px;
+    }
+
+}
+
+/* Paragraph to display email text */
+.email_text {
+    font-family:"Times New Roman", Times, serif;
+    font-size:14px;
+    padding-left: 0px;
+
+    em {
+        font-weight:bold;
+        font-style:normal;
+    }
+
+}
+
+/* Paragraphs that displays query results */
+.query_result {
+    font-family:"Courier New", Courier, monospace;
+    font-size:12px;
+    width: 700px;
+    height: 100px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    border-style: dotted;
+}
+
+/* Script log*/
+.log_list {
+    /*overflow: auto;*/
+}
+
+/* Error message text*/
+.error_text {
+    color: red;
+}
+
+/* page within editing screen that displays assignable items*/
+.item-page {
+    border: 1px solid #ddd;
+    border-style: dotted;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right:5px;
+    margin-bottom:5px;
+    margin-left:0px;
+    margin-top:5px;
+    float:left;
+    width: 373px;
+    height: 150px;
+    overflow: auto;
+    font-size:12px;
+}
+
+/* Paragraph used for instructions */
+.instruction {
+    background: #EAF2FA;
+    margin-bottom: 1em;
+    padding:10px;
+    color: #6C7D8E;
+}
+
+/* Div for inline elements */
+div.inline {
+    float: left;
+    clear: none;
+    padding-right: 5px;
+
+    select {
+        padding: 2px;
+    }
+}
+
+/* This is used for list containers */
+.list-page {
+    border: 1px dotted #ddd;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right:25px;
+    margin-bottom:10px;
+    float:left;
+}
+
+.list-container {
+    width: 300px;
+    height: 400px;
+    overflow: auto;
+
+    ul {
+        list-style-type:none;
+        padding:5px;
+        margin:0px;
+
+        li {
+            a { text-decoration:none;}
+        }
+    }
+}
+
+/* Footer  */
+#footer {
+    padding-left: 0%;
+    float:left;
+    width:100%;
+    clear:left;
+
+    p {
+        padding-left: 10px;
+    }
+}

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: QA Server
+  location: dbutil01dev.lax.dev.int.untd.com
+  status_code: A
+  heartbeat_sysdate: 2012-07-12 14:39:56
+  update_sysdate: 2012-07-12 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
+
+two:
+  name: Production Server
+  location: dbutil.prod.untd.com
+  status_code: A
+  heartbeat_sysdate: 2012-07-12 14:39:56
+  update_sysdate: 2012-07-12 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
