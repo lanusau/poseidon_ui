@@ -12,9 +12,32 @@
 
     <!-- Header here! -->
     <div id="header">
-      <img src="/assets/poseidon.png" alt="Poseidon"/>
+      <%= image_tag "poseidon.png" %>
       <h1>Poseidon</h1>
-    </div> 
+
+
+      <!-- Menu -->
+      <div class="top-menu">
+        <ul>
+          <% top_menu.each do |key,value| %>
+          <li <%=  raw 'class="selected"' if value["selected"] %> >
+              <%= link_to value["label"], value["path"] %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="bottom-menu">
+        <ul>
+          <% sub_menu.each do |key,value| %>
+          <li <%=  raw 'class="selected"' if value["selected"] %> >
+              <%= link_to value["label"], :controller=>value["controller"] %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </div>
 
     <!-- Content here -->
     <div id="content">
@@ -35,7 +58,6 @@
       <% if current_user  %>
         You are logged in as <%= current_user.login %>
         | <%= link_to "Logout", logout_path, :method=>:delete %>
-
       <% end %>
     </div>
 

@@ -1,0 +1,55 @@
+<div class="editform_page">
+
+  <% if @user.errors.any? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @user.errors.full_messages.each do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@user) do |f| %>
+
+      <fieldset>
+        <legend> Enter information about this user</legend>
+
+        <div>
+          <%= f.label :login, "Login" %>
+          <%= f.text_field :login, {"size"=>30,"maxlength"=>200}%>
+          <p class="note">User's login name </p>
+        </div>
+
+        <div>
+          <%= f.label :access_level, "Access Level" %>
+          <%= f.select :access_level, {"Admin"=>0,"Regular User"=>1} %>
+          <p class="note">Access level</p>
+        </div>
+
+        <div>
+          <%= f.label :password, "Password" %>
+          <%= f.password_field :password, {"size"=>20,"maxlength"=>20}%>
+          <p class="note">Password.</p>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, "Confirm Password" %>
+          <%= f.password_field :password_confirmation, {"size"=>20,"maxlength"=>20}%>
+          <p class="note">Confirm password </p>
+        </div>        
+
+        <%= submit_tag("Save") %>
+        <%= submit_tag("Cancel") %>
+
+      </fieldset>
+
+    <% end %>
+
+  </div>
+
+</div>

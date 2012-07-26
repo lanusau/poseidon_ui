@@ -5,6 +5,9 @@ require 'sso'
 # authentication against database table
 #
 class UntdSessionsController < ApplicationController
+
+  skip_before_filter :authorize
+  
   # GET /session/new
   def new
 

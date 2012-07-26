@@ -1,0 +1,21 @@
+## Submenu, which is specific to this module onky
+servers:
+  label: Servers
+  controller: servers
+  access_level: 1
+target_types:
+  label: Target Types
+  controller: servers
+  access_level: 1
+notifications:
+  label: Notifications
+  controller: servers
+  access_level: 1
+script_categories:
+  label: Script Categories
+  controller: servers
+  access_level: 1
+users:
+  label: Users
+  controller: users
+  access_level: 0

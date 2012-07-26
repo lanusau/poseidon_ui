@@ -45,6 +45,36 @@ ul.compact {
         margin-top: 40px;
         width: 100px;
     }
+
+    div.top-menu {
+        float: left;
+        margin-bottom: 2px;
+        width: 100%;
+    }
+
+    div.bottom-menu {
+        float: left;
+        margin-bottom: 2px;
+        margin-left: 10px;
+        width: 100%;
+    }
+
+    ul {
+        font-size: 14px;
+        margin: 0px;
+        padding: 0px;
+
+        li {
+            float: left;
+            list-style: none outside none;
+            margin-right: 8px;
+            padding: 0px;
+
+            &.selected a {
+                text-decoration: none;
+            }
+        }
+    }
 }
 
 /* Main page excluding header */

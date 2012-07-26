@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  skip_before_filter :authorize
+  
   # GET /session/new
   def new
     # Just display login page

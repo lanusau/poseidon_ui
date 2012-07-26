@@ -1,7 +1,7 @@
 class ServersController < ApplicationController
 
-  # Allow only level 1 users
-  before_filter {authorize(1)}
+  set_access_level :user
+  set_submenu :servers
 
   # GET /server
   def index
