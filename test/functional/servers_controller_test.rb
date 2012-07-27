@@ -19,7 +19,7 @@ class ServersControllerTest < ActionController::TestCase
     assert_select "div.rowlist_page" do
       assert_select "table" do                
         server_count = Server.count
-        assert_select "tr", server_count+1, "There should be #{server_count} rows in the list of servers"
+        assert_select "tr", server_count+1, "There should be #{server_count} rows in the list"
       end
     end
   end

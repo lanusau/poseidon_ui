@@ -10,7 +10,6 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
       match 'login'  => 'sessions#new', :via => :get
       match 'login'  => 'sessions#create', :via => :post
       match 'logout' => 'sessions#destroy', :via => :delete
-      resources :servers
       root :to => 'servers#index'
     end
 
@@ -18,9 +17,13 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     # Login as admin user
-    post_via_redirect "/login", :login => "admin", :password => "test123"    
-    assert_equal "/", path
+    post "/login", :login => "admin", :password => "test123"
+    assert_redirected_to root_url
+    assert_not_nil session[:user_id]
     assert_equal 'Logged in!', flash[:notice]
+
+    # Reload routes to continue testing
+    PoseidonV3::Application.reload_routes!
 
     get "/servers"
     assert_response :success
@@ -37,10 +40,14 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
       root :to => 'servers#index'
     end
 
-    # Login as SSO user
-    get_via_redirect "/login", :sso_token=>"lanusau|POSEIDON|1342737318|DKlzPPLE5ctWy0N0DMIl/lgU0izRZajXoOjfNhwQbQyIqBnbP+A+yVORo6sjyeDg nk5Efio4txB+Ppdp38IWWQ== "
-    assert_equal "/", path
+    # Login as SSO user    
+    get "/login", :sso_token=>"lanusau|POSEIDON|1342737318|DKlzPPLE5ctWy0N0DMIl/lgU0izRZajXoOjfNhwQbQyIqBnbP+A+yVORo6sjyeDg nk5Efio4txB+Ppdp38IWWQ== "
+    assert_redirected_to root_url
+    assert_not_nil session[:user_id]
     assert_equal 'Logged in!', flash[:notice]
+
+    # Reload routes to continue testing
+    PoseidonV3::Application.reload_routes!
 
     get "/servers"
     assert_response :success

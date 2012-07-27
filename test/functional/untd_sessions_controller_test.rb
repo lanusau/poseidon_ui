@@ -3,12 +3,15 @@ require 'test_helper'
 class UntdSessionsControllerTest < ActionController::TestCase
 
   setup do
-    # Change routes to use SSO authentication
     PoseidonV3::Application.routes.draw do
       match 'login'  => 'untd_sessions#new', :via => :get
       match 'logout' => 'untd_sessions#destroy', :via => :delete
       root :to => 'servers#index'
     end
+  end
+
+  def teardown
+    PoseidonV3::Application.reload_routes!
   end
 
   test "Should redirect to SSO server" do

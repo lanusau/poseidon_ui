@@ -12,6 +12,9 @@ class SessionsControllerTest < ActionController::TestCase
     end    
   end
 
+  def teardown
+    PoseidonV3::Application.reload_routes!
+  end
 
   test "Should render login form" do    
     get :new
