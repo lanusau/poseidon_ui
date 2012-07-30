@@ -5,7 +5,7 @@ servers:
   access_level: 1
 target_types:
   label: Target Types
-  controller: servers
+  controller: target_types
   access_level: 1
 notifications:
   label: Notifications

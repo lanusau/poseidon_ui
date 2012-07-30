@@ -15,6 +15,7 @@ PoseidonV3::Application.routes.draw do
   # Resourceful routing
   resources :servers
   resources :users
+  resources :target_types
 
 
   # Root URL

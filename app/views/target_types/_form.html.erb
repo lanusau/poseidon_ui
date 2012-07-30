@@ -1,0 +1,49 @@
+<div class="editform_page">
+
+  <% if @target_type.errors.any? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @target_type.errors.full_messages.each do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@target_type) do |f| %>
+
+      <fieldset>
+        <legend> Enter information about this target type</legend>
+
+        <div>
+          <%= f.label :name, "Name" %>
+          <%= f.text_field :name, {"size"=>50,"maxlength"=>200}%>
+          <p class="note">Unique target type name </p>
+        </div>
+
+        <div>
+          <%= f.label :url_ruby, "URL for Ruby" %>
+          <%= f.text_field :url_ruby, {"size"=>50,"maxlength"=>200}%>
+          <p class="note">URL for Ruby DBI</p>
+        </div>
+
+        <div>
+          <%= f.label :url_jdbc, "URL for JDBC" %>
+          <%= f.text_field :url_jdbc, {"size"=>50,"maxlength"=>200}%>
+          <p class="note">URL for JDBC</p>
+        </div>
+
+        <%= submit_tag("Save") %>
+        <%= submit_tag("Cancel") %>
+
+      </fieldset>
+
+    <% end %>
+
+  </div>
+
+</div>
