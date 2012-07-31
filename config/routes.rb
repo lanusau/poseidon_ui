@@ -16,6 +16,7 @@ PoseidonV3::Application.routes.draw do
   resources :servers
   resources :users
   resources :target_types
+  resources :script_categories
 
 
   # Root URL

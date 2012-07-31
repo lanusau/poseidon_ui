@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730165426) do
+ActiveRecord::Schema.define(:version => 20120731193356) do
+
+  create_table "script_category", :primary_key => "script_category_id", :force => true do |t|
+    t.string   "name",           :limit => 200, :null => false
+    t.datetime "create_sysdate",                :null => false
+    t.datetime "update_sysdate",                :null => false
+  end
+
+  add_index "script_category", ["name"], :name => "psd_script_category_u1", :unique => true
 
   create_table "server", :primary_key => "server_id", :force => true do |t|
     t.string   "name",              :limit => 200, :null => false

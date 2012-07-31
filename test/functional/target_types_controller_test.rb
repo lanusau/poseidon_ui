@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class TargetTypesControllerTest < ActionController::TestCase
-setup do
+  
+  setup do
     # Assume we are logged in
     admin = User.find_by_login("admin")
     session[:user_id] = admin.id
@@ -15,7 +16,7 @@ setup do
     assert_response :success
     assert_not_nil assigns(:target_types)
 
-    # Should have 2 rows in the table plus 1 header row
+    # Should have TargetType.count rows in the table plus 1 header row
     assert_select "div.rowlist_page" do
       assert_select "table" do
         target_type_count = TargetType.count

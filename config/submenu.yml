@@ -13,7 +13,7 @@ notifications:
   access_level: 1
 script_categories:
   label: Script Categories
-  controller: servers
+  controller: script_categories
   access_level: 1
 users:
   label: Users

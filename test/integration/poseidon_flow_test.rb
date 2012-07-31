@@ -25,6 +25,7 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
     # Reload routes to continue testing
     PoseidonV3::Application.reload_routes!
 
+    # Check list of servers
     get "/servers"
     assert_response :success
     assert assigns(:servers)
@@ -33,6 +34,7 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
     get "/target_types"
     assert_response :success
     assert assigns(:target_types)
+    
   end
 
   test "login and browse site using SSO authentication" do
