@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class PoseidonFlowTest < ActionDispatch::IntegrationTest
-  fixtures :server,:user,:target_type
+  fixtures :server,:user,:target_type, :notify_group,
+    :notify_group_email
 
   test "login and browse site using password authentication" do
 
@@ -34,6 +35,24 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
     get "/target_types"
     assert_response :success
     assert assigns(:target_types)
+
+    # Add notification group email
+    get "/notify_groups"
+    assert_response :success
+    assert_not_nil assigns(:notify_groups)
+    notify_group = notify_group(:dba)
+
+    get notify_group_emails_path(notify_group)
+    assert_response :success
+    assert_not_nil assigns(:notify_group)
+    assert_not_nil assigns(:notify_group_emails)
+    assert_difference('NotifyGroupEmail.count') do
+      post notify_group_emails_path(notify_group),
+        :notify_group_email =>{
+          severity: 1,
+          email: 'test@test.com'
+        }
+    end
     
   end
 
@@ -65,6 +84,24 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
     get "/target_types"
     assert_response :success
     assert assigns(:target_types)
+
+    # Add notification group email
+    get "/notify_groups"
+    assert_response :success
+    assert_not_nil assigns(:notify_groups)
+    notify_group = notify_group(:dba)
+    
+    get notify_group_emails_path(notify_group)
+    assert_response :success
+    assert_not_nil assigns(:notify_group)
+    assert_not_nil assigns(:notify_group_emails)
+    assert_difference('NotifyGroupEmail.count') do
+      post notify_group_emails_path(notify_group),
+        :notify_group_email =>{
+          severity: 1,
+          email: 'test@test.com'
+        }
+    end
 
   end  
 

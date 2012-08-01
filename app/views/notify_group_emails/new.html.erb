@@ -1,0 +1,46 @@
+<h2>New email for notification group [<%= @notify_group.name %> ]</h2>
+
+<div class="editform_page">
+
+  <% if @notify_group_email.errors.any? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @notify_group_email.errors.full_messages.each do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@notify_group_email, :url => notify_group_emails_path(@notify_group)) do |f| %>
+
+      <fieldset>
+        <legend> Enter new email for notification</legend>
+
+        <div>
+          <%= f.label :severity, "Severity" %>
+          <%= f.select :severity,{"Low"=>3,"Medium"=>2,"High"=>1} %>
+          <p class="note">Severity</p>
+        </div>
+        <div>
+          <%= f.label :email, "Email" %>
+          <%= f.text_field :email, {"size"=>30,"maxlength"=>200}%>
+          <p class="note">Email address</p>
+        </div>
+
+        <%= submit_tag("Save") %>
+        <%= submit_tag("Cancel") %>
+
+      </fieldset>
+
+    <% end %>
+
+  </div>
+
+</div>
+
+

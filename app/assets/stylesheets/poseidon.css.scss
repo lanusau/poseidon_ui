@@ -19,9 +19,9 @@ ul.compact {
 /* Settings that apply to main page in the window */
 #page {
     font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    margin: 0 auto;
-    padding: 0 0;
+    font-size: 12px;    
+    padding-left: 20px;
+    padding-right: 10px;
     width: 90%;
     color: #000;
 }
@@ -80,8 +80,8 @@ ul.compact {
 /* Main page excluding header */
 #content {
     font-size:14px;
-    padding-left: 0px;
-    margin-top:15px;
+    margin-left: 10px;
+    margin-top:0px;
     float:left;
     clear:both;
 

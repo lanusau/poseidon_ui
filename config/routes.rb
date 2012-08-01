@@ -17,7 +17,9 @@ PoseidonV3::Application.routes.draw do
   resources :users
   resources :target_types
   resources :script_categories
-
+  resources :notify_groups do
+    resources :notify_group_emails, :as => "emails",:only => [:index, :new, :create, :destroy]
+  end
 
   # Root URL
   root :to => 'servers#index'

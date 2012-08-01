@@ -1,9 +1,9 @@
 class ScriptCategoriesController < ApplicationController
 
   set_access_level :user
-  set_submenu :script_category
+  set_submenu :script_categories
 
-# GET /script_category
+  # GET /script_category
   def index
     @script_categories = ScriptCategory.all
   end

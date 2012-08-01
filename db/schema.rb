@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120731193356) do
+ActiveRecord::Schema.define(:version => 20120731201116) do
+
+  create_table "notify_group", :primary_key => "notify_group_id", :force => true do |t|
+    t.string   "name",           :limit => 200, :null => false
+    t.datetime "create_sysdate",                :null => false
+    t.datetime "update_sysdate",                :null => false
+  end
+
+  add_index "notify_group", ["name"], :name => "psd_notify_group_u1", :unique => true
+
+  create_table "notify_group_email", :primary_key => "notify_group_email_id", :force => true do |t|
+    t.integer  "notify_group_id",                :null => false
+    t.integer  "severity",                       :null => false
+    t.string   "email",           :limit => 200, :null => false
+    t.datetime "create_sysdate",                 :null => false
+    t.datetime "update_sysdate",                 :null => false
+  end
+
+  add_index "notify_group_email", ["notify_group_id"], :name => "psd_notify_group_email_n1"
 
   create_table "script_category", :primary_key => "script_category_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false

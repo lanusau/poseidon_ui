@@ -9,7 +9,7 @@ target_types:
   access_level: 1
 notifications:
   label: Notifications
-  controller: servers
+  controller: notify_groups
   access_level: 1
 script_categories:
   label: Script Categories

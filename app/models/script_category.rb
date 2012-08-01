@@ -3,4 +3,6 @@ class ScriptCategory < ActiveRecord::Base
 
   validates :name,:presence=>true,
             :uniqueness => {:case_sensitive =>false, :message => "- duplicate name"}
+  validates :create_sysdate, :presence=>true
+  validates :update_sysdate, :presence=>true
 end
