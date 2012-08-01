@@ -1,0 +1,25 @@
+target_one:
+  target_type: oracle
+  server: production
+  name: oracle@target1.com
+  hostname: target1.com
+  database_name: test
+  port_number: 1521
+  monitor_username: monitor
+  monitor_password: monitor
+  status_code: A
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
+target_two:
+  target_type: mysql
+  server: production
+  name: mysql@target2.com
+  hostname: target2.com
+  database_name: test
+  port_number: 3306
+  monitor_username: monitor
+  monitor_password: monitor
+  status_code: I
+  inactive_until: 2020-01-02 01:00:00
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56

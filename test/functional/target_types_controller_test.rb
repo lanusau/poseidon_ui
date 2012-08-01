@@ -8,7 +8,7 @@ class TargetTypesControllerTest < ActionController::TestCase
     session[:user_id] = admin.id
 
     # Also, assign one of the fixtures to variable
-    @target_type = target_type(:one)
+    @target_type = target_type(:oracle)
   end
 
   test "should get index" do

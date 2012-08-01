@@ -7,7 +7,7 @@ class ServersControllerTest < ActionController::TestCase
     session[:user_id] = admin.id
 
     # Also, assign one of the fixtures to variable
-    @server = server(:one)
+    @server = server(:production)
   end
 
   test "should get index" do

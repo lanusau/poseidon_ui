@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120731201116) do
+ActiveRecord::Schema.define(:version => 20120801170510) do
 
   create_table "notify_group", :primary_key => "notify_group_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false
@@ -49,6 +49,52 @@ ActiveRecord::Schema.define(:version => 20120731201116) do
   end
 
   add_index "server", ["name"], :name => "psd_server_u1", :unique => true
+
+  create_table "target", :primary_key => "target_id", :force => true do |t|
+    t.integer  "target_type_id",                  :null => false
+    t.integer  "server_id",                       :null => false
+    t.string   "name",             :limit => 200, :null => false
+    t.string   "hostname",         :limit => 100, :null => false
+    t.string   "database_name",    :limit => 100, :null => false
+    t.integer  "port_number",                     :null => false
+    t.string   "monitor_username", :limit => 30,  :null => false
+    t.string   "monitor_password", :limit => 30,  :null => false
+    t.string   "status_code",      :limit => 1,   :null => false
+    t.datetime "inactive_until"
+    t.datetime "create_sysdate",                  :null => false
+    t.datetime "update_sysdate",                  :null => false
+  end
+
+  add_index "target", ["name"], :name => "psd_target_u1", :unique => true
+
+  create_table "target_group", :primary_key => "target_group_id", :force => true do |t|
+    t.string   "name",           :limit => 200, :null => false
+    t.datetime "create_sysdate",                :null => false
+    t.datetime "update_sysdate",                :null => false
+  end
+
+  add_index "target_group", ["name"], :name => "psd_target_group_u1", :unique => true
+
+  create_table "target_group_assignment", :primary_key => "target_group_assignment_id", :force => true do |t|
+    t.integer  "target_id",                    :null => false
+    t.integer  "target_group_id",              :null => false
+    t.string   "status_code",     :limit => 1, :null => false
+    t.datetime "inactive_until"
+    t.datetime "create_sysdate",               :null => false
+    t.datetime "update_sysdate",               :null => false
+  end
+
+  add_index "target_group_assignment", ["target_group_id", "target_id"], :name => "psd_target_group_assignment_u1", :unique => true
+  add_index "target_group_assignment", ["target_id"], :name => "psd_target_group_assignment_n1"
+
+  create_table "target_hostname", :primary_key => "target_hostname_id", :force => true do |t|
+    t.integer  "target_id",                     :null => false
+    t.string   "hostname",       :limit => 100, :null => false
+    t.datetime "create_sysdate",                :null => false
+    t.datetime "update_sysdate",                :null => false
+  end
+
+  add_index "target_hostname", ["target_id", "hostname"], :name => "psd_target_hostname_u1", :unique => true
 
   create_table "target_type", :primary_key => "target_type_id", :force => true do |t|
     t.string   "name",           :limit => 200,  :null => false

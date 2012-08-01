@@ -10,7 +10,7 @@ class ServerTest < ActiveSupport::TestCase
   end
 
   test "status_code values should only be A and I" do
-    server = server(:one)
+    server = server(:production)
     server.status_code = "B"
     assert !server.save, "Saved with invalid status code"
   end

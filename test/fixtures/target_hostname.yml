@@ -1,0 +1,10 @@
+target_one_host_one:
+  target: target_one
+  hostname: target1-vip1.com
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
+target_one_host_two:
+  target: target_one
+  hostname: target1-vip2.com
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56

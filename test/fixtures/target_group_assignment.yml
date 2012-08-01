@@ -1,0 +1,6 @@
+one:
+  target_group: production_oracle
+  target: target_one
+  status_code: A
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
