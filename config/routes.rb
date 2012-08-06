@@ -20,6 +20,18 @@ PoseidonV3::Application.routes.draw do
   resources :notify_groups do
     resources :notify_group_emails, :as => "emails",:only => [:index, :new, :create, :destroy]
   end
+  resources :target_groups
+  resources :targets do
+    # Add additional actions to routes
+    member do
+      post "activate"
+      post "inactivate"
+    end
+    collection do
+      get "reset"
+    end
+    resources :target_hostnames, :as => "hostnames",:only => [:index, :new, :create, :destroy]
+  end
 
   # Root URL
   root :to => 'servers#index'

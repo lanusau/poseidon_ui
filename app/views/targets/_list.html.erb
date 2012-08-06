@@ -1,0 +1,18 @@
+<table class="rowlist_table">
+  <tr>
+    <th>Name</th>
+    <th>Status</th>
+    <th>Functions</th>
+  </tr>
+
+  <% @targets.each_with_index do |target,index| %>
+    <tr id="target_<%= target.target_id%>" class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+      <%= render "row", {:target=>target} %>
+    </tr>
+  <% end %>
+
+</table>
+
+<p />
+
+<%= will_paginate(@targets) %>

@@ -1,0 +1,94 @@
+<div class="editform_page">
+
+  <% if @target.errors.any? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @target.errors.full_messages.each do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@target) do |f| %>
+
+      <fieldset>
+
+        <legend> Enter information about target</legend>
+
+        <div>
+          <%= f.label :target_type_id, "Target type" %>
+          <%= f.select :target_type_id,
+            @target_types.collect {|t| [t.name,t.id]} ,{},{}%>
+          <p class="note">Target type</p>
+        </div>
+
+        <div>
+          <%= f.label :name, " Name" %>
+          <%= f.text_field :name, {"size"=>35,"maxlength"=>200}%>
+          <p class="note">Unique target name</p>
+        </div>
+
+        <div>
+          <%= f.label :server_id, "Server" %>
+          <%= f.select :server_id, @servers.collect {|s| [s.name,s.id]} ,{},{}%>
+          <p class="note">Pick server which will serve this target</p>
+        </div>
+
+        <div>
+          <%= f.label :hostname, "Hostname" %>
+          <%= f.text_field :hostname, {"size"=>35,"maxlength"=>100}%>
+          <p class="note">Fully qualified host name</p>
+        </div>
+
+        <div>
+          <%= f.label :port_number, "Port" %>
+          <%= f.text_field :port_number, {"size"=>6,"maxlength"=>10}%>
+          <p class="note">Port number</p>
+        </div>
+
+        <div>
+          <%= f.label :database_name, "Database" %>
+          <%= f.text_field :database_name, {"size"=>10,"maxlength"=>100}%>
+          <p class="note">Database or service name</p>
+        </div>
+
+        <div>
+          <%= f.label :monitor_username, "Username" %>
+          <%= f.text_field :monitor_username,{"size"=>20,"maxlength"=>30} %>
+          <p class="note">Username</p>
+        </div>
+
+        <div>
+          <%= f.label :monitor_password, "Password" %>
+          <%= f.password_field :monitor_password,{"size"=>20,"maxlength"=>30} %>
+          <p class="note">Password</p>
+        </div>
+
+        <div>
+          <%= f.label :status_code, "Status" %>
+          <%= f.select :status_code, {"Inactive"=>"I","Active"=>"A"} %>
+          <p class="note">Pick status code</p>
+        </div>
+
+        <div>
+          <%= f.label :inactive_until, "Inactive until" %>
+          <%= f.text_field :inactive_until,{"size"=>30,"maxlength"=>30} %>
+          <p class="note">MM/DD/YYYY HH24:MI:SS</p>
+        </div>
+
+
+        <%= submit_tag("Save") %>
+        <%= submit_tag("Cancel") %>
+
+      </fieldset>
+
+    <% end %>
+
+  </div>
+
+</div>

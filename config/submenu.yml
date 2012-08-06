@@ -1,21 +1,29 @@
 ## Submenu, which is specific to this module onky
-servers:
-  label: Servers
-  controller: servers
+targets:
+  label: Targets
+  route: reset_targets_path
   access_level: 1
-target_types:
-  label: Target Types
-  controller: target_types
+target_groups:
+  label: Target Groups
+  route: target_groups_path
   access_level: 1
 notifications:
   label: Notifications
-  controller: notify_groups
+  route: notify_groups_path
+  access_level: 1
+servers:
+  label: Servers
+  route: servers_path
+  access_level: 1
+target_types:
+  label: Target Types
+  route: target_types_path
   access_level: 1
 script_categories:
   label: Script Categories
-  controller: script_categories
+  route: script_categories_path
   access_level: 1
 users:
   label: Users
-  controller: users
+  route: users_path
   access_level: 0

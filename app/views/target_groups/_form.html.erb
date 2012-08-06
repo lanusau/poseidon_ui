@@ -1,0 +1,37 @@
+<div class="editform_page">
+
+  <% if @target_group.errors.any? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @target_group.errors.full_messages.each do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@target_group) do |f| %>
+
+      <fieldset>
+        <legend> Enter information about this target group</legend>
+
+        <div>
+          <%= f.label :name, "Name" %>
+          <%= f.text_field :name, {"size"=>20,"maxlength"=>200}%>
+          <p class="note">Unique target group name </p>
+        </div>
+
+        <%= submit_tag("Save") %>
+        <%= submit_tag("Cancel") %>
+
+      </fieldset>
+
+    <% end %>
+
+  </div>
+
+</div>

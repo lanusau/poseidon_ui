@@ -4,6 +4,10 @@
   <title>Poseidon</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <% if params[:controller] == "targets"%>
+    <%= javascript_include_tag "jquery.observe_field.js"%>
+    <%= javascript_include_tag "target"%>
+  <% end %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -31,7 +35,7 @@
         <ul>
           <% sub_menu.each do |key,value| %>
           <li <%=  raw 'class="selected"' if value["selected"] %> >
-              <%= link_to value["label"], :controller=>value["controller"] %>
+              <%= link_to value["label"], method(value["route"]).call %>
           </li>
           <% end %>
         </ul>

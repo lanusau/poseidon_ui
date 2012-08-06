@@ -81,12 +81,14 @@ ul.compact {
 #content {
     font-size:14px;
     margin-left: 10px;
-    margin-top:0px;
+    margin-top:5px;
     float:left;
     clear:both;
 
     h2 {
         color: #4E463F;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     div.flash_note {
@@ -94,6 +96,13 @@ ul.compact {
         background-color: #FFC;
         padding: 5px;
     }
+}
+
+/* IFRAME to view child records */
+#child_record_iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
 }
 
 /* Page where single record is displayed */

@@ -1,8 +1,10 @@
 class Target < ActiveRecord::Base
   attr_accessible :name, :hostname,:database_name,:port_number,
-    :monitor_username,:monitor_password,:status_code,:inactive_until
+    :monitor_username,:monitor_password,:status_code,:inactive_until,
+    :target_type_id, :server_id
 
   has_many :target_group_assignments, :dependent => :delete_all
+  has_many :target_hostnames, :dependent => :delete_all
   belongs_to :target_type
   belongs_to :server
 

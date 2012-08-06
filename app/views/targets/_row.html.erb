@@ -1,0 +1,22 @@
+<td><%= target.name %></td>
+<td><%= target.status_code == "A"? "Active":"Inactive" %> </td>
+<td>
+  [
+  <%= link_to 'Edit', edit_target_path(target) %>
+  |
+  <%  if target.status_code == "I" %>
+
+    <%=  link_to "Activate", activate_target_path(target), method: :post, :remote=>true %>
+
+  <%  else %>
+
+    Inactivate for [
+    <%= link_to "1h", inactivate_target_path(target,:hours=>1), method: :post, :remote => true %>,
+    <%= link_to "4h", inactivate_target_path(target,:hours=>4), method: :post, :remote => true %>,
+    <%= link_to "12h", inactivate_target_path(target,:hours=>12), method: :post, :remote => true %>
+    ]
+  <%  end %>
+  |
+  <%= link_to 'Delete', target, method: :delete, data: { confirm: 'Are you sure?' } %>
+  ]
+</td>
