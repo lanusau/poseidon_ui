@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120801170510) do
+ActiveRecord::Schema.define(:version => 20120807203040) do
 
   create_table "notify_group", :primary_key => "notify_group_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false
@@ -31,6 +31,44 @@ ActiveRecord::Schema.define(:version => 20120801170510) do
 
   add_index "notify_group_email", ["notify_group_id"], :name => "psd_notify_group_email_n1"
 
+  create_table "query_column", :primary_key => "query_column_id", :force => true do |t|
+    t.integer  "script_id",                     :null => false
+    t.integer  "column_position",               :null => false
+    t.string   "column_name_str", :limit => 30, :null => false
+    t.datetime "create_sysdate",                :null => false
+    t.datetime "update_sysdate",                :null => false
+  end
+
+  add_index "query_column", ["script_id"], :name => "psd_query_column_n1"
+
+  create_table "script", :primary_key => "script_id", :force => true do |t|
+    t.string   "name",                     :limit => 200,                  :null => false
+    t.text     "description",                                              :null => false
+    t.string   "schedule_min",             :limit => 100, :default => "",  :null => false
+    t.string   "schedule_hour",            :limit => 100, :default => "",  :null => false
+    t.string   "schedule_day",             :limit => 100, :default => "",  :null => false
+    t.string   "schedule_month",           :limit => 100, :default => "",  :null => false
+    t.string   "schedule_week",            :limit => 100, :default => "",  :null => false
+    t.integer  "query_type",                              :default => 0,   :null => false
+    t.text     "query_text"
+    t.integer  "timeout_sec",                             :default => 0,   :null => false
+    t.integer  "fixed_severity",                          :default => 0,   :null => false
+    t.integer  "severity_column_position"
+    t.integer  "value_med_severity"
+    t.integer  "value_high_severity"
+    t.text     "expression_text"
+    t.integer  "message_format",                          :default => 0,   :null => false
+    t.string   "message_subject",          :limit => 200
+    t.text     "message_header"
+    t.text     "message_text_str"
+    t.text     "message_footer"
+    t.string   "status_code",              :limit => 1,   :default => "I", :null => false
+    t.datetime "create_sysdate",                                           :null => false
+    t.datetime "update_sysdate",                                           :null => false
+  end
+
+  add_index "script", ["name"], :name => "psd_script_u1", :unique => true
+
   create_table "script_category", :primary_key => "script_category_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false
     t.datetime "create_sysdate",                :null => false
@@ -38,6 +76,36 @@ ActiveRecord::Schema.define(:version => 20120801170510) do
   end
 
   add_index "script_category", ["name"], :name => "psd_script_category_u1", :unique => true
+
+  create_table "script_category_assign", :primary_key => "script_category_assign_id", :force => true do |t|
+    t.integer  "script_category_id", :null => false
+    t.integer  "script_id",          :null => false
+    t.datetime "create_sysdate",     :null => false
+    t.datetime "update_sysdate",     :null => false
+  end
+
+  add_index "script_category_assign", ["script_category_id", "script_id"], :name => "psd_script_category_assign_u1", :unique => true
+  add_index "script_category_assign", ["script_id"], :name => "psd_script_category_assign_n1"
+
+  create_table "script_group", :primary_key => "script_group_id", :force => true do |t|
+    t.integer  "target_group_id", :null => false
+    t.integer  "script_id",       :null => false
+    t.datetime "create_sysdate",  :null => false
+    t.datetime "update_sysdate",  :null => false
+  end
+
+  add_index "script_group", ["script_id"], :name => "psd_script_group_n1"
+  add_index "script_group", ["target_group_id", "script_id"], :name => "psd_script_group_u1", :unique => true
+
+  create_table "script_target", :primary_key => "script_target_id", :force => true do |t|
+    t.integer  "target_id",      :null => false
+    t.integer  "script_id",      :null => false
+    t.datetime "create_sysdate", :null => false
+    t.datetime "update_sysdate", :null => false
+  end
+
+  add_index "script_target", ["script_id"], :name => "psd_script_target_n1"
+  add_index "script_target", ["target_id", "script_id"], :name => "psd_script_target_u1", :unique => true
 
   create_table "server", :primary_key => "server_id", :force => true do |t|
     t.string   "name",              :limit => 200, :null => false

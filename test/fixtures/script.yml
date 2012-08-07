@@ -1,0 +1,55 @@
+dataguard_check:
+  name: Dataguard check
+  description: Check dataguard replication delay
+  schedule_min: 0,30
+  schedule_hour: "*"
+  schedule_day: "*"
+  schedule_month: "*"
+  schedule_week: "?"
+  query_type: 1
+  query_text: |
+    select d.destination,max_seq,appl_l.max_applied_seq,trunc((sysdate - l.next_time)*24,3) delay,max_seq-appl_l.max_applied_seq seq_diff, trunc(d.delay_mins/60) delay_hours
+    from
+    (
+    select dest_id, max(sequence#) max_seq
+    from V$ARCHIVED_LOG l
+    where resetlogs_change# = (
+    select resetlogs_change# from V$DATABASE
+    )
+    group by dest_id
+    ) ml,
+    (
+    select dest_id, max(sequence#) max_applied_seq
+    from V$ARCHIVED_LOG l
+    where resetlogs_change# = (
+      select resetlogs_change# from V$DATABASE
+    )
+    and applied = 'YES'
+    group by dest_id
+    ) appl_l,
+    (
+    select dest_id,destination,delay_mins
+    from V$ARCHIVE_DEST
+    where target = 'STANDBY'
+    and status in ('VALID','ERROR')
+    ) d,
+    V$ARCHIVED_LOG l
+    where ml.dest_id = d.dest_id
+    and ml.dest_id = appl_l.dest_id
+    and l.dest_id = ml.dest_id
+    and l.sequence# = appl_l.max_applied_seq
+    and ml.max_seq != appl_l.max_applied_seq
+  timeout_sec: 300
+  fixed_severity: 0
+  severity_column_position: 3
+  value_med_severity: 4
+  value_high_severity: 6
+  expression_text: "%3 > (%5+5) && %4 > 2"
+  message_format: 0
+  message_subject: "[%t] Dataguard delay"
+  message_header: ~
+  message_text_str: "Delay in destination %0 is %3 hours. Current archived log in primary:%1 last applied log in standby: %2. "
+  message_footer: ~
+  status_code: A
+  create_sysdate: 2006-10-10 16:49:12
+  update_sysdate: 2010-04-07 11:47:32  

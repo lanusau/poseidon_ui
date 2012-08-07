@@ -1,8 +1,8 @@
-one:
-  name: DBA jobs
+dba_related:
+  name: DBA related
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
-two:
+billing:
   name: Billing
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56

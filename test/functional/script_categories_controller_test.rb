@@ -7,7 +7,7 @@ class ScriptCategoriesControllerTest < ActionController::TestCase
     session[:user_id] = admin.id
 
     # Also, assign one of the fixtures to variable
-    @script_category = script_category(:one)
+    @script_category = script_category(:dba_related)
   end
 
   test "should get index" do

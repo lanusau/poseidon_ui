@@ -1,0 +1,12 @@
+one:
+  script: dataguard_check
+  column_position: 0
+  column_name_str: destination
+  update_sysdate: 2012-07-12 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
+two:
+  script: dataguard_check
+  column_position: 1
+  column_name_str: max_seq
+  update_sysdate: 2012-07-12 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
