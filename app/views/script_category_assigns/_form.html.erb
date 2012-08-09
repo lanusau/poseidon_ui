@@ -1,0 +1,13 @@
+<% if additional_categories.empty? %>
+  <p> There are no additional categories available </p>
+<% else %>
+  <p>
+    <select name="script_category_id" id="script_category_id" class="non-aligned">
+      <% additional_categories.each do | c | %>
+        <option value="<%= c.id %>"><%= c.name %></option>
+      <% end %>
+    </select>
+    <input name="commit" type="submit" value="Save"   id="script_category_id_submit"/>
+    <input name="cancel" type="submit" value="Cancel" id="script_category_id_cancel"/>
+  </p>
+<% end %>

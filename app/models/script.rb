@@ -6,6 +6,7 @@ class Script < ActiveRecord::Base
   has_many :script_groups, :dependent => :delete_all
   has_many :query_columns, :order => "column_position", :dependent => :delete_all
   has_many :script_notifications, :dependent => :delete_all
+  has_many :script_person_notifications, :dependent => :delete_all
 
   validates :name,:presence=>true,
             :uniqueness => {:case_sensitive =>false, :message => "- duplicate name"}

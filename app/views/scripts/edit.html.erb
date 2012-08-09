@@ -1,0 +1,278 @@
+<div class="editform_page">
+  <h2><%= @script.name %></h2>
+
+  <% if not @script.errors.empty? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @script.errors.each_full do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@script) do |f| %>
+
+      <fieldset>
+
+        <legend> Enter name and description</legend>
+        <div>
+          <%= f.label :name, "Name" %>
+          <%= f.text_field :name ,{"size"=>35,"maxlength"=>200} %>
+          <p class="note">Unique script name</p>
+        </div>
+        <div>
+          <%= f.label :description, "Description" %>
+          <%= f.text_area :description , {"cols"=>50,"rows"=>5} %>
+          <p class="note">Detailed description</p>
+        </div>
+
+      </fieldset>
+
+      <div class="item-page">
+
+        <h3> Script categories </h3>
+        <div id="script_category_list">
+          <%= render :partial => "script_category_assigns/index" %>
+        </div>
+
+        <div id="script_category_list_error" class="error_text"></div>
+
+      </div>
+
+      <br class="clear-float" />
+
+      <div class="item-page">
+
+        <h3> Targets </h3>
+        <div id="script_target_list">
+          <%= render :partial => "script_targets/index" %>
+        </div>
+
+        <div id="script_target_list_error" class="error_text"></div>
+        
+      </div>
+
+      <br class="clear-float" />
+
+      <fieldset>
+
+        <legend> Enter script query </legend>
+
+        <div class="instruction">
+
+          For PLSQL type query, you need to put anonymous block that would assign ref_cursor to the :cursor bind variable. <br />
+          For example <code> BEGIN OPEN :cursor FOR SELECT * FROM emp; END; </code>
+
+        </div>
+
+        <div>
+          <label for="script_query_type">Query Type</label>
+          <%= f.select :query_type,{"SQL"=>1,"PL/SQL"=>2} %>
+          <p class="note">Select query type</p>
+        </div>
+
+        <div>
+          <label for="script_query_text">Query text</label>
+          <%= f.text_area :query_text, {"cols"=>80,"rows"=>13,"class"=>"big"} %>
+          <p class="note">Enter query or PL/SQL text</p>
+        </div>
+
+        <div>
+          <label for="script_timeout_sec">Query timeout</label>
+          <%= f.text_field :timeout_sec, {"size"=>20,"maxlength"=>20} %>
+          <p class="note"> Enter query timeout in seconds </p>
+        </div>
+
+      </fieldset>
+
+      <div class="instruction">
+        This is optional step which lets you cache list of columns returned from the query so that you
+        don't have to re-run query each time you need to look it up. You can get list of columns only
+        when query returns at least 1 row. After you cache list of columns, query doesn't need to return any
+        rows in order for you to look up columns. Rebuild list of columns each time you change column list
+        in the query
+      </div>
+
+      <br class="clear-float" />
+
+      <fieldset>
+
+        <legend> Trigger expression </legend>
+
+        <div class="instruction">
+          <div>
+            Use simple expressions that evaluate to true or false
+            <ul class="compact">
+              <li>You can use column values by using variable %x, where x is column position.</li>
+              <li>You can use variable %rc which will correspond to number of rows returned </li>
+              <li>You can use simple operators, like &&,||, !, !=, == etc </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <label for="script_expression_text">Trigger expression </label>
+          <%= f.text_field :expression_text ,{"size"=>40,"maxlength"=>500,"class"=>"input-long"} %>
+          <p class="note"> Enter expression </p>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+
+        <legend> Severity </legend>
+
+        <div>
+          <label for="script_fixed_severity">Fixed/calculated severity</label>
+          <%= f.select :fixed_severity,{"Low"=>3,"Medium"=>2,"High"=>1,"Calculate"=>0} %>
+          <p class="note"> Pick severity type </p>
+        </div>
+
+        <fieldset>
+
+          <legend> Calculated severity </legend>
+
+          <div class="instruction">
+            <div>
+              Column values less then Medium threshold will cause Low severity, more then Medium  <br />
+              but less then High - Medium severity, and more then High - high severity.
+              <br />
+              Specify the position of the column (without % sign) in the list that will be used to calculate the severity
+            </div>
+          </div>
+
+          <div>
+            <label for="script_severity_column_position" class="short inline">Column Position </label>
+            <%= f.text_field :severity_column_position ,{"size"=>5,"maxlength"=>10,"class"=>"short inline"} %>
+          </div>
+
+          <br />
+
+          <fieldset>
+            <legend>Thresholds for medium and high severities</legend>
+            <div>
+              <strong>Med </strong>
+              <%= f.text_field :value_med_severity ,{"size"=>10,"maxlength"=>20} %>
+              <strong>High </strong>
+              <%= f.text_field :value_high_severity ,{"size"=>10,"maxlength"=>20} %>
+            </div>
+          </fieldset>
+
+        </fieldset>
+
+      </fieldset>
+
+      <fieldset>
+
+        <legend> Schedule </legend>
+        <div class="instruction">
+
+          <div><h3>Schedule syntax</h3>
+            Schedule syntax is similiar to that of Unix Cron, but with some extensions
+            <ul class="compact">
+              <li>You can use plain numbers, lists or ranges, for example 10 or 10,15 or 10-15</li>
+              <li>You can use "/" character to specify repetition, for example 0/15 means every 15 starting at 0</li>
+              <li>If you specify week, then you need to put "?" in the day, and vice versa, if you specify day, you need to put "?" in the week</li>
+              <li>You can put letter "L" for the day, which means "last day of the month"</li>
+              <li>Same as in Unix, "*" means "every"</li>
+              <li>Week is from Sunday (1) to Saturday (7) </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <strong>Min</strong>
+          <%= f.text_field :schedule_min ,{"size"=>10,"maxlength"=>100} %>
+
+          <strong>Hour</strong>
+          <%= f.text_field :schedule_hour ,{"size"=>10,"maxlength"=>100} %>
+
+          <strong>Day</strong>
+          <%= f.text_field :schedule_day ,{"size"=>10,"maxlength"=>100} %>
+
+          <strong>Month</strong>
+          <%= f.text_field :schedule_month ,{"size"=>10,"maxlength"=>100} %>
+
+          <strong>Week</strong>
+          <%= f.text_field :schedule_week ,{"size"=>10,"maxlength"=>100} %>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend> Message settings </legend>
+
+        <div class="instruction">
+          <div>
+            <h3>Email text variables</h3>
+            You can use following variables in the email text
+            <ul class="compact">
+              <li> %t - target name </li>
+              <li> %n - script name </li>
+              <li> %s - severity (only effects subject) </li>
+              <li> %rc - rowcount </li>
+              <li> %x - column number x value, for example %1  </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <label for="script_message_format">Message format</label>
+          <%= f.select :message_format,{"Text"=>0,"HTML"=>1} %>
+          <p class="note"> Select message format </p>
+        </div>
+
+        <div>
+          <label for="script_message_subject">Message subject </label>
+          <%= f.text_field :message_subject ,{"size"=>40,"maxlength"=>500} %>
+          <p class="note">Enter message subject</p>
+        </div>
+
+        <div>
+          <label for="script_message_header">Message header </label>
+          <%= f.text_area :message_header ,{"cols"=>50,"rows"=>5,"class"=>"big"} %>
+          <p class="note">Enter message header</p>
+        </div>
+
+        <div>
+          <label for="script_message_text_str">Message text </label>
+          <%= f.text_area :message_text_str ,{"cols"=>50,"rows"=>5,"class"=>"big"} %>
+          <p class="note">Enter message text (generated for each row ) 
+          </p>
+        </div>
+
+        <div>
+          <label for="script_message_footer">Message footer </label>
+          <%= f.text_area :message_footer ,{"cols"=>50,"rows"=>5,"class"=>"big"} %>
+          <p class="note">Enter message footer </p>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+
+        <legend> Status code </legend>
+        <div>
+          <label for="script_status_code">Status code</label>
+          <%= f.select :status_code,{"Active"=>'A',"Inactive"=>'I'} %>
+          <p class="note"> Select script status code </p>
+        </div>
+
+      </fieldset>
+
+      <br class="clear-float" />
+
+
+      <%= submit_tag("Save") %>
+      <%= submit_tag("Cancel") %>
+
+
+    <% end -%>
+
+  </div>
+
+</div>

@@ -1,0 +1,45 @@
+<div class="editform_page">
+
+  <% if @script.errors.any? %>
+    <div class="errors">
+
+      <p><em>Oops... the following errors were encountered:</em></p>
+      <ul>
+        <% @script.errors.full_messages.each do |m| %>
+          <li><%= m  %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-container">
+
+    <%= form_for(@script) do |f| %>
+
+      <fieldset>
+
+        <legend> Enter name and description of the script</legend>
+
+        <div>
+          <%= f.label :name, " Name" %>
+          <%= f.text_field :name, {"size"=>35,"maxlength"=>200}%>
+          <p class="note">Unique script name</p>
+        </div>
+
+        <div>
+          <%= f.label :description, "Description" %>
+          <%= f.text_area :description , {"cols"=>50,"rows"=>5} %>
+          <p class="note">Detailed description</p>
+        </div>
+
+
+        <%= submit_tag("Save") %>
+        <%= submit_tag("Cancel") %>
+
+      </fieldset>
+
+    <% end %>
+
+  </div>
+
+</div>

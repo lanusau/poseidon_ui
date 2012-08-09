@@ -1,4 +1,6 @@
 class ScriptCategoryAssign < ActiveRecord::Base
+  attr_accessible :script_category_id,:create_sysdate, :update_sysdate
+
   belongs_to :script
   belongs_to :script_category
 

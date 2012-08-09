@@ -1,0 +1,25 @@
+<td><%= script.name %></td>
+<td>
+  <% script.script_category_assigns.each_with_index do |a,index| %>
+    <%= "|" unless index == 0 %>
+    <%= a.script_category.name %>
+  <% end %>
+</td>
+<td><%= script.status_code == "A"? "Active":"Inactive" %> </td>
+<td>
+  [
+  <%= link_to 'Edit', edit_script_path(script) %>
+  |
+  <%  if script.status_code == "I" %>
+
+    <%=  link_to "Activate", activate_script_path(script), method: :post, :remote=>true %>
+
+  <%  else %>
+
+    <%=  link_to "Inactivate", inactivate_script_path(script), method: :post, :remote=>true %>
+
+  <%  end %>
+  |
+  <%= link_to 'Delete', script, method: :delete, data: { confirm: 'Are you sure?' } %>
+  ]
+</td>

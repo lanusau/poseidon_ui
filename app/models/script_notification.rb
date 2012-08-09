@@ -1,10 +1,8 @@
-class ScriptTarget < ActiveRecord::Base
-  attr_accessible :target_id,:create_sysdate, :update_sysdate
-
+class ScriptNotification < ActiveRecord::Base
   belongs_to :script
-  belongs_to :target
+  belongs_to :notify_group
 
-  validates :target_id,:presence=>true,
+  validates :notify_group_id,:presence=>true,
             :uniqueness => {
               :scope=>"script_id",
               :message => "- already assigned for this script"}

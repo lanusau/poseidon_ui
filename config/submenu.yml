@@ -1,4 +1,8 @@
 ## Submenu, which is specific to this module onky
+scripts:
+  label: Scripts
+  route: reset_scripts_path
+  access_level: 1
 targets:
   label: Targets
   route: reset_targets_path

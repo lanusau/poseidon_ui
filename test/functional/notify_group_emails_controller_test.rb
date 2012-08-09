@@ -13,8 +13,8 @@ class NotifyGroupEmailsControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    assert_routing '/notify_groups/1/notify_group_emails',
-      { :controller => 'notify_group_emails', :action => "index", :notify_group_id => "1" }
+    assert_routing "/notify_groups/#{@notify_group.id}/notify_group_emails",
+      { :controller => 'notify_group_emails', :action => "index", :notify_group_id => @notify_group.id.to_s }
     get :index, :notify_group_id=>@notify_group.id
     assert_response :success
     assert_not_nil assigns(:notify_group)
@@ -30,8 +30,8 @@ class NotifyGroupEmailsControllerTest < ActionController::TestCase
   end
 
   test "should render form for new" do
-    assert_routing '/notify_groups/1/notify_group_emails/new',
-      { :controller => 'notify_group_emails', :action => "new", :notify_group_id => "1" }
+    assert_routing "/notify_groups/#{@notify_group.id}/notify_group_emails/new",
+      { :controller => 'notify_group_emails', :action => "new", :notify_group_id => @notify_group.id.to_s}
     get :new, :notify_group_id => @notify_group.id
     assert_response :success
 
@@ -47,8 +47,8 @@ class NotifyGroupEmailsControllerTest < ActionController::TestCase
   end
 
   test "should create notify_group_email" do
-    assert_routing({:method => 'post',:path=> '/notify_groups/1/notify_group_emails'},
-      { :controller => 'notify_group_emails', :action => "create", :notify_group_id => "1" })
+    assert_routing({:method => 'post',:path=> "/notify_groups/#{@notify_group.id}/notify_group_emails"},
+      { :controller => 'notify_group_emails', :action => "create", :notify_group_id => @notify_group.id.to_s })
     assert_difference('NotifyGroupEmail.count') do
       post :create, :notify_group_id => @notify_group.id,
         :notify_group_email =>{

@@ -6,7 +6,11 @@
   <%= javascript_include_tag "application" %>
   <% if params[:controller] == "targets"%>
     <%= javascript_include_tag "jquery.observe_field.js"%>
-    <%= javascript_include_tag "target"%>
+    <%= javascript_include_tag "targets"%>
+  <% end %>
+  <% if params[:controller] == "scripts"%>
+    <%= javascript_include_tag "jquery.observe_field.js"%>
+    <%= javascript_include_tag "scripts"%>
   <% end %>
   <%= csrf_meta_tags %>
 </head>

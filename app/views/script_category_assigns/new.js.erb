@@ -1,0 +1,23 @@
+// Insert form into div
+$("#script_category_new").html("<%= escape_javascript( render :partial => "form", :locals => {:additional_categories=>@additional_categories}) %>");
+
+// Reset error div
+$("#script_category_list_error").html("");
+
+// Add click event for cancel button
+$("#script_category_id_cancel").click(function(e) {
+  e.preventDefault();
+  $("#script_category_new").html("<%=  escape_javascript(link_to "New", new_script_category_assign_path(@script), :remote=>true) %>");
+});
+
+// Add click event for submit button
+$("#script_category_id_submit").click(function(e) {
+  e.preventDefault();
+  // Post just the SELECT element value
+  $.post("<%= script_category_assigns_path(@script)%>", $("#script_category_id").serialize(), function( data ) {
+    }
+  ).error(function() { $("#script_category_list_error").html("Sorry, error has occured"); });
+  // Refresh item list
+  $("#script_category_list").load("<%= script_category_assigns_path(@script)%>");
+});
+

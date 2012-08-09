@@ -22,7 +22,7 @@ PoseidonV3::Application.routes.draw do
   end
   resources :target_groups
   resources :targets do
-    # Add additional actions to routes
+    # Additional actions
     member do
       post "activate"
       post "inactivate"
@@ -32,9 +32,21 @@ PoseidonV3::Application.routes.draw do
     end
     resources :target_hostnames, :as => "hostnames",:only => [:index, :new, :create, :destroy]
   end
+  resources :scripts do
+    # Additional actions
+    member do
+      post "activate"
+      post "inactivate"
+    end
+    collection do
+      get "reset"
+    end
+    resources :script_category_assigns, :as => "category_assigns",:only => [:index, :new, :create, :destroy]
+    resources :script_targets, :as => "targets",:only => [:index, :new, :create, :destroy]
+  end
 
   # Root URL
-  root :to => 'servers#index'
+  root :to => 'scripts#index'
 
   # See how all your routes lay out with "rake routes"
   

@@ -1,0 +1,1 @@
+$("#script_<%=@script.id-%> ").html("<%= escape_javascript( render :partial => "row", :locals => {:script=>@script}) %>")

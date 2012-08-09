@@ -1,0 +1,12 @@
+<ul class="rowlist_ul">
+  <% @script.script_category_assigns.each do | assignment | %>
+    <li>
+      <%= assignment.script_category.name %>
+      <%=  link_to "Remove", script_category_assign_path(@script,assignment), method: :delete, :remote=>true %>
+    </li>
+  <% end %>
+</ul>
+
+<div id="script_category_new">
+  <%=  link_to "New", new_script_category_assign_path(@script), :remote=>true %>
+</div>

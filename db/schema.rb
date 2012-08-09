@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120807203040) do
+ActiveRecord::Schema.define(:version => 20120807205731) do
 
   create_table "notify_group", :primary_key => "notify_group_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false
@@ -96,6 +96,25 @@ ActiveRecord::Schema.define(:version => 20120807203040) do
 
   add_index "script_group", ["script_id"], :name => "psd_script_group_n1"
   add_index "script_group", ["target_group_id", "script_id"], :name => "psd_script_group_u1", :unique => true
+
+  create_table "script_notification", :primary_key => "script_notification_id", :force => true do |t|
+    t.integer  "notify_group_id", :null => false
+    t.integer  "script_id",       :null => false
+    t.datetime "create_sysdate",  :null => false
+    t.datetime "update_sysdate",  :null => false
+  end
+
+  add_index "script_notification", ["notify_group_id", "script_id"], :name => "psd_script_notification_u1", :unique => true
+  add_index "script_notification", ["script_id"], :name => "psd_script_notification_n1"
+
+  create_table "script_person_notification", :primary_key => "script_person_notification_id", :force => true do |t|
+    t.integer  "script_id",      :null => false
+    t.string   "email_address",  :null => false
+    t.datetime "create_sysdate", :null => false
+    t.datetime "update_sysdate", :null => false
+  end
+
+  add_index "script_person_notification", ["script_id"], :name => "psd_script_person_notification_n1"
 
   create_table "script_target", :primary_key => "script_target_id", :force => true do |t|
     t.integer  "target_id",      :null => false

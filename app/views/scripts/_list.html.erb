@@ -1,0 +1,19 @@
+<table class="rowlist_table">
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Status</th>
+    <th>Functions</th>
+  </tr>
+
+  <% @scripts.each_with_index do |script,index| %>
+    <tr id="script_<%= script.id%>" class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+      <%= render "row", {:script=>script} %>
+    </tr>
+  <% end %>
+
+</table>
+
+<p />
+
+<%= will_paginate(@scripts) %>

@@ -2,6 +2,7 @@ class NotifyGroup < ActiveRecord::Base
   attr_accessible :name
 
   has_many :notify_group_emails,:order => "severity", :dependent => :delete_all
+  has_many :script_notifications, :dependent => :delete_all
   
   validates :name,:presence=>true,
             :uniqueness => {:case_sensitive =>false, :message => "- duplicate name"}
