@@ -37,12 +37,14 @@ PoseidonV3::Application.routes.draw do
     member do
       post "activate"
       post "inactivate"
+      post "test"
     end
     collection do
       get "reset"
     end
     resources :script_category_assigns, :as => "category_assigns",:only => [:index, :new, :create, :destroy]
     resources :script_targets, :as => "targets",:only => [:index, :new, :create, :destroy]
+    resources :script_groups, :as => "groups",:only => [:index, :new, :create, :destroy]
   end
 
   # Root URL

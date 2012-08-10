@@ -1,0 +1,12 @@
+<ul class="rowlist_ul">
+  <% @script.script_groups.each do | script_group | %>
+    <li>
+      <%= script_group.target_group.name %>
+      <%=  link_to "Remove", script_group_path(@script,script_group), method: :delete, :remote=>true %>
+    </li>
+  <% end %>
+</ul>
+
+<div id="script_group_new">
+  <%=  link_to "New", new_script_group_path(@script), :remote=>true %>
+</div>

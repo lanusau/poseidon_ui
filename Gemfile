@@ -6,6 +6,9 @@ gem 'rails', '3.2.6'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
+gem "dbd-pg", "~> 0.3.9"
+gem "dbd-mysql", "~> 0.4.4"
+gem "ruby-oci8", "~> 2.1.2"
 
 
 # Gems used only for assets and not required

@@ -306,6 +306,11 @@ div.inline {
     }
 }
 
+/* Class to hide elements */
+.invisible {
+    display:none;
+}
+
 /* This is used for list containers */
 .list-page {
     border: 1px dotted #ddd;

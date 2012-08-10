@@ -1,4 +1,6 @@
 class ScriptGroup < ActiveRecord::Base
+  attr_accessible :target_group_id,:create_sysdate, :update_sysdate
+
   belongs_to :script
   belongs_to :target_group
 

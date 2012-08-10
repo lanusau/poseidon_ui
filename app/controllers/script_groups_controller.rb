@@ -1,23 +1,23 @@
-class ScriptTargetsController < ApplicationController
+class ScriptGroupsController < ApplicationController
 
   set_access_level :user
   set_submenu :scripts
 
-  # GET /scripts/:script_id/script_targets
+  # GET /scripts/:script_id/script_groups
   def index
     @script = Script.find(params[:script_id])
     render :partial => "index"
   end
 
-  # GET /scripts/:script_id/script_targets/new
+  # GET /scripts/:script_id/script_groups/new
   def new
     @script = Script.find(params[:script_id])
-    @targets = Target.all(:order => "name")
+    @target_groups = TargetGroup.all(:order => "name")
 
     # Only leave records that are not assigned already
-    @additional_targets = Array.new
-    @targets.each do |target|
-      @additional_targets.push(target) unless @script.script_targets.detect {|a| a.target_id  == target.id }
+    @additional_groups = Array.new
+    @target_groups.each do |group|
+      @additional_groups.push(group) unless @script.script_groups.detect {|a| a.target_group_id  == group.id }
     end
 
     # Only JS format is supported, since this is AJAX call
@@ -27,12 +27,12 @@ class ScriptTargetsController < ApplicationController
     end
   end
 
-  # POST /scripts/:script_id/script_targets
-  def create    
-    @target_id = params[:target_id]
+  # POST /scripts/:script_id/script_groups
+  def create
+    @target_group_id = params[:target_group_id]
     @script = Script.find(params[:script_id])
-    @script.script_targets.create(
-      :target_id => @target_id,
+    @script.script_groups.create(
+      :target_group_id => @target_group_id,
       :create_sysdate => DateTime.now(),
       :update_sysdate => DateTime.now()
     )
@@ -41,10 +41,10 @@ class ScriptTargetsController < ApplicationController
 
   end
 
-  # DELETE /scripts/:script_id/script_targets/:id
+  # DELETE /scripts/:script_id/script_groups/:id
   def destroy
-    @script_target = ScriptTarget.find(params[:id])
-    @script_target.destroy
+    @script_group = ScriptGroup.find(params[:id])
+    @script_group.destroy
     @script = Script.find(params[:script_id])
 
     # Only JS format is supported, since this is AJAX call
@@ -53,5 +53,4 @@ class ScriptTargetsController < ApplicationController
       format.js
     end
   end
-
 end

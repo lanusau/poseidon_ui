@@ -3,7 +3,7 @@
 TargetType.create(
   {
     :name => 'Oracle',
-    :url_ruby => 'dbi:oci8:(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=%h)(PORT=%p))(CONNECT_DATA=(SERVICE_NAME=%d)))',
+    :url_ruby => 'dbi:OCI8:(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=%h)(PORT=%p))(CONNECT_DATA=(SERVICE_NAME=%d)))',
     :url_jdbc => 'jdbc:oracle:thin:@//%h:%p/%d',
     :create_sysdate => DateTime.now(),
     :update_sysdate => DateTime.now()

@@ -1,0 +1,13 @@
+<% if additional_groups.empty? %>
+  <p> There are no additional groups available </p>
+<% else %>
+  <p>
+    <select name="target_group_id" id="target_group_id" class="non-aligned">
+      <% additional_groups.each do | c | %>
+        <option value="<%= c.id %>"><%= c.name %></option>
+      <% end %>
+    </select>
+    <input name="commit" type="submit" value="Save"   id="target_group_id_submit"/>
+    <input name="cancel" type="submit" value="Cancel" id="target_group_id_cancel"/>
+  </p>
+<% end %>

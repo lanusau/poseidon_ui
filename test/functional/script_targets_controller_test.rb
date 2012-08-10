@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ScriptTargetsControllerTest < ActionController::TestCase
- setup do
+  setup do
     # Assume we are logged in
     admin = User.find_by_login("admin")
     session[:user_id] = admin.id
