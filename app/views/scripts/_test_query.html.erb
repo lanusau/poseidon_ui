@@ -1,0 +1,29 @@
+<div class="query_result">
+  <% if @query_tester.error %>
+    <p>
+      <span class="error_text">
+        <%= @query_tester.error  %>
+      </span>
+    </p>
+  <% else %>
+    <% if (defined? @query_tester.result_set) && (@query_tester.column_names != nil) %>
+      <table class="rowlist_table">
+        <tr>
+          <% @query_tester.column_names.each do |h| %>
+            <th><%= h %></th>
+          <% end %>
+        </tr>
+        <% @query_tester.result_set.each do |row | %>
+          <tr>
+            <% row.each do |v| %>
+              <td><%= v %> </td>
+            <% end %>
+          </tr>
+        <% end %>
+
+      </table>
+    <% else %>
+      <p> No rows returned </p>
+    <% end %>
+  <% end %>
+</div>

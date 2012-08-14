@@ -1,0 +1,12 @@
+<ul class="rowlist_ul">
+  <% @script.script_person_notifications.each do | script_person_notification | %>
+    <li>
+      <%= script_person_notification.email_address %>
+      <%=  link_to "Remove", script_person_notification_path(@script,script_person_notification), method: :delete, :remote=>true %>
+    </li>
+  <% end %>
+</ul>
+
+<div id="script_person_notification_new">
+  <%=  link_to "New", new_script_person_notification_path(@script), :remote=>true %>
+</div>

@@ -5,7 +5,7 @@ class NotifyGroupEmailTest < ActiveSupport::TestCase
     notify_group = NotifyGroup.find_by_name("dba")
     notify_group_email = NotifyGroupEmail.new(
       :severity => 3,
-      :email => "something@test.com")
+      :email_address => "something@test.com")
 
     notify_group_email.notify_group = notify_group
     notify_group_email.create_sysdate=DateTime.now
@@ -18,7 +18,7 @@ class NotifyGroupEmailTest < ActiveSupport::TestCase
     notify_group = NotifyGroup.find_by_name("dba")
     notify_group_email = NotifyGroupEmail.new(
       :severity => 4,
-      :email => "something@test.com")
+      :email_address => "something@test.com")
 
     notify_group_email.notify_group = notify_group
     notify_group_email.create_sysdate=DateTime.now

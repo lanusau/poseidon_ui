@@ -6,7 +6,7 @@
 
     <table class="rowlist_table">
       <tr>
-        <td>Severity</td>
+        <th>Severity</th>
         <th>Email</th>
         <th>Functions</th>
       </tr>
@@ -14,7 +14,7 @@
       <% @notify_group_emails.each_with_index do |notify_group_email,index| %>
         <tr class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
           <td><%= notify_group_email.severity_str %></td>
-          <td><%= notify_group_email.email %></td>
+          <td><%= notify_group_email.email_address %></td>
           <td>
             [
             <%= link_to 'Delete', notify_group_email_path(@notify_group,notify_group_email), method: :delete, data: { confirm: 'Are you sure?' } %>

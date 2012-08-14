@@ -50,7 +50,7 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
       post notify_group_emails_path(notify_group),
         :notify_group_email =>{
           severity: 1,
-          email: 'test@test.com'
+          email_address: 'test@test.com'
         }
     end
     
@@ -99,7 +99,7 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
       post notify_group_emails_path(notify_group),
         :notify_group_email =>{
           severity: 1,
-          email: 'test@test.com'
+          email_address: 'test@test.com'
         }
     end
 

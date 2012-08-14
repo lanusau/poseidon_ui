@@ -39,7 +39,7 @@ class NotifyGroupEmailsControllerTest < ActionController::TestCase
     assert_select "div.form-container" do
       assert_select "form" do
         # Input fields
-        assert_select "input#notify_group_email_email", 1, "Should have field for notify_group_email email"
+        assert_select "input#notify_group_email_email_address", 1, "Should have field for notify_group_email email_address"
         # One select list for severity
         assert_select "select", 1, "Should have one select in the form"
       end
@@ -53,7 +53,7 @@ class NotifyGroupEmailsControllerTest < ActionController::TestCase
       post :create, :notify_group_id => @notify_group.id,
         :notify_group_email =>{
           severity: 1,
-          email: 'test@test.com'
+          email_address: 'test@test.com'
         }
     end
 

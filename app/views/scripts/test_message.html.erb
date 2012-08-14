@@ -1,0 +1,18 @@
+<div class="query_result">
+  <% if @error %>
+    <p>
+      <span class="error_text">
+        <%= @error  %>
+      </span>
+    </p>
+  <% else %>
+
+    Subject: <%= @message_subject_str %> <br />
+    Message Text: <br />
+    <%= @message_header_str %> <br />
+    <% @message_rows.each do |message| %>
+      <%= message %><br />
+    <% end %>
+    <%= @message_footer_str %> <br />
+  <% end %>
+</div>

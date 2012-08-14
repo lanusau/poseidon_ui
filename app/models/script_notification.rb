@@ -1,4 +1,6 @@
 class ScriptNotification < ActiveRecord::Base
+  attr_accessible :notify_group_id,:create_sysdate, :update_sysdate
+
   belongs_to :script
   belongs_to :notify_group
 

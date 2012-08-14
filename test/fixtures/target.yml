@@ -23,3 +23,15 @@ target_two:
   inactive_until: 2020-01-02 01:00:00
   update_sysdate: 2012-07-30 14:39:56
   create_sysdate: 2012-07-12 14:39:56
+test_target:
+  target_type: mysql
+  server: production
+  name: Test Target
+  hostname: from_database_yml
+  database_name: from_database_yml
+  port_number: 3306
+  monitor_username: from_database_yml
+  monitor_password: from_database_yml
+  status_code: A
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56

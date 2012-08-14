@@ -6,7 +6,7 @@
 
       <p><em>Oops... the following errors were encountered:</em></p>
       <ul>
-        <% @script.errors.each_full do |m| %>
+        <% @script.errors.full_messages do |m| %>
           <li><%= m  %> </li>
         <% end %>
       </ul>
@@ -99,7 +99,7 @@
           <p class="note"> Enter query timeout in seconds </p>
         </div>
 
-        <input name="commit" type="submit" value="Test" data-url="<%= test_script_path(@script)%> " id="query_test_button"/>
+        <input name="commit" type="submit" value="Test" data-url="<%= test_query_script_path(@script)%> " id="query_test_button"/>
         <%= image_tag("spinner_moz.gif", {:id=>"spinner_qry",:class =>"invisible" }) %>
 
         <div id="query_test_result">
@@ -113,6 +113,15 @@
         when query returns at least 1 row. After you cache list of columns, query doesn't need to return any
         rows in order for you to look up columns. Rebuild list of columns each time you change column list
         in the query
+      </div>
+
+      <div class="item-page">
+        <h3> Query columns </h3>
+        <div id="query_columns_list">
+          <%= render :partial => "query_columns/index" %>
+        </div>
+        <input name="commit" type="submit" value="Rebuild" data-url="<%= script_query_columns_path(@script)%> " id="rebuild_query_columns_button"/>
+        <%= image_tag("spinner_moz.gif", {:id=>"spinner_rebuild",:class =>"invisible" }) %>
       </div>
 
       <br class="clear-float" />
@@ -136,6 +145,12 @@
           <label for="script_expression_text">Trigger expression </label>
           <%= f.text_field :expression_text ,{"size"=>40,"maxlength"=>500,"class"=>"input-long"} %>
           <p class="note"> Enter expression </p>
+        </div>
+
+        <input name="commit" type="submit" value="Test" data-url="<%= test_expression_script_path(@script)%> " id="expression_test_button"/>
+        <%= image_tag("spinner_moz.gif", {:id=>"spinner_expr",:class =>"invisible" }) %>
+
+        <div id="expression_test_result">
         </div>
 
       </fieldset>
@@ -268,6 +283,8 @@
           <p class="note">Enter message footer </p>
         </div>
 
+        <input name="commit" type="submit" value="Test" data-url="<%= test_message_script_path(@script)%>" id="message_test_button"/>
+
       </fieldset>
 
       <fieldset>
@@ -280,6 +297,28 @@
         </div>
 
       </fieldset>
+
+      <div class="item-page">
+
+        <h3> Groups to notify </h3>
+        <div id="script_notification_list">
+          <%= render :partial => "script_notifications/index" %>
+        </div>
+
+        <div id="script_notification_error" class="error_text"></div>
+
+      </div>
+
+      <div class="item-page">
+
+        <h3> Additional notifications (Optional)</h3>
+        <div id="script_person_notification_list">
+          <%= render :partial => "script_person_notifications/index" %>
+        </div>
+
+        <div id="script_person_notification_error" class="error_text"></div>
+
+      </div>
 
       <br class="clear-float" />
 

@@ -1,12 +1,12 @@
 oracle:
   name: Oracle
-  url_ruby: dbi:oci8:(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=%h)(PORT=%p))(CONNECT_DATA=(SERVICE_NAME=%d)))
+  url_ruby: dbi:OCI8:(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=%h)(PORT=%p))(CONNECT_DATA=(SERVICE_NAME=%d)))
   url_jdbc: jdbc:oracle:thin:@//%h:%p/%d
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
 mysql:
   name: MySQL
-  url_ruby: dbi:mysql:database=%d;host=%h;port=%p
+  url_ruby: dbi:Mysql:database=%d;host=%h;port=%p
   url_jdbc: jdbc:mysql://%h:%p/%d
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56

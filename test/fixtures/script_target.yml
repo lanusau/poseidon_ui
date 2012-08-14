@@ -3,3 +3,8 @@ one:
   target: target_one
   create_sysdate: 2006-10-10 16:49:12
   update_sysdate: 2010-04-07 11:47:32
+two:
+  script: query_test_script
+  target: test_target
+  create_sysdate: 2006-10-10 16:49:12
+  update_sysdate: 2010-04-07 11:47:32

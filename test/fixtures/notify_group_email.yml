@@ -1,37 +1,37 @@
 dba_severe:
   notify_group: dba
   severity: 1
-  email: dba_pagers@noc.com
+  email_address: dba_pagers@noc.com
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
 dba_medium:
   notify_group: dba
   severity: 2
-  email: dba@noc.com
+  email_address: dba@noc.com
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
 dba_low:
   notify_group: dba
   severity: 3
-  email: dba@noc.com
+  email_address: dba@noc.com
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
 ops_db_severe:
   notify_group: ops_db
   severity: 1
-  email: ops_db_pagers@noc.com
+  email_address: ops_db_pagers@noc.com
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
 ops_db_medium:
   notify_group: ops_db
   severity: 2
-  email: ops_db@noc.com
+  email_address: ops_db@noc.com
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
 ops_db_low:
   notify_group: ops_db
   severity: 3
-  email: ops_db@noc.com
+  email_address: ops_db@noc.com
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
 

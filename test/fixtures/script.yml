@@ -53,3 +53,25 @@ dataguard_check:
   status_code: A
   create_sysdate: 2006-10-10 16:49:12
   update_sysdate: 2010-04-07 11:47:32  
+query_test_script:
+  name: Query Test
+  description: Check query test functionality
+  schedule_min: 0,30
+  schedule_hour: "*"
+  schedule_day: "*"
+  schedule_month: "*"
+  schedule_week: "?"
+  query_type: 1
+  query_text: |
+    select * from psd_target
+  timeout_sec: 300
+  fixed_severity: 1
+  expression_text: "%0 > 1"
+  message_format: 0
+  message_subject: "[%t] Test"
+  message_header: ~
+  message_text_str: "Testing 123 "
+  message_footer: ~
+  status_code: A
+  create_sysdate: 2006-10-10 16:49:12
+  update_sysdate: 2010-04-07 11:47:32

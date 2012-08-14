@@ -1,5 +1,4 @@
 require 'query_test'
-require 'timeout'
 
 class ScriptsController < ApplicationController
 
@@ -12,6 +11,7 @@ class ScriptsController < ApplicationController
     session.delete(:page)
     session.delete(:script_search_name)
     session.delete(:script_category_id)
+    session.delete(:target_id)
     
     redirect_to scripts_path
   end
@@ -22,9 +22,11 @@ class ScriptsController < ApplicationController
     session[:page] = params[:page] if params[:page]
     session[:script_search_name] = params[:script_search_name] if params[:script_search_name]
     session[:script_category_id] = params[:script_category_id] if params[:script_category_id]
+    session[:target_id] = params[:target_id] if params[:target_id]
 
     @script_search_name = session[:script_search_name]
     @script_category_id = session[:script_category_id]
+    @target_id = session[:target_id]
 
     # Build an array of various conditions
     conditions = Array.new
@@ -36,11 +38,39 @@ class ScriptsController < ApplicationController
       binds << "%#{@script_search_name}%"
     end
 
+    # Filter on script category
     if @script_category_id &&  @script_category_id.downcase.to_sym != :all
       conditions << %q{exists (select * from psd_script_category_assign a
                                  where a.script_id = psd_script.script_id
                                  and a.script_category_id = ?)}
       binds << @script_category_id
+    end
+
+    # Filter on particular target,
+    # directly or through target groups
+    if !@target_id.blank?
+      begin
+        @target = Target.find(@target_id)
+        conditions << %q{
+          ( exists ( select * from psd_script_target st
+                     where st.script_id = psd_script.script_id
+                     and st.target_id = ?
+                   )
+            or
+            exists ( select *
+                     from psd_script_group sg, psd_target_group_assignment tga
+                     where sg.script_id = psd_script.script_id
+                     and sg.target_group_id = tga.target_group_id
+                     and tga.target_id = ?
+                   )
+          )
+        }
+        # 2 binds, the same target_id in both
+        binds << @target_id
+        binds << @target_id
+      rescue Exception => e
+        @target_id = ""
+      end
     end
 
     if conditions.size > 0
@@ -59,7 +89,7 @@ class ScriptsController < ApplicationController
 
   end
 
-  # GET /script/new
+  # GET /script/new"#{
   def new
     @script = Script.new(
       :query_type => 1,
@@ -88,6 +118,7 @@ class ScriptsController < ApplicationController
     redirect_to scripts_path and return if params[:commit] == "Cancel"
 
     @script = Script.new(params[:script])
+    @script.status_code = 'I'
 
     @script.create_sysdate = DateTime.now()
     @script.update_sysdate = DateTime.now()
@@ -158,8 +189,8 @@ class ScriptsController < ApplicationController
     end
   end
 
-  # POST /scripts/:id/test
-  def test
+  # POST /scripts/:id/test_query
+  def test_query
     script = Script.find(params[:id])
     query_text = params[:script][:query_text]
     query_type = params[:script][:query_type]
@@ -167,47 +198,133 @@ class ScriptsController < ApplicationController
     query_timeout = 3 if query_timeout < 1 or query_timeout > 1000
 
     # Try to find any target for this script
-    target = get_first_target(script)
+    target = script.get_first_target
 
     if target == nil
       @error = "Please define at least 1 target or target group"
     else
       # Test query
       url = ((target.target_type.url_ruby.sub("%h",target.hostname)).sub("%p",target.port_number.to_s)).sub("%d",target.database_name)
-      @sql_tester = QueryTest.new(url,target.monitor_username,target.monitor_password,query_text,query_type)
-      
-      begin
-        Timeout::timeout(query_timeout) {
-          @sql_tester.test
-        }
-      rescue Timeout::Error => e
-        @error = %q{Query timed out. This can be caused by long query but also
-                   can be caused by server not being to connect to target (maybe
-                   there is a firewall involved ?)}
-      rescue Exception => e
-        @error = "Error:#{e.message}"
-      end
+      @query_tester = QueryTest.new(url,target.monitor_username,target.monitor_password,
+        query_text,query_type,query_timeout)
+
+      @query_tester.test
+
     end
-    render :partial=>"test"
+
+    render :partial=>"test_query"
   end
 
-  private
+  # POST /scripts/:id/test_expression
+  def test_expression
+    script = Script.find(params["id"])
+    expression_text = params["script"]["expression_text"]
+    query_text = params["script"]["query_text"]
+    query_type = params["script"]["query_type"]
+    query_timeout = params[:script][:timeout_sec].to_i
+    query_timeout = 3 if query_timeout < 1 or query_timeout > 1000
 
-  # Get first assigned target for the particular script
-  def get_first_target(script)
+    # Get first script target and build query tester object
+    target = script.get_first_target
 
-    if script.script_targets.empty? && script.script_groups.empty?
-      return nil
+    if target == nil
+      @error = "Please define at least 1 target or target group"
     else
-      if ! script.script_targets.empty?
-        target = script.script_targets[0].target
-      elsif ! script.script_groups.empty?
-        target = script.script_groups[0].target_group.target_group_assignments[0].target
+      url = ((target.target_type.url_ruby.sub("%h",target.hostname)).sub("%p",target.port_number.to_s)).sub("%d",target.database_name)
+      @query_tester = QueryTest.new(url,target.monitor_username,target.monitor_password,
+        query_text,query_type,query_timeout)
+
+      # Run query test, which will build a list of columns
+      @query_tester.test
+
+      if !@query_tester.error
+
+
+        # Go through the every line in the result set and evaluate it, storing evaluation
+        # results in the array
+        @evaluation_results = Array.new
+
+        @query_tester.result_set.each do |row|
+
+          # Construct expressions by replacing $x variable in expression with column values
+          evaluation_string = expression_text
+          row.each_with_index do |col_value,index|
+            evaluation_string = evaluation_string.gsub("%"<< index.to_s,col_value.to_s)
+          end
+
+          # Replace %rc with number of rows
+          evaluation_string = evaluation_string.gsub("%rc",@query_tester.result_set.size.to_s)
+
+          # Try to evaluate expression
+          begin
+            eval_result = eval(evaluation_string)
+          rescue Exception => e
+            eval_result = e.message
+          end
+
+          # Add evaluation result to the array
+          @evaluation_results<< eval_result
+        end
       end
     end
 
-    return target
+    render :partial=>"test_expression"
 
+  end
+
+  # GET /scripts/:id/test_message
+  def test_message
+    script = Script.find(params[:id])
+    query_text = params[:script][:query_text]
+    query_type = params[:script][:query_type]
+    query_timeout = params[:script][:timeout_sec].to_i
+    query_timeout = 3 if query_timeout < 1 or query_timeout > 1000
+    message_format = params[:script][:message_format]
+    message_subject = params[:script][:message_subject] || ""
+    message_header = params[:script][:message_header] || ""
+    message_text_str = params[:script][:message_text_str] || ""
+    message_footer = params[:script][:message_footer] || ""
+
+
+    # Get first script target and build query tester object
+    target = script.get_first_target
+    if target == nil
+      @error = "Please define at least 1 target or target group"
+    else
+
+      url = ((target.target_type.url_ruby.sub("%h",target.hostname)).sub("%p",target.port_number.to_s)).sub("%d",target.database_name)
+      @query_tester = QueryTest.new(url,target.monitor_username,target.monitor_password,
+        query_text,query_type,query_timeout)
+
+      # Run query test, which will build a list of columns
+      @query_tester.test
+
+      if !@query_tester.error
+
+        @message_subject_str = (message_subject.gsub("%t",target.name)).gsub("%n",script.name).gsub("%s","High")
+        @message_header_str = ((message_header.gsub("%t",target.name)).gsub("%n",script.name)).gsub("%rc",@query_tester.result_set.length.to_s)
+        @message_footer_str = ((message_footer.gsub("%t",target.name)).gsub("%n",script.name)).gsub("%rc",@query_tester.result_set.length.to_s)
+        @message_rows = Array.new
+        @query_tester.result_set.each do |row|
+          row_message = message_text_str
+          row.each_with_index do |col_value,index|
+            row_message = row_message.gsub("%"<< index.to_s,col_value.to_s)
+          end
+          @message_rows << row_message
+        end
+      else
+        @error = @query_tester.error
+      end
+    end
+
+    render "test_message", :layout => "iframe" and return if @error
+
+    if message_format == "1" # HTML
+      html_document = @message_header_str << @message_rows.join("\n") << @message_footer_str
+      render :inline => "#{html_document}", :layout => false
+    else
+      render "test_message", :layout => "iframe"
+    end
   end
 
 end

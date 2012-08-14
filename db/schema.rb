@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120807205731) do
+ActiveRecord::Schema.define(:version => 20120814181609) do
 
   create_table "notify_group", :primary_key => "notify_group_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20120807205731) do
   create_table "notify_group_email", :primary_key => "notify_group_email_id", :force => true do |t|
     t.integer  "notify_group_id",                :null => false
     t.integer  "severity",                       :null => false
-    t.string   "email",           :limit => 200, :null => false
+    t.string   "email_address",   :limit => 200, :null => false
     t.datetime "create_sysdate",                 :null => false
     t.datetime "update_sysdate",                 :null => false
   end

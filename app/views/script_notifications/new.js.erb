@@ -1,0 +1,23 @@
+// Insert form into div
+$("#script_notification_new").html("<%= escape_javascript( render :partial => "form", :locals => {:additional_notify_groups=>@additional_notify_groups}) %>");
+
+// Reset error div
+$("#script_notification_error").html("");
+
+// Add click event for cancel button
+$("#script_notify_group_id_cancel").click(function(e) {
+  e.preventDefault();
+  $("#script_notification_new").html("<%=  escape_javascript(link_to "New", new_script_notification_path(@script), :remote=>true) %>");
+});
+
+// Add click event for submit button
+$("#script_notify_group_id_submit").click(function(e) {
+  e.preventDefault();
+  // Post just the SELECT element value
+  $.post("<%= script_notifications_path(@script)%>", $("#notify_group_id").serialize(), function( data ) {
+    }
+  ).error(function() { $("#script_notification_error").html("Sorry, error has occured"); });
+  // Refresh item list
+  $("#script_notification_list").load("<%= script_notifications_path(@script)%>");
+});
+

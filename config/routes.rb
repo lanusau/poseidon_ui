@@ -31,13 +31,16 @@ PoseidonV3::Application.routes.draw do
       get "reset"
     end
     resources :target_hostnames, :as => "hostnames",:only => [:index, :new, :create, :destroy]
+    resources :scripts, :only => [:index]
   end
   resources :scripts do
     # Additional actions
     member do
       post "activate"
       post "inactivate"
-      post "test"
+      post "test_query"
+      post "test_expression"
+      get  "test_message"
     end
     collection do
       get "reset"
@@ -45,6 +48,9 @@ PoseidonV3::Application.routes.draw do
     resources :script_category_assigns, :as => "category_assigns",:only => [:index, :new, :create, :destroy]
     resources :script_targets, :as => "targets",:only => [:index, :new, :create, :destroy]
     resources :script_groups, :as => "groups",:only => [:index, :new, :create, :destroy]
+    resources :query_columns,:only => [:index, :create]
+    resources :script_notifications, :as => "notifications",:only => [:index, :new, :create, :destroy]
+    resources :script_person_notifications, :as => "person_notifications",:only => [:index, :new, :create, :destroy]
   end
 
   # Root URL

@@ -1,0 +1,12 @@
+<% if @error %>
+<div class="error_text">
+  <%= @error %>
+</div>
+<% end %>
+<ul class="rowlist_ul">
+  <% @script.query_columns.each do | c | %>
+    <li>
+      <em>%<%= c.column_position %> </em> <%= c.column_name_str %>
+    </li>
+  <% end %>	
+</ul>

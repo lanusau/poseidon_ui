@@ -1,0 +1,13 @@
+<% if additional_notify_groups.empty? %>
+  <p> There are no additional notification groups available </p>
+<% else %>
+  <p>
+    <select name="notify_group_id" id="notify_group_id" class="non-aligned">
+      <% additional_notify_groups.each do | c | %>
+        <option value="<%= c.id %>"><%= c.name %></option>
+      <% end %>
+    </select>
+    <input name="commit" type="submit" value="Save"   id="script_notify_group_id_submit"/>
+    <input name="cancel" type="submit" value="Cancel" id="script_notify_group_id_cancel"/>
+  </p>
+<% end %>

@@ -4,6 +4,8 @@
   [
   <%= link_to 'Edit', edit_target_path(target) %>
   |
+  <%= link_to "Scripts", target_scripts_path(target) %>
+  |
   <%  if target.status_code == "I" %>
 
     <%=  link_to "Activate", activate_target_path(target), method: :post, :remote=>true %>
