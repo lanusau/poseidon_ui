@@ -5,6 +5,8 @@ class Target < ActiveRecord::Base
 
   has_many :target_group_assignments, :dependent => :delete_all
   has_many :target_hostnames, :dependent => :delete_all
+  has_many :script_target_logs
+  
   belongs_to :target_type
   belongs_to :server
 
@@ -20,8 +22,4 @@ class Target < ActiveRecord::Base
   validates :create_sysdate, :presence=>true
   validates :update_sysdate, :presence=>true    
 
-  # Overwrite default accessor to provide custom date format
-  def inactive_until
-    self[:inactive_until].to_formatted_s(:untd_timestamp) unless self[:inactive_until] == nil
-  end
 end

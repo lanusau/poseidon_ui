@@ -4,8 +4,4 @@ class TargetGroupAssignment < ActiveRecord::Base
   belongs_to :target_group
   belongs_to :target
   
-  def inactive_until_str
-    inactive_until.nil? ? "" : inactive_until.to_formatted_s(:untd_timestamp)
-  end
-
 end

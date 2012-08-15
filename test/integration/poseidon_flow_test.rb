@@ -53,6 +53,44 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
           email_address: 'test@test.com'
         }
     end
+
+    # Create new script
+    get scripts_path
+    assert_response :success
+
+    post scripts_path, :script => {
+      :name => "Integration test",
+      :description => "Testing creating script"
+    }
+    script = Script.find_by_name("Integration test")
+    assert_redirected_to edit_script_path(script)
+    assert_equal 'Record created successfully', flash[:notice]
+
+    put script_path(script), :script => {
+        name:  script.name,
+        description: script.description,
+        schedule_min: "0,30",
+        schedule_hour: "*",
+        schedule_day: "*",
+        schedule_month: "*",
+        schedule_week: "?",
+        query_type: "1",
+        query_text: "something",
+        timeout_sec: "300",
+        fixed_severity: "0",
+        severity_column_position: "3",
+        value_med_severity: "4",
+        value_high_severity: "6",
+        expression_text: "%3 > (%5+5) && %4 > 2",
+        message_format: "0",
+        message_subject: "[%t] Test",
+        message_header: "",
+        message_text_str: "Testing 123 ",
+        message_footer: "",
+        status_code: "A"
+    }
+    assert_redirected_to scripts_path
+    assert_equal 'Update successfull', flash[:notice]
     
   end
 
@@ -102,6 +140,44 @@ class PoseidonFlowTest < ActionDispatch::IntegrationTest
           email_address: 'test@test.com'
         }
     end
+
+    # Create new script
+    get scripts_path
+    assert_response :success
+
+    post scripts_path, :script => {
+      :name => "Integration test",
+      :description => "Testing creating script"
+    }
+    script = Script.find_by_name("Integration test")
+    assert_redirected_to edit_script_path(script)
+    assert_equal 'Record created successfully', flash[:notice]
+
+    put script_path(script), :script => {
+        name:  script.name,
+        description: script.description,
+        schedule_min: "0,30",
+        schedule_hour: "*",
+        schedule_day: "*",
+        schedule_month: "*",
+        schedule_week: "?",
+        query_type: "1",
+        query_text: "something",
+        timeout_sec: "300",
+        fixed_severity: "0",
+        severity_column_position: "3",
+        value_med_severity: "4",
+        value_high_severity: "6",
+        expression_text: "%3 > (%5+5) && %4 > 2",
+        message_format: "0",
+        message_subject: "[%t] Test",
+        message_header: "",
+        message_text_str: "Testing 123 ",
+        message_footer: "",
+        status_code: "A"
+    }
+    assert_redirected_to scripts_path
+    assert_equal 'Update successfull', flash[:notice]
 
   end  
 

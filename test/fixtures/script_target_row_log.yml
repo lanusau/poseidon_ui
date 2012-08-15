@@ -1,0 +1,7 @@
+row_one:
+  script_target_log: dataguard_check_log_one_target_one
+  row_number: 0
+  expression_result: 0
+  severity: 3
+  create_sysdate: 2012-08-14 16:49:12
+  update_sysdate: 2012-08-14 16:50:12

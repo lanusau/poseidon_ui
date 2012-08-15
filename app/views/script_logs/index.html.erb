@@ -1,0 +1,39 @@
+<h2>Script logs</h2>
+
+<div class="rowlist_page">
+
+  <%= form_tag filter_script_logs_path, :method => :get do  -%>
+    <div class="inline">
+
+      <label for="trigger_filter_code" > Trigger</label>
+      <select id="trigger_filter_code" name="trigger_filter_code" >
+        <option <%= "selected" if @trigger_filter_code == :all -%> value="all">Both</option>
+        <option <%= "selected" if @trigger_filter_code == "1" -%> value="1">Triggered</option>
+        <option <%= "selected" if @trigger_filter_code == "0" -%> value="0">Not triggered</option>
+      </select>
+
+      <label for="error_filter_code" > Error</label>
+      <select id="error_filter_code" name="error_filter_code" >
+        <option <%= "selected" if @error_filter_code == :all -%> value="all">All</option>
+        <option <%= "selected" if @error_filter_code == "1" -%> value="1">With error only</option>
+      </select>
+
+      <label for="date_from" >From </label>
+      <input type="text" id="date_from" name="date_from" value="<%= @date_from -%>" size=15  />
+
+      <label for="date_to" >To</label>
+      <input type="text" id="date_to" name="date_to" value="<%= @date_to -%>" size=15  />
+
+      <%= submit_tag("Filter") %>
+
+    </div>
+  <% end -%>
+
+  <br class="clear-float" />
+
+  <p />
+
+  <div id="record_list">
+    <%= render :partial=>"list" %>
+  </div>
+</div>

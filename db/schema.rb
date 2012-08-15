@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814181609) do
+ActiveRecord::Schema.define(:version => 20120815213526) do
 
   create_table "notify_group", :primary_key => "notify_group_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false
@@ -97,6 +97,22 @@ ActiveRecord::Schema.define(:version => 20120814181609) do
   add_index "script_group", ["script_id"], :name => "psd_script_group_n1"
   add_index "script_group", ["target_group_id", "script_id"], :name => "psd_script_group_u1", :unique => true
 
+  create_table "script_log", :primary_key => "script_log_id", :force => true do |t|
+    t.integer  "script_id",           :null => false
+    t.datetime "start_date",          :null => false
+    t.datetime "finish_date"
+    t.integer  "status_number",       :null => false
+    t.integer  "error_status_code",   :null => false
+    t.integer  "trigger_status_code", :null => false
+    t.datetime "create_sysdate",      :null => false
+    t.datetime "update_sysdate",      :null => false
+  end
+
+  add_index "script_log", ["create_sysdate"], :name => "psd_script_log_n2"
+  add_index "script_log", ["script_id"], :name => "psd_script_log_n1"
+  add_index "script_log", ["start_date"], :name => "psd_script_log_n4"
+  add_index "script_log", ["update_sysdate"], :name => "psd_script_log_n3"
+
   create_table "script_notification", :primary_key => "script_notification_id", :force => true do |t|
     t.integer  "notify_group_id", :null => false
     t.integer  "script_id",       :null => false
@@ -125,6 +141,47 @@ ActiveRecord::Schema.define(:version => 20120814181609) do
 
   add_index "script_target", ["script_id"], :name => "psd_script_target_n1"
   add_index "script_target", ["target_id", "script_id"], :name => "psd_script_target_u1", :unique => true
+
+  create_table "script_target_col_log", :primary_key => "script_target_col_log_id", :force => true do |t|
+    t.integer  "script_target_row_log_id", :null => false
+    t.integer  "column_number",            :null => false
+    t.text     "column_value",             :null => false
+    t.datetime "create_sysdate",           :null => false
+    t.datetime "update_sysdate",           :null => false
+  end
+
+  add_index "script_target_col_log", ["create_sysdate"], :name => "psd_script_target_col_log_n2"
+  add_index "script_target_col_log", ["script_target_row_log_id"], :name => "psd_script_target_col_log_n1"
+
+  create_table "script_target_log", :primary_key => "script_target_log_id", :force => true do |t|
+    t.integer  "script_log_id",  :null => false
+    t.integer  "target_id",      :null => false
+    t.datetime "start_date",     :null => false
+    t.datetime "finish_date"
+    t.integer  "status_number",  :null => false
+    t.text     "error_message"
+    t.integer  "severity"
+    t.datetime "create_sysdate", :null => false
+    t.datetime "update_sysdate", :null => false
+  end
+
+  add_index "script_target_log", ["create_sysdate"], :name => "psd_script_target_log_n4"
+  add_index "script_target_log", ["finish_date"], :name => "psd_script_target_log_n3"
+  add_index "script_target_log", ["script_log_id"], :name => "psd_script_target_log_n1"
+  add_index "script_target_log", ["target_id"], :name => "psd_script_target_log_n2"
+
+  create_table "script_target_row_log", :primary_key => "script_target_row_log_id", :force => true do |t|
+    t.integer  "script_target_log_id",     :null => false
+    t.integer  "row_number",               :null => false
+    t.integer  "expression_result",        :null => false
+    t.text     "expression_error_message"
+    t.integer  "severity",                 :null => false
+    t.datetime "create_sysdate",           :null => false
+    t.datetime "update_sysdate",           :null => false
+  end
+
+  add_index "script_target_row_log", ["create_sysdate"], :name => "psd_script_target_row_log_n2"
+  add_index "script_target_row_log", ["script_target_log_id"], :name => "psd_script_target_row_log_n1"
 
   create_table "server", :primary_key => "server_id", :force => true do |t|
     t.string   "name",              :limit => 200, :null => false

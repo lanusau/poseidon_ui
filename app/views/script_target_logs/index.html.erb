@@ -1,0 +1,33 @@
+<div class="rowlist_page">
+  <h2> Script log details </h2>
+  <ul class="rowlist_ul">
+    <li> <strong>Script:</strong> <%= @script_log.script.name %> </li>
+    <li> <strong>Start date:</strong> <%= @script_log.start_date %> </li>
+    <li> <strong>Finish date:</strong> <%= @script_log.finish_date %> </li>
+    <li> <strong>Status:</strong> <%= @script_log.status_number_str %> </li>
+    <li> <strong>Error code:</strong> <%= @script_log.error_status_code_str %> </li>
+    <li> <strong>Triggered?:</strong> <%= @script_log.trigger_status_code_str %> </li>
+  </ul>
+  <table class="rowlist_table">
+    <tr>
+      <th> Target </th>
+      <th> Severity </th>
+      <th> Status </th>
+    </tr>
+    <% @script_log.script_target_logs.each_with_index do |tl,index| %>
+      <tr class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+        <td> <%= link_to tl.target.name,edit_target_path(tl.target) %> </td>
+        <td> <%= tl.severity_str %> </td>
+        <td>
+          <%= tl.status_number_str do |s|
+            link_to s,script_target_log_row_logs_path(tl)
+          end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<p />
+
+<%= link_to "Back",  script_logs_path %>

@@ -91,17 +91,7 @@ class ScriptsController < ApplicationController
 
   # GET /script/new"#{
   def new
-    @script = Script.new(
-      :query_type => 1,
-      :fixed_severity => 1,
-      :schedule_min => "0",
-      :schedule_hour => "*",
-      :schedule_day => "*",
-      :schedule_month => "*",
-      :schedule_week => "?",
-      :timeout_sec => 300,
-      :status_code => "A"
-    )
+    @script = Script.new
   end
 
   # GET /script/1/edit

@@ -4,9 +4,9 @@
 
   <%= form_tag scripts_path do  -%>
     <select id="script_category_id" name="script_category_id" >
-      <option <%= "selected" if session[:script_category_id]==:all -%> value="all">All</option>
+      <option selected value="all">All</option>
       <% @script_categories.each do | cat | %>
-        <option <%= "selected" if session[:script_category_id]== cat.id.to_s -%>  value="<%= cat.id %>"><%= cat.name %></option>
+        <option  value="<%= cat.id %>"><%= cat.name %></option>
       <% end %>
     </select>
     <%=  text_field_tag 'script_search_name', @script_search_name, :size => 20, :id=> "script_search_name" %>

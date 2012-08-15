@@ -1,4 +1,8 @@
 ## Submenu, which is specific to this module onky
+script_logs:
+  label: Log
+  route: reset_script_logs_path
+  access_level: 1
 scripts:
   label: Scripts
   route: reset_scripts_path

@@ -52,6 +52,16 @@ PoseidonV3::Application.routes.draw do
     resources :script_notifications, :as => "notifications",:only => [:index, :new, :create, :destroy]
     resources :script_person_notifications, :as => "person_notifications",:only => [:index, :new, :create, :destroy]
   end
+  resources :script_logs, :only => [:index] do
+    collection do
+      get "reset"
+      get "filter"
+    end
+    resources :script_target_logs,:as => "target_logs", :only => [:index]
+  end  
+  resources :script_target_logs, :only => [] do
+    resources :script_target_row_logs, :as => "row_logs", :only => [:index]
+  end
 
   # Root URL
   root :to => 'scripts#index'

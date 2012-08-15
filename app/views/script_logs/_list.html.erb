@@ -1,0 +1,41 @@
+<table class="rowlist_table">
+  <tr>
+    <th>Script Name</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Status</th>
+    <th>Error</th>
+    <th>Trigger</th>
+  </tr>
+
+  <% @script_logs.each_with_index do |script_log,index| %>
+    <tr class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+      <td>
+        <%= link_to script_log.script.name[0,30],edit_script_path(script_log.script)  %>
+      </td>
+      <td>
+        <%=  script_log.start_date %>
+      </td>
+      <td>
+        <%=  script_log.finish_date %>
+      </td>
+      <td>
+        <%= script_log.status_number_str do |s|
+          link_to s,script_log_target_logs_path(script_log)
+        end
+        %>
+      </td>
+      <td>
+        <span class="error_text"><%= script_log.error_status_code_str %></span>
+      </td>
+      <td>
+        <%= script_log.trigger_status_code_str %>
+      </td>
+    </tr>
+  <% end %>
+
+</table>
+
+<p />
+
+<%= will_paginate(@script_logs) %>
