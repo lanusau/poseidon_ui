@@ -15,7 +15,7 @@ class ServersControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:servers)
     
-    # Should have 2 rows in the table plus 1 header row
+    # Should have same number of rows in the table plus 1 header row
     assert_select "div.rowlist_page" do
       assert_select "table" do                
         server_count = Server.count

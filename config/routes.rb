@@ -51,6 +51,7 @@ PoseidonV3::Application.routes.draw do
     resources :query_columns,:only => [:index, :create]
     resources :script_notifications, :as => "notifications",:only => [:index, :new, :create, :destroy]
     resources :script_person_notifications, :as => "person_notifications",:only => [:index, :new, :create, :destroy]
+    resources :script_logs, :only => [:index]
   end
   resources :script_logs, :only => [:index] do
     collection do

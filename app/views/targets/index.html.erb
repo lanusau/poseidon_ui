@@ -2,7 +2,7 @@
 
 <div class="rowlist_page">
 
-  <%= form_tag targets_path do  -%>
+  <%= form_tag targets_path(:page=>1) do  -%>
     <%=  text_field_tag 'target_name', @target_name, :size => 20, :id=> "target_name" %>
   <% end -%>
 

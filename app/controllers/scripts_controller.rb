@@ -8,7 +8,7 @@ class ScriptsController < ApplicationController
   # GET /scripts/reset
   def reset
     # Just reset session variables and redirect to index
-    session.delete(:page)
+    session.delete(:scripts_page)
     session.delete(:script_search_name)
     session.delete(:script_category_id)
     session.delete(:target_id)
@@ -19,7 +19,7 @@ class ScriptsController < ApplicationController
   # GET /scripts
   def index
 
-    session[:page] = params[:page] if params[:page]
+    session[:scripts_page] = params[:page] if params[:page]
     session[:script_search_name] = params[:script_search_name] if params[:script_search_name]
     session[:script_category_id] = params[:script_category_id] if params[:script_category_id]
     session[:target_id] = params[:target_id] if params[:target_id]
@@ -48,7 +48,7 @@ class ScriptsController < ApplicationController
 
     # Filter on particular target,
     # directly or through target groups
-    if !@target_id.blank?
+    if @target_id.present?
       begin
         @target = Target.find(@target_id)
         conditions << %q{
@@ -74,10 +74,12 @@ class ScriptsController < ApplicationController
     end
 
     if conditions.size > 0
-      @scripts = Script.paginate(:page => session[:page],:order=>"name",
-      :conditions => [conditions.join(" AND "),binds].flatten)
+      @scripts = Script.paginate(:page => session[:scripts_page],:order=>"name",
+      :conditions => [conditions.join(" AND "),binds].flatten,
+      :include => {:script_category_assigns => :script_category})
     else
-      @scripts = Script.paginate(:page => session[:page],:order=>"name")
+      @scripts = Script.paginate(:page => session[:scripts_page],:order=>"name",
+      :include => {:script_category_assigns => :script_category})
     end
 
     @script_categories = ScriptCategory.all        

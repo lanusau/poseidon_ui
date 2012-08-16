@@ -6,11 +6,12 @@ class ScriptLogsController < ApplicationController
   # GET /script_logs/reset
   def reset
     # Just reset session variables and redirect to index
-    session.delete(:page)
+    session.delete(:script_logs_page)
     session.delete(:date_from)
     session.delete(:date_to)
     session.delete(:trigger_filter_code)
     session.delete(:error_filter_code)
+    session.delete(:script_id)
 
     redirect_to script_logs_path
   end
@@ -18,24 +19,27 @@ class ScriptLogsController < ApplicationController
   # GET    /script_logs/filter
   def filter
     # Need to reset page number when running new filter
-    session.delete(:page)
+    session.delete(:script_logs_page)
     # Just forward to index with the same parameters (without action)
     params.delete(:action)
     redirect_to script_logs_path(params)
   end
   
   # GET    /script_logs
+  # GET    /scripts/:script_id/script_logs
   def index
-    session[:page] = params[:page] if params[:page]
+    session[:script_logs_page] = params[:page] if params[:page]
     session[:date_from] = params[:date_from] if params[:date_from]
     session[:date_to] = params[:date_to] if params[:date_to]
     session[:trigger_filter_code] = params[:trigger_filter_code] if params[:trigger_filter_code]
     session[:error_filter_code] = params[:error_filter_code] if params[:error_filter_code]
+    session[:script_id] = params[:script_id] if params[:script_id]
 
     @date_from = session[:date_from]
     @date_to = session[:date_to]
     @trigger_filter_code = session[:trigger_filter_code]
     @error_filter_code = session[:error_filter_code]
+    @script_id = session[:script_id]
 
     @trigger_filter_code = :all if @trigger_filter_code.present? and @trigger_filter_code.downcase.to_sym == :all
     @error_filter_code = :all if @error_filter_code.present? and @error_filter_code.downcase.to_sym == :all
@@ -43,6 +47,17 @@ class ScriptLogsController < ApplicationController
     # Build an array of various conditions
     conditions = Array.new
     binds = Array.new
+
+    # Filter by script
+    if @script_id.present?
+      begin
+        @script = Script.find(@script_id)
+        conditions << %Q[script_id = ?]
+        binds << @script.id
+      rescue Exception => e
+        @script_id = ""
+      end
+    end
 
     # Filter on start_date
     if @date_from.present?
@@ -75,10 +90,10 @@ class ScriptLogsController < ApplicationController
 
     # Paginate
     if conditions.size > 0
-      @script_logs = ScriptLog.paginate(:page => session[:page],:order=>"start_date desc",:include =>:script,
+      @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>:script,
       :conditions => [conditions.join(" AND "),binds].flatten)
     else
-      @script_logs = ScriptLog.paginate(:page => session[:page],:order=>"start_date desc",:include =>:script)
+      @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>:script)
     end
 
   end

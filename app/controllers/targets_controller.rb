@@ -6,7 +6,7 @@ class TargetsController < ApplicationController
   # GET /targets/reset
   def reset
     # Just reset session variables and redirect to index
-    session.delete(:page)
+    session.delete(:targets_page)
     session.delete(:target_name)
     redirect_to targets_path
   end
@@ -14,7 +14,7 @@ class TargetsController < ApplicationController
   # GET /targets
   def index
 
-    session[:page] = params[:page] if params[:page]
+    session[:targets_page] = params[:page] if params[:page]
     session[:target_name] = params[:target_name] if params[:target_name]
 
     @target_name = session[:target_name]
@@ -30,10 +30,10 @@ class TargetsController < ApplicationController
     end
 
     if conditions.size > 0
-      @targets = Target.paginate(:page => session[:page],:order=>"name",
+      @targets = Target.paginate(:page => session[:targets_page],:order=>"name",
       :conditions => [conditions.join(" AND "),binds].flatten)
     else
-      @targets = Target.paginate(:page => session[:page],:order=>"name")
+      @targets = Target.paginate(:page => session[:targets_page],:order=>"name")
     end
     
     # If this is an Ajax request (search), render partial template
