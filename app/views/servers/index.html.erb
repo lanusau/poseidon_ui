@@ -2,6 +2,11 @@
 
 <div class="rowlist_page">
 
+  <div class="instruction">
+    Note: you can not delete server that has any targets. Please delete targets
+    first.
+  </div>
+
   <div id="record_list">
 
     <table class="rowlist_table">
@@ -25,10 +30,10 @@
             [
             <%= link_to 'Edit', edit_server_path(server) %>
             |
-            <% if true #if server.targets.empty? %>
+            <% if server.targets.empty? %>
               <%= link_to 'Delete', server, method: :delete, data: { confirm: 'Are you sure?' } %>
             <% else %>
-              Remove
+              Delete
             <% end %>
             ]
           </td>

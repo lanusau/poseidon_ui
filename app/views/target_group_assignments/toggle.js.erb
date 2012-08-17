@@ -1,0 +1,1 @@
+$("#target_group_<%= @target_group.id%>").html("<%= escape_javascript( render :partial => "row", :locals => {:target=>@target,:target_group=>@target_group})%>")

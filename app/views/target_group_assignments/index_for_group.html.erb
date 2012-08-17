@@ -1,0 +1,19 @@
+<div class="rowlist_page">
+
+  <h2> Assign targets to group [<%= @target_group.name %>] </h2>
+
+  <p />
+
+  <div id="assignment_page">
+    <%= render :partial => "target_assignment_page",:locals=>{
+      :target_group=>@target_group,
+      :available_targets => @available_targets
+    } %>
+  </div>
+
+</div>
+
+
+<br class="clear-float" />
+
+<%= link_to "Back", target_groups_path %>

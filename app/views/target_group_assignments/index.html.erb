@@ -1,0 +1,27 @@
+<h2>Target group assignments for target [<%= @target.name %> ]</h2>
+
+<%= link_to "Back", targets_path %>
+
+<p />
+
+<div class="rowlist_page">
+
+  <div id="record_list">
+    <table class="rowlist_table">
+      <tr>
+        <th>Group</th>
+      </tr>
+
+      <% @target_groups.each_with_index do |target_group,index| %>
+        <tr id="target_group_<%= target_group.id%>" class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+          <%= render :partial => "row",:locals=>{:target => @target,:target_group => target_group} %>
+        </tr>
+      <% end %>
+
+    </table>
+  </div>
+
+</div>
+
+<p />
+<%= link_to "Back", targets_path %>

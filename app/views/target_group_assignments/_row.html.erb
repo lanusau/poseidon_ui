@@ -1,0 +1,10 @@
+<td>
+  <%= if target.target_group_assignments.detect{|a| a.target_group_id == target_group.id}
+       image_tag "check.png"
+     else
+       image_tag "check_clear.png"
+     end  
+  %>
+
+  <%= link_to target_group.name, toggle_target_assignments_path(target, :target_group_id => target_group.id), :remote=>true%>
+</td>

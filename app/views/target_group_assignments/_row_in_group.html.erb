@@ -1,0 +1,21 @@
+<td><%= target_group_assignment.target.name %></td>
+<td><%= target_group_assignment.status_code == "A"? "Active":"Inactive" %> </td>
+<td><%= target_group_assignment.status_code == "A"? "": target_group_assignment.inactive_until %> </td>
+<td>
+  [
+  <%  if target_group_assignment.status_code == "I" %>
+
+    <%=  link_to "Activate", activate_target_group_assignment_path(target_group,target_group_assignment), method: :post, :remote=>true %>
+
+  <%  else %>
+
+    Inactivate for [
+    <%= link_to "1h", inactivate_target_group_assignment_path(target_group,target_group_assignment,:hours=>1), method: :post, :remote => true %>,
+    <%= link_to "4h", inactivate_target_group_assignment_path(target_group,target_group_assignment,:hours=>4), method: :post, :remote => true %>,
+    <%= link_to "12h", inactivate_target_group_assignment_path(target_group,target_group_assignment,:hours=>12), method: :post, :remote => true %>
+    ]
+  <%  end %>
+  |
+  <%= link_to 'Delete', target_group_assignment_path(target_group,target_group_assignment), method: :delete, :remote=>true %>
+  ]
+</td>

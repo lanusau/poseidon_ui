@@ -287,6 +287,24 @@ ul.compact {
     font-size:12px;
 }
 
+/* list in the viewing screen that allows items to be picked up from */
+.list-page {
+    border: 1px solid #ddd;
+    border-style: dotted;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right:5px;
+    margin-bottom:5px;
+    margin-left:0px;
+    margin-top:5px;
+    width: 400px;
+    height: 300px;
+    overflow: auto;
+    font-size:12px;
+}
+
 /* Paragraph used for instructions */
 .instruction {
     background: #EAF2FA;

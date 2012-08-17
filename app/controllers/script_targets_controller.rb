@@ -22,7 +22,7 @@ class ScriptTargetsController < ApplicationController
 
     # Only JS format is supported, since this is AJAX call
     respond_to do |format|
-      format.html { raise 'HTML request is not supported in this controller' }
+      format.html { raise 'HTML request is not supported in this action' }
       format.js
     end
   end
@@ -49,7 +49,7 @@ class ScriptTargetsController < ApplicationController
 
     # Only JS format is supported, since this is AJAX call
     respond_to do |format|
-      format.html { raise 'HTML request is not supported in this controller' }
+      format.html { raise 'HTML request is not supported in this action' }
       format.js
     end
   end

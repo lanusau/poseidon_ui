@@ -17,6 +17,8 @@
             [
             <%= link_to 'Edit', edit_target_group_path(target_group) %>
             |
+            <%= link_to "Assign Targets",target_group_assignments_path(target_group) %>
+            |
             <%= link_to 'Delete', target_group, method: :delete, data: { confirm: 'Are you sure?' } %>
             ]
           </td>

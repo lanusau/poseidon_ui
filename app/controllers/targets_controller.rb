@@ -122,7 +122,8 @@ class TargetsController < ApplicationController
     redirect_to targets_path
   end
 
-  # Activate target 
+  # Activate target
+  #  POST   /targets/:id/activate
   def activate
     @target = Target.find(params[:id])
     @target.status_code = 'A'
@@ -136,6 +137,7 @@ class TargetsController < ApplicationController
   end
 
   # Inactivate target
+  # POST   /targets/:id/inactivate
   def inactivate
     @target = Target.find(params[:id])
 

@@ -1,0 +1,1 @@
+$("#assignment_page").html("<%= escape_javascript( render :partial => "target_assignment_page",:locals=>{:target_group => @target_group,:available_targets => @available_targets,:error=>nil})%>")

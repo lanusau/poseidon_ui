@@ -20,7 +20,14 @@ PoseidonV3::Application.routes.draw do
   resources :notify_groups do
     resources :notify_group_emails, :as => "emails",:only => [:index, :new, :create, :destroy]
   end
-  resources :target_groups
+  resources :target_groups do
+    resources :target_group_assignments, :as => "assignments", :only => [:index,:create,:destroy] do
+      member do
+        post "activate"
+        post "inactivate"
+      end
+    end  
+  end
   resources :targets do
     # Additional actions
     member do
@@ -32,7 +39,13 @@ PoseidonV3::Application.routes.draw do
     end
     resources :target_hostnames, :as => "hostnames",:only => [:index, :new, :create, :destroy]
     resources :scripts, :only => [:index]
+    resources :target_group_assignments, :as => "assignments", :only => [:index] do
+      collection do
+        get "toggle"
+      end
+    end
   end
+
   resources :scripts do
     # Additional actions
     member do

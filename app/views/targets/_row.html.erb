@@ -1,10 +1,12 @@
-<td><%= target.name %></td>
+<td><%= link_to target.name, edit_target_path(target) %></td>
 <td><%= target.status_code == "A"? "Active":"Inactive" %> </td>
 <td>
   [
   <%= link_to 'Edit', edit_target_path(target) %>
   |
   <%= link_to "Scripts", target_scripts_path(target) %>
+  |
+  <%= link_to "Groups", target_assignments_path(target) %>
   |
   <%  if target.status_code == "I" %>
 

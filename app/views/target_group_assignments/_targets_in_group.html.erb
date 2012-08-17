@@ -1,0 +1,19 @@
+<% if (defined? error) && error.present? %>
+  <div class="errors">
+    <p><%= error %> </p>
+  </div>
+<% end %>
+<table class="rowlist_table">
+  <tr>
+    <th>Target</th>
+    <th>Status</th>
+    <th>Inactive Until</th>
+    <th>Functions</th>
+  </tr>
+
+  <% target_group.target_group_assignments.sort{|a,b|a.target.name <=> b.target.name}.each_with_index do |ta,index| %>
+    <tr id="target_group_assignment_<%= ta.id%>" class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+      <%= render :partial => "row_in_group",:locals=>{:target_group => target_group,:target_group_assignment => ta} %>
+    </tr>
+  <% end %>
+</table>

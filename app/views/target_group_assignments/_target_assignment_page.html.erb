@@ -1,0 +1,31 @@
+<h2> Assigned targets </h2>
+<div class="instruction">
+  Note: inactivation here only inactivates target membership in this group, not the target itself.
+</div>
+
+<div id="targets_in_group_list">
+  <%= render :partial => "targets_in_group",:locals=>{:target_group=>@target_group} %>
+</div>
+
+<h2> Available targets. Click to assign</h2>
+
+<div class="list-page">
+
+  <% available_targets.collect{|t| t.server_id}.uniq.each do |server_id| %>
+
+    <table class="rowlist_table">
+      <tr>
+        <th><%= available_targets.find_all{|t| t.server_id == server_id}.first.server.name %></th>
+      </tr>
+      <% available_targets.find_all{|t| t.server_id == server_id}.each_with_index do |t,index| %>
+        <tr id="target_<%= t.id%>" class="<%= index.modulo(2) == 0 ? "even" : "odd" %>">
+          <td>
+            <%= link_to t.name,target_group_assignments_path(target_group,:target_id => t.id), :method=>:post, :remote=> true %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+  <% end %>
+
+</div>
