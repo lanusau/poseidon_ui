@@ -15,6 +15,8 @@ class TargetGroupAssignmentsController < ApplicationController
 
   # GET    /target_groups/:target_group_id/target_group_assignments
   def index_for_group
+    TargetGroupAssignmentsController.set_submenu :target_groups
+    
     @target_group = TargetGroup.find(params[:target_group_id])
     @available_targets = find_available_targets(@target_group)
 
