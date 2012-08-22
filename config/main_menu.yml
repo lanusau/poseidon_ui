@@ -3,15 +3,3 @@ monitoring:
   label: Monitoring
   path: /monitoring
   access_level: 1
-replication:
-  label: Replication
-  path: /replication
-  access_level: 1
-sso:
-  label: SSO
-  path: /sso
-  access_level: 1
-guest:
-  label: Guest
-  path: /guest
-  access_level: 9
