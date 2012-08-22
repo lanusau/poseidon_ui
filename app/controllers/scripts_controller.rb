@@ -17,6 +17,7 @@ class ScriptsController < ApplicationController
   end
 
   # GET /scripts
+  # GET /targets/:target_id/scripts
   def index
 
     session[:scripts_page] = params[:page] if params[:page]
@@ -52,16 +53,16 @@ class ScriptsController < ApplicationController
       begin
         @target = Target.find(@target_id)
         conditions << %q{
-          ( exists ( select * from psd_script_target st
-                     where st.script_id = psd_script.script_id
-                     and st.target_id = ?
+          ( exists ( select * from psd_script_target t
+                     where t.script_id = psd_script.script_id
+                     and t.target_id = ?
                    )
             or
             exists ( select *
-                     from psd_script_group sg, psd_target_group_assignment tga
-                     where sg.script_id = psd_script.script_id
-                     and sg.target_group_id = tga.target_group_id
-                     and tga.target_id = ?
+                     from psd_script_group g, psd_target_group_assignment a
+                     where g.script_id = psd_script.script_id
+                     and g.target_group_id = a.target_group_id
+                     and a.target_id = ?
                    )
           )
         }
@@ -71,7 +72,7 @@ class ScriptsController < ApplicationController
       rescue Exception => e
         @target_id = ""
       end
-    end
+    end    
 
     if conditions.size > 0
       @scripts = Script.paginate(:page => session[:scripts_page],:order=>"name",

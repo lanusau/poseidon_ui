@@ -8,6 +8,10 @@ class TargetsController < ApplicationController
     # Just reset session variables and redirect to index
     session.delete(:targets_page)
     session.delete(:target_name)
+
+    # Also reset page number for scripts
+    # Because we may want to see all scripts for this target
+    session.delete(:scripts_page)
     redirect_to targets_path
   end
 

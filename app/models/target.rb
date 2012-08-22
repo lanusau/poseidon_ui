@@ -6,6 +6,7 @@ class Target < ActiveRecord::Base
   has_many :target_group_assignments, :dependent => :delete_all
   has_many :target_hostnames, :dependent => :delete_all
   has_many :script_target_logs
+  has_many :script_targets, :dependent => :delete_all
   
   belongs_to :target_type
   belongs_to :server

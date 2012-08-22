@@ -45,6 +45,22 @@ class ScriptsControllerTest < ActionController::TestCase
     end
   end
 
+  test "should get index by target_id" do
+    target = target(:target_one)
+    assert_routing "/targets/#{target.id}/scripts",
+      { :controller => 'scripts', :action => "index", :target_id => target.id.to_s }
+    get :index, :target_id => target.id
+    assert_response :success
+    assert_not_nil assigns(:scripts)
+    # Should have matching number of rows in the table plus 1 header row
+    assert_select "div.rowlist_page" do
+      assert_select "table" do
+        script_count = target.script_targets.count
+        assert_select "tr", script_count+1, "There should be #{script_count} rows in the list"
+      end
+    end
+  end
+
   test "should render form for new" do
     get :new
     assert_response :success
