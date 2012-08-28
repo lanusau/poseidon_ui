@@ -62,4 +62,24 @@ class TargetTest < ActiveSupport::TestCase
     target.port_number = 'ABC'
     assert !target.save, "Saved target with invalid port number"
   end
+
+  test "Date validation" do
+    # Valid date set as string
+    target = target(:target_one)
+    target.inactive_until = '01-01-2012 00:00:01'
+    assert target.valid?, 'Valid date passed as string did not validate'
+
+    # Valid date set as DateTime
+    target.inactive_until = DateTime.now()
+    assert target.valid?, 'Valid date passed as DateTime did not validate'
+
+    # Null should be valid
+    target.inactive_until = nil
+    assert target.valid?, 'Nil date did not validate'
+
+    # Finally - invalid date
+    target.inactive_until = 'RFD1111'
+    assert !target.valid?, 'Invalid date validated'
+  end
+
 end

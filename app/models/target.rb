@@ -21,6 +21,16 @@ class Target < ActiveRecord::Base
   validates :monitor_password, :presence=>true
   validates :status_code, :presence=>true, :inclusion => {:in =>%w( A I)}
   validates :create_sysdate, :presence=>true
-  validates :update_sysdate, :presence=>true    
+  validates :update_sysdate, :presence=>true
+
+  validate :validate_inactive_until
+
+  # Validate inactive_until
+  def validate_inactive_until
+    errors.add(:inactive_until, "- invalid date format") unless
+      inactive_until_before_type_cast.blank? ||
+      inactive_until_before_type_cast.class != String ||
+      inactive_until_before_type_cast =~ /\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}:\d{2}/
+  end
 
 end
