@@ -14,7 +14,7 @@
 
   <div class="form-container">
 
-    <%= form_for(@target) do |f| %>
+    <%= nested_form_for(@target) do |f| %>
 
       <fieldset>
 
@@ -80,6 +80,16 @@
           <%= f.text_field :inactive_until,{"size"=>30,"maxlength"=>30} %>
           <p class="note">MM/DD/YYYY HH24:MI:SS</p>
         </div>
+
+        <fieldset>
+          <legend>Additional hostnames </legend>
+          <span class="heading">Host</span>
+          <%= f.fields_for :target_hostnames do |nested_form| %>
+            <%= nested_form.text_field :hostname, {"size"=>30,"maxlength"=>100}%>
+            <%= nested_form.link_to_remove "Remove" %>
+          <% end %>
+          <p><%= f.link_to_add "Add a hostname", :target_hostnames %></p>
+        </fieldset>
 
 
         <%= submit_tag("Save") %>

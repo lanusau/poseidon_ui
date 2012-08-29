@@ -82,16 +82,19 @@ class TargetsControllerTest < ActionController::TestCase
         assert_select "input#target_inactive_until", 1, "Should have field for target inactive_until"
         # Selects
         assert_select "select", 3, "Should have three select in the form"
+        # Nested form for target hostnames
+        (0..@target.target_hostnames.size-1).each do |index|
+          assert_select "input#target_target_hostnames_attributes_#{index}_hostname",1,
+            "Should be a field for hostname for nested record #{index}"
+        end
       end
     end
-    # Should have iframe for hostname list
-    assert_select "iframe#child_record_iframe", 1, "Should have an iframe for hostname list"
   end
 
   test "should update target" do
     put :update, id: @target, target: {
       status_code: "I",
-      inactive_until: "01/01/2012 00:00:01"
+      inactive_until: "01-01-2012 00:00:01"
     }
     assert_redirected_to targets_path
   end

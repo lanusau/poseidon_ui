@@ -37,21 +37,21 @@ div.form-container {
         legend { font-weight: bold; color: #666; }
     }
 
-    label, span.label { margin-right: 10px; padding-right: 10px; width: 150px; display: block; float: left; text-align: right; position: relative; }
-    label.error, span.error { color: #C00; }
-    label,span.label {
-        em { position: absolute; right: 0; font-size: 120%; font-style: normal; color: #C00; }
+    label { 
+      font-weight: bold;
+      margin-right: 10px;
+      padding-right: 10px;
+      width: 150px;
+      display: block;
+      float: left;
+      text-align: right;
+      position: relative; }
+
+    span.heading {
+      margin-right:155px;
+      font-weight: bold;
     }
+
     input.error { border-color: #C00; background-color: #FEF; }
-    input:focus,input.error:focus,textarea:focus { background-color: #FFC; border-color: #FC6; }
 
-    div.controlset {
-        label, input { display: inline; float: none; }
-        div { margin-left: 170px; }
-    }
-
-    div.buttonrow { margin-left: 180px; }
-
-    label {font-weight: bold}
-    span.fieldWithErrors { background-color: #C00; }
 }

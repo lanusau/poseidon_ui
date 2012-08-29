@@ -1,10 +1,11 @@
 class Target < ActiveRecord::Base
   attr_accessible :name, :hostname,:database_name,:port_number,
     :monitor_username,:monitor_password,:status_code,:inactive_until,
-    :target_type_id, :server_id
+    :target_type_id, :server_id, :target_hostnames_attributes
 
   has_many :target_group_assignments, :dependent => :delete_all
   has_many :target_hostnames, :dependent => :delete_all
+  accepts_nested_attributes_for :target_hostnames, :allow_destroy => true, :reject_if => :all_blank
   has_many :script_target_logs
   has_many :script_targets, :dependent => :delete_all
   

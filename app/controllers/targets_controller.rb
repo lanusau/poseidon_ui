@@ -102,7 +102,6 @@ class TargetsController < ApplicationController
     @target.attributes = attributes
     @target.update_sysdate = DateTime.now()
 
-
     if @target.save
       redirect_to targets_path, :notice => 'Update successfull'
     else
