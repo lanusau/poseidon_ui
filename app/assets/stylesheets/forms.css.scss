@@ -54,4 +54,9 @@ div.form-container {
 
     input.error { border-color: #C00; background-color: #FEF; }
 
+    /* Deleted fields in nested_form gem */
+    div.marked_for_destruction {
+      display: none;
+    }
+
 }

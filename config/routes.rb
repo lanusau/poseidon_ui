@@ -37,7 +37,6 @@ PoseidonV3::Application.routes.draw do
     collection do
       get "reset"
     end
-    resources :target_hostnames, :as => "hostnames",:only => [:index, :new, :create, :destroy]
     resources :scripts, :only => [:index]
     resources :target_group_assignments, :as => "assignments", :only => [:index] do
       collection do
