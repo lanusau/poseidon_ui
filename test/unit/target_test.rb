@@ -81,6 +81,8 @@ class TargetTest < ActiveSupport::TestCase
     # Finally - invalid date
     target.inactive_until = 'RFD1111'
     assert !target.valid?, 'Invalid date validated'
+    target.inactive_until = '08-43-2012 00:00:01'
+    assert !target.valid?, 'Invalid date validated'
   end
 
 end

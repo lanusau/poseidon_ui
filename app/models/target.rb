@@ -24,22 +24,6 @@ class Target < ActiveRecord::Base
   validates :create_sysdate, :presence=>true
   validates :update_sysdate, :presence=>true
 
-  validate :validate_inactive_until
-
-  # Modify datetime attribute method to accept datetime in default format
-  def inactive_until=(value)
-    if value.class == String
-      value = DateTime.strptime(value, Time::DATE_FORMATS[:default]) rescue value
-    end
-    super(value)
-  end
-
-  # Validate inactive_until
-  def validate_inactive_until
-    errors.add(:inactive_until, "- invalid date format") unless
-      inactive_until_before_type_cast.blank? ||
-      inactive_until_before_type_cast.class != String ||
-      inactive_until_before_type_cast =~ /\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}:\d{2}/
-  end
+  datetime_with_default_format :inactive_until, :allow_nil=>true
 
 end
