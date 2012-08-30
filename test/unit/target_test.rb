@@ -66,8 +66,9 @@ class TargetTest < ActiveSupport::TestCase
   test "Date validation" do
     # Valid date set as string
     target = target(:target_one)
-    target.inactive_until = '01-01-2012 00:00:01'
+    target.inactive_until = '08-29-2012 00:00:01'
     assert target.valid?, 'Valid date passed as string did not validate'
+    assert_not_nil target.inactive_until, "Valid date got set as nil"
 
     # Valid date set as DateTime
     target.inactive_until = DateTime.now()

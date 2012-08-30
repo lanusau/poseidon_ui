@@ -26,6 +26,14 @@ class Target < ActiveRecord::Base
 
   validate :validate_inactive_until
 
+  # Modify datetime attribute method to accept datetime in default format
+  def inactive_until=(value)
+    if value.class == String
+      value = DateTime.strptime(value, Time::DATE_FORMATS[:default]) rescue value
+    end
+    super(value)
+  end
+
   # Validate inactive_until
   def validate_inactive_until
     errors.add(:inactive_until, "- invalid date format") unless
