@@ -50,7 +50,12 @@ module ActiveRecord
         # Modify datetime attribute method to accept datetime in default format
         def #{attribute.id2name}=(value)
         if value.class == String
-          value = DateTime.strptime(value, Time::DATE_FORMATS[:default]) rescue value
+          begin
+            date_parts = DateTime._strptime(value, Time::DATE_FORMATS[:default])
+            value = Time.zone.local(date_parts[:year],date_parts[:mon],date_parts[:mday],
+                                    date_parts[:hour],date_parts[:min],date_parts[:sec])
+          rescue
+          end
         end
         super(value)
         end
