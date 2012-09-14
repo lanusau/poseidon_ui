@@ -1,5 +1,4 @@
 config/database.yml
-Gemfile.lock
 nbproject/
 tmp/
 *.log
