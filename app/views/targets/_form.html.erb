@@ -83,7 +83,8 @@
 
         <fieldset>
           <legend>Additional hostnames </legend>
-          <span class="heading">Host</span>
+          <div class="heading">Host</div>
+          <p class="clear-float" />
           <%= f.fields_for :target_hostnames do |nested_form| %>
             <%= nested_form.text_field :hostname, {"size"=>30,"maxlength"=>100}%>
             <%= nested_form.link_to_remove "Remove" %>

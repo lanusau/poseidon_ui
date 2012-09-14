@@ -47,12 +47,41 @@ div.form-container {
       text-align: right;
       position: relative; }
 
-    span.heading {
-      margin-right:155px;
+    div.heading {
+      width:195px;
+      float: left;
+      font-weight: bold;
+    }
+    div.heading_short {
+      width:60px;
+      float: left;
       font-weight: bold;
     }
 
-    input.error { border-color: #C00; background-color: #FEF; }
+    select,input[type="submit"] {
+      padding: 3px;
+      box-shadow: 0 0 2px #DDDDDD;
+    }
+
+    input[type="text"],input[type="password"],textarea {
+      padding: 4px;
+      border: 1px solid #DDDDDD;
+
+      /*Applying CSS 3radius*/
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+
+      /*Applying CSS3 box shadow*/
+      -moz-box-shadow: 0 0 2px #DDDDDD;
+      -webkit-box-shadow: 0 0 2px #DDDDDD;
+      box-shadow: 0 0 2px #DDDDDD;
+    }
+
+    input[type="text"]:hover,input[type="password"]:hover,textarea:hover { border:1px solid #cccccc;}
+    input[type="text"]:focus,input[type="password"]:focus,textarea:focus { box-shadow:0 0 2px #94FFDB;}
+
+    input.error { box-shadow:0 0 3px #FF3333; }
 
     /* Deleted fields in nested_form gem */
     div.marked_for_destruction {
