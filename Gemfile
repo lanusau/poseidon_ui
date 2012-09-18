@@ -2,9 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+# MySQL driver is needed to access repository
+# Other drivers are needed for test query functionality in the script editing page
 gem 'mysql2'
 gem "dbd-pg", "~> 0.3.9"
 gem "dbd-mysql", "~> 0.4.4"
@@ -25,22 +24,17 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+# Use JQuery
 gem 'jquery-rails'
 
 # For password hash
 gem 'bcrypt-ruby', '~> 3.0.0'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+# Wrapper for OpenSSL
+gem 'encryptor', '~> 1.1.3'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
+# Pagination
+gem "will_paginate"
 
 group :development do
   gem 'debugger'
@@ -50,4 +44,4 @@ group :test do
   gem 'debugger'
 end
 
-gem "will_paginate"
+

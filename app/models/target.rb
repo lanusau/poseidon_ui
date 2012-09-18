@@ -26,4 +26,38 @@ class Target < ActiveRecord::Base
 
   datetime_with_default_format :inactive_until, :allow_nil=>true
 
+  # Accessors for encrypted password
+  def monitor_password=(password)
+    return if password.blank?
+
+    # Regenerate salt each time password is changed
+    salt = 16.times.map{Random.rand(10)}.join
+    write_attribute(:salt,salt)
+
+    secret_key = Digest::MD5.digest(PoseidonV3::Application.config.secret)
+    iv = Digest::MD5.digest(salt)
+    write_attribute(:monitor_password, Base64.encode64(Encryptor.encrypt(password, :key => secret_key,:iv=>iv)))
+  end
+
+  def monitor_password
+    secret_key = Digest::MD5.digest(PoseidonV3::Application.config.secret)
+    iv = Digest::MD5.digest(read_attribute(:salt))
+    begin
+    Encryptor.decrypt(Base64.decode64(read_attribute(:monitor_password)), :key => secret_key,:iv=>iv)
+    rescue 
+      return read_attribute(:monitor_password)
+    end
+  end
+
+  # This can be used to re-encrypt passwords
+  def monitor_password_with(secret,salt)
+    secret_key = Digest::MD5.digest(secret)
+    iv = Digest::MD5.digest(salt)
+    begin
+    Encryptor.decrypt(Base64.decode64(read_attribute(:monitor_password)), :key => secret_key,:iv=>iv)
+    rescue
+      return read_attribute(:monitor_password)
+    end
+  end
+
 end

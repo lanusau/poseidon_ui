@@ -86,4 +86,15 @@ class TargetTest < ActiveSupport::TestCase
     assert !target.valid?, 'Invalid date validated'
   end
 
+  test "Passwords can be encrypted and decrypted" do
+    target = target(:target_one)
+    new_password = 'new$password'
+    target.monitor_password = new_password
+    assert target.save, 'Can not save record with new password'
+
+    # Reload record
+    target = Target.find(target.id)
+    assert_equal target.monitor_password,new_password, 'Password could not be decrypted'
+  end
+
 end

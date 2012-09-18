@@ -34,8 +34,8 @@ class QueryColumnsControllerTest < ActionController::TestCase
     assert_routing({:method => 'post',:path=> "/scripts/#{@script.id}/query_columns"},
       { :controller => 'query_columns', :action => "create", :script_id => @script.id.to_s })
 
-    # There are 13 columns in the query "select * from psd_target"
-    assert_difference("Script.find(#{@script.id}).query_columns.size",+13) do
+    # There are 14 columns in the query "select * from psd_target"
+    assert_difference("Script.find(#{@script.id}).query_columns.size",+14) do
       post :create, :script_id => @script.id,
         :script => {
           :query_text => @script.query_text,

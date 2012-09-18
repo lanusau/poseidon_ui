@@ -6,7 +6,8 @@ target_one:
   database_name: test
   port_number: 1521
   monitor_username: monitor
-  monitor_password: monitor
+  monitor_password: Pk6GNLh9XEDlbcz8SYY07g==\n
+  salt: 4969826170212300
   status_code: A
   update_sysdate: 2012-07-30 14:39:56
   create_sysdate: 2012-07-12 14:39:56
@@ -18,7 +19,8 @@ target_two:
   database_name: test
   port_number: 3306
   monitor_username: monitor
-  monitor_password: monitor
+  monitor_password: Pk6GNLh9XEDlbcz8SYY07g==\n
+  salt: 4969826170212300
   status_code: I
   inactive_until: 2020-01-02 01:00:00
   update_sysdate: 2012-07-30 14:39:56
@@ -32,6 +34,7 @@ test_target:
   port_number: 3306
   monitor_username: from_database_yml
   monitor_password: from_database_yml
+  salt: 4969826170212300
   status_code: A
   update_sysdate: 2012-07-30 14:39:56
   create_sysdate: 2012-07-12 14:39:56

@@ -12,8 +12,15 @@ end
 module PoseidonV3
   class Application < Rails::Application
 
+    # Key for password encryption. If you change this then every password in
+    # table PSD_TARGET  will have to be reset
+    config.secret = 'm0nitr$this'
+    
     # Location of main menu file
     config.main_menu_config_file = '/u01/dba/apps/poseidon_modules/main_menu.yml'
+
+    # Use AES-128 for encryption.
+    Encryptor.default_options.merge!(:algorithm => 'aes-128-cbc')
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/extras)
