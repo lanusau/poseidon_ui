@@ -112,6 +112,14 @@ class ScriptsController < ApplicationController
 
     @script = Script.new(params[:script])
     @script.status_code = 'I'
+    @script.query_type = 1
+    @script.fixed_severity = 1
+    @script.schedule_min = "0"
+    @script.schedule_hour = "*"
+    @script.schedule_day = "*"
+    @script.schedule_month = "*"
+    @script.schedule_week = "?"
+    @script.timeout_sec = 300
 
     @script.create_sysdate = DateTime.now()
     @script.update_sysdate = DateTime.now()

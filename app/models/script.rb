@@ -29,6 +29,24 @@ class Script < ActiveRecord::Base
   validates :update_sysdate, :presence=>true
 
   validate :schedule_day_or_week_must_have_question,:on=>:update
+  validate :calculated_severity_needs_other_columns,:on=>:update
+
+  # If severity is specified to be calculated based of other columns,
+  # those other columns need to be specified
+  def calculated_severity_needs_other_columns
+    errors.add(:severity_column_position,
+      "When specifying severity to be calculated, specify column position") if
+     (fixed_severity == 0) && (severity_column_position.blank?)
+
+    errors.add(:value_med_severity,
+      "When specifying severity to be calculated, specify medium threshold") if
+     (fixed_severity == 0) && (value_med_severity.blank?)
+
+    errors.add(:value_high_severity,
+      "When specifying severity to be calculated, specify high threshold") if
+     (fixed_severity == 0) && (value_high_severity.blank?)
+
+  end
 
   # Either schedule day or week must have question mark
   def schedule_day_or_week_must_have_question

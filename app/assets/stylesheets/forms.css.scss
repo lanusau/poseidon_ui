@@ -33,6 +33,14 @@ div.form-container {
 
             div { padding: 0.25em 0; }
 
+            /* Paragraph used for instructions */
+            div.instruction {
+                background: #EAF2FA;
+                margin-bottom: 1em;
+                padding: 5px 10px;
+                color: #6C7D8E;
+            }
+
         }
         legend { font-weight: bold; color: #666; }
     }
