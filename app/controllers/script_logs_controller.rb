@@ -52,27 +52,31 @@ class ScriptLogsController < ApplicationController
     if @script_id.present?
       begin
         @script = Script.find(@script_id)
+        # For performance reasons we will not look past 7 days
         conditions << %Q[script_id = ?]
         binds << @script.id
-      rescue Exception => e
+      rescue Exception 
         @script_id = ""
       end
     end
+
+    date_filter_set = false
 
     # Filter on start_date
     if @date_from.present?
       if @date_from =~ /\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}:\d{2}/
         conditions << %Q[start_date >= STR_TO_DATE(?,'%m-%d-%Y %H:%i:%s')]
         binds << @date_from
+        date_filter_set = true
       else
         flash[:notice] = "Invalid date format, please use format MM-DD-YYYY HH24:MI:SS"
       end
     end
-    # Filter on finish_date
     if @date_to.present?
       if @date_to =~ /\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}:\d{2}/
-        conditions << %Q[finish_date < STR_TO_DATE(?,'%m-%d-%Y %H:%i:%s')]
+        conditions << %Q[start_date < STR_TO_DATE(?,'%m-%d-%Y %H:%i:%s')]
         binds << @date_to
+        date_filter_set = true
       else
         flash[:notice] = "Invalid date format, please use format MM-DD-YYYY HH24:MI:SS"
       end
@@ -88,13 +92,16 @@ class ScriptLogsController < ApplicationController
       binds << @error_filter_code
     end
 
-    # Paginate
-    if conditions.size > 0
-      @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>:script,
-      :conditions => [conditions.join(" AND "),binds].flatten)
-    else
-      @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>:script)
+    # If we don't have filter on start_date, add it to only show rows for last
+    # X days.
+    unless date_filter_set
+      conditions << %Q[start_date > date_sub(now(),INTERVAL ? day)]
+      binds << 7
     end
+
+    # Paginate
+    @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>:script,
+      :conditions => [conditions.join(" AND "),binds].flatten)
 
   end
 end
