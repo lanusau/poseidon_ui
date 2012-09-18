@@ -24,3 +24,11 @@ TargetType.create(
     :create_sysdate => DateTime.now(),
     :update_sysdate => DateTime.now()
   }, :without_protection => true)
+User.create(
+  {
+    :login => 'admin',
+    :password => 'admin',
+    :access_level => 0,
+    :create_sysdate => DateTime.now(),
+    :update_sysdate => DateTime.now()
+  }, :without_protection => true)
