@@ -17,7 +17,7 @@ module PoseidonV3
     config.secret = 'm0nitr$this'
     
     # Location of main menu file
-    config.main_menu_config_file = '/u01/dba/apps/poseidon_modules/main_menu.yml'
+    config.main_menu_config_file = "#{config.root}/config/main_menu.yml"
 
     # Use AES-128 for encryption.
     Encryptor.default_options.merge!(:algorithm => 'aes-128-cbc')
