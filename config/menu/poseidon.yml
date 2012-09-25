@@ -3,7 +3,3 @@ monitoring:
   label: Monitoring
   path: /monitoring
   access_level: 1
-replication:
-  label: Replication
-  path: /replication
-  access_level: 1

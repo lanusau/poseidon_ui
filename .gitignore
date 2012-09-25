@@ -2,3 +2,4 @@ config/database.yml
 nbproject/
 tmp/
 *.log
+.bundle
