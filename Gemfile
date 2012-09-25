@@ -37,6 +37,8 @@ gem 'encryptor', '~> 1.1.3'
 # Pagination
 gem "will_paginate"
 
+gem 'passenger'
+
 group :development do
   gem 'debugger'
 end
