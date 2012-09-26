@@ -28,8 +28,8 @@ Requires: openssl >= 0.9.8
 AutoReqProv: no
 
 # What repository to pull the actual code from
-%define git_repo oracle@dbutil01dev.lax.dev.int.untd.com:/u01/git/poseidon_v3.git
-%define git_project poseidon_v3
+%define git_repo https://github.com/lanusau/poseidon_ui.git
+%define git_project poseidon_ui
 
 #
 # DIRS
@@ -49,6 +49,7 @@ Poseidon Monitoring UI
 rm -rf ./%{git_project}
 git clone %{git_repo}
 pushd %{git_project}
+# Assume releases are on master branch
 git checkout master
 
 # Install all required gems into ./vendor/bundle using the handy bundle commmand
