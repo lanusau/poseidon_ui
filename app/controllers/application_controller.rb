@@ -55,6 +55,8 @@ class ApplicationController < ActionController::Base
   # Return information about currently logged in user
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  rescue
+    @current_user = nil
   end
 
   helper_method :current_user
