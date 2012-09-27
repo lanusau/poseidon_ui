@@ -7,3 +7,9 @@ production:
   password: <***>
   host: <host where mysql is running>
   pool: 5
+  secret: m0nitr$this
+
+# Field "secret" specifies key for password encryption/decryption. 
+# If you change this after creating any targets, you will need to
+# re-encrypt passwords. Run following command: 
+# bundle rake poseidon:re_encrypt_targets old_secret=<old_secret>

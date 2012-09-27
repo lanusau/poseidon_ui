@@ -31,3 +31,24 @@ namespace :poseidon do
     
   end
 end
+
+namespace :poseidon do
+  desc "Re-encrypt target passwords."
+  task :re_encrypt_targets => :environment do
+    # Expect old_secret=secret in ARGV[1] (ARGV[0] has rake task name)
+    old_secret = ARGV[1].split("old_secret=")[1] if ARGV[1].present?
+    if old_secret.nil?
+      puts("Please specify parameter old_secret=xxx")
+    else
+      target_count = 0
+      Target.all.each do |target|
+        password = target.monitor_password_with(old_secret,target.salt)
+        target.monitor_password=password
+        target.save!
+        target_count += 1
+      end
+      puts "#{target_count} targets re-encrypted"
+    end
+
+  end
+end
