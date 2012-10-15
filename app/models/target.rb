@@ -14,7 +14,7 @@ class Target < ActiveRecord::Base
     has_many :sso_global_role_target_roles, :dependent => :delete_all
   end
   if defined? SsoSurvey && Rails.env == 'production'
-    has_many :sso_surveys, :dependent => :delete_all
+    has_many :sso_surveys, :dependent => :destroy
   end  
 
   belongs_to :target_type
