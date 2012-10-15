@@ -2,7 +2,7 @@ class ScriptTargetLog < ActiveRecord::Base
   belongs_to :script_log
   belongs_to :target
 
-  has_many :script_target_row_logs
+  has_many :script_target_row_logs, :dependent => :destroy
 
   # Return description of status number
   def status_number_str(&block)

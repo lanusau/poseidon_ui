@@ -1,4 +1,14 @@
-<h2>New Target</h2>
+<% if @servers.empty? %>
 
-<%= render 'form' %>
+  <div class="flash_note">
+    You need to setup at least one server before you can add new target. 
+    <%= link_to "Add new server", new_server_path %> .
+  </div>
+
+<% else %>
+  <h2>New Target</h2>
+
+  <%= render 'form' %>
+
+<% end %>
 

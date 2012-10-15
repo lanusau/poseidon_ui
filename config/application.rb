@@ -4,21 +4,14 @@ require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  # Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(*Rails.groups(:assets => %w(development test)))
   # If you want your assets lazily compiled in production, use this line
-  Bundler.require(:default, :assets, Rails.env)
+  # Bundler.require(:default, :assets, Rails.env)
 end
 
 module PoseidonV3
   class Application < Rails::Application
-
-    # Key for password encryption. If you change this then every password in
-    # table PSD_TARGET  will have to be reset
-    config.secret = 'm0nitr$this'
     
-    # Location of main menu file
-    config.main_menu_config_file = "#{config.root}/config/main_menu.yml"
-
     # Use AES-128 for encryption.
     Encryptor.default_options.merge!(:algorithm => 'aes-128-cbc')
 

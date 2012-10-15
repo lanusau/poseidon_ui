@@ -1,7 +1,7 @@
 class ScriptTargetRowLog < ActiveRecord::Base
   belongs_to :script_target_log
 
-  has_many :script_target_col_logs
+  has_many :script_target_col_logs, :dependent => :delete_all
 
   # Return description of expression_result
   def expression_result_str

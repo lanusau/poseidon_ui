@@ -67,8 +67,8 @@ class TargetTypesController < ApplicationController
 
     redirect_to target_types_path, :notice => 'Delete successfull'
 
-  rescue ActiveRecord::RecordNotFound
-    redirect_to target_types_path
+  rescue ActiveRecord::RecordNotFound, ActiveRecord::DeleteRestrictionError
+    redirect_to target_types_path, :notice => 'Delete failed'
   end
 
 end

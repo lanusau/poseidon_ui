@@ -69,10 +69,20 @@ class ServersControllerTest < ActionController::TestCase
   end
 
   test "should destroy server" do
+    @server = server(:server_with_no_targets)
     assert_difference('Server.count', -1) do
       delete :destroy, id: @server
     end
 
     assert_redirected_to servers_path
+  end
+  
+  test "should not destroy server with child records" do
+    assert_no_difference('Server.count') do
+      delete :destroy, id: @server
+    end
+
+    assert_redirected_to servers_path
+    assert_equal 'Delete failed', flash[:notice]
   end
 end

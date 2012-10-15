@@ -69,8 +69,8 @@ class ServersController < ApplicationController
     
     redirect_to servers_path, :notice => 'Delete successfull'
 
-  rescue ActiveRecord::RecordNotFound
-    redirect_to servers_path
+  rescue ActiveRecord::RecordNotFound, ActiveRecord::DeleteRestrictionError
+    redirect_to servers_path, :notice => 'Delete failed'
   end
 
 end
