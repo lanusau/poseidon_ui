@@ -76,10 +76,20 @@ class TargetTypesControllerTest < ActionController::TestCase
   end
 
   test "should destroy target_type" do
+    @target_type = target_type(:type_with_no_targets)
     assert_difference('TargetType.count', -1) do
       delete :destroy, id: @target_type
     end
 
     assert_redirected_to target_types_path
+  end
+
+  test "should not destroy target_type with existing child records" do
+    assert_no_difference('TargetType.count') do
+      delete :destroy, id: @target_type
+    end
+
+    assert_redirected_to target_types_path
+    assert_equal 'Delete failed', flash[:notice]
   end
 end

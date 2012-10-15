@@ -10,3 +10,9 @@ mysql:
   url_jdbc: jdbc:mysql://%h:%p/%d
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
+type_with_no_targets:
+  name: For delete test
+  url_ruby: dbi:Mysql:database=%d;host=%h;port=%p
+  url_jdbc: jdbc:mysql://%h:%p/%d
+  update_sysdate: 2012-07-12 14:39:56
+  create_sysdate: 2012-07-12 14:39:56

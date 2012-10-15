@@ -1,14 +1,20 @@
 qa:
   name: QA Server
-  location: dbutil01dev.lax.dev.int.untd.com
+  location: somehost01.qa.company.com
   status_code: A
   heartbeat_sysdate: 2012-07-12 14:39:56
   update_sysdate: 2012-07-12 14:39:56
   create_sysdate: 2012-07-12 14:39:56
-
 production:
   name: Production Server
-  location: dbutil.prod.untd.com
+  location: somehost01.prod.company.com
+  status_code: A
+  heartbeat_sysdate: 2012-07-12 14:39:56
+  update_sysdate: 2012-07-12 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
+server_with_no_targets:
+  name: testing delete
+  location: somehost02.qa.company.com
   status_code: A
   heartbeat_sysdate: 2012-07-12 14:39:56
   update_sysdate: 2012-07-12 14:39:56

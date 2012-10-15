@@ -1,6 +1,6 @@
 class ScriptLog < ActiveRecord::Base
   belongs_to :script
-  has_many :script_target_logs
+  has_many :script_target_logs, :dependent => :destroy
 
   # Printable value of status number
   def status_number_str(&block)

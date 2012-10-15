@@ -6,14 +6,12 @@ class Target < ActiveRecord::Base
   has_many :target_group_assignments, :dependent => :delete_all
   has_many :target_hostnames, :dependent => :delete_all
   accepts_nested_attributes_for :target_hostnames, :allow_destroy => true, :reject_if => :all_blank
-  has_many :script_target_logs
+  has_many :script_target_logs, :dependent => :delete_all
   has_many :script_targets, :dependent => :delete_all
 
   # UNTD SSO related models, in production they are in the same db
-  if defined? SsoGLobalRoleTargetRole && Rails.env == 'production'
+  if Rails.env == 'production'
     has_many :sso_global_role_target_roles, :dependent => :delete_all
-  end
-  if defined? SsoSurvey && Rails.env == 'production'
     has_many :sso_surveys, :dependent => :destroy
   end  
 
