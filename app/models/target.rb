@@ -9,9 +9,13 @@ class Target < ActiveRecord::Base
   has_many :script_target_logs
   has_many :script_targets, :dependent => :delete_all
 
+  # UNTD SSO related models, in production they are in the same db
   if defined? SsoGLobalRoleTargetRole && Rails.env == 'production'
     has_many :sso_global_role_target_roles, :dependent => :delete_all
   end
+  if defined? SsoSurvey && Rails.env == 'production'
+    has_many :sso_surveys, :dependent => :delete_all
+  end  
 
   belongs_to :target_type
   belongs_to :server
