@@ -67,7 +67,7 @@ class QueryTest
         # Strip off Ruby portion of the URL
         # Thats because OCI8 call is low-level OCI call, not Ruby call
 
-        @database_url = @database_url.gsub("dbi:oci8:","")
+        @database_url = @database_url.gsub("dbi:OCI8:","")
         conn = OCI8.new(@username, @password, @database_url)
         # parse PL/SQL
         plsql = conn.parse(@sql_text)
