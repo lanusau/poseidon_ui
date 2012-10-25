@@ -15,9 +15,9 @@ $("#script_category_id_submit").click(function(e) {
   e.preventDefault();
   // Post just the SELECT element value
   $.post("<%= script_category_assigns_path(@script)%>", $("#script_category_id").serialize(), function( data ) {
+      // Refresh item list
+      $("#script_category_list").load("<%= script_category_assigns_path(@script)%>");
     }
-  ).error(function() { $("#script_category_list_error").html("Sorry, error has occured"); });
-  // Refresh item list
-  $("#script_category_list").load("<%= script_category_assigns_path(@script)%>");
+  ).error(function() { $("#script_category_list_error").html("Sorry, error has occured"); });  
 });
 

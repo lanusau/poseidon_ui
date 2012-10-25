@@ -15,9 +15,9 @@ $("#script_notify_group_id_submit").click(function(e) {
   e.preventDefault();
   // Post just the SELECT element value
   $.post("<%= script_notifications_path(@script)%>", $("#notify_group_id").serialize(), function( data ) {
+      // Refresh item list
+      $("#script_notification_list").load("<%= script_notifications_path(@script)%>");
     }
-  ).error(function() { $("#script_notification_error").html("Sorry, error has occured"); });
-  // Refresh item list
-  $("#script_notification_list").load("<%= script_notifications_path(@script)%>");
+  ).error(function() { $("#script_notification_error").html("Sorry, error has occured"); });  
 });
 
