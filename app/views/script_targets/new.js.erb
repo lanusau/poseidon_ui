@@ -15,9 +15,10 @@ $("#script_target_id_submit").click(function(e) {
   e.preventDefault();
   // Post just the SELECT element value
   $.post("<%= script_targets_path(@script)%>", $("#target_id").serialize(), function( data ) {
+      // Refresh item list
+      $("#script_target_list").load("<%= script_targets_path(@script)%>");
     }
   ).error(function() { $("#script_target_list_error").html("Sorry, error has occured"); });
-  // Refresh item list
-  $("#script_target_list").load("<%= script_targets_path(@script)%>");
+  
 });
 

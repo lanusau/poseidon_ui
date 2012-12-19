@@ -11,8 +11,7 @@ gem "dbd-mysql", "~> 0.4.4"
 gem "ruby-oci8", "~> 2.1.2"
 
 # Use nested forms
-gem "nested_form", :git => 'https://github.com/lanusau/nested_form.git'
-
+gem "nested_form", ">= 0.3.1"
 
 # Gems used only for assets and not required
 # in production environments by default.

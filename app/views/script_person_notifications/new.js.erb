@@ -15,9 +15,9 @@ $("#script_person_notification_submit").click(function(e) {
   e.preventDefault();
   // Post just the SELECT element value
   $.post("<%= script_person_notifications_path(@script)%>", $("#script_person_notification_email_address").serialize(), function( data ) {
+      // Refresh item list
+      $("#script_person_notification_list").load("<%= script_person_notifications_path(@script)%>");
     }
-  ).error(function() { $("#script_person_notification_error").html("Sorry, error has occured"); });
-  // Refresh item list
-  $("#script_person_notification_list").load("<%= script_person_notifications_path(@script)%>");
+  ).error(function() { $("#script_person_notification_error").html("Sorry, error has occured"); });  
 });
 

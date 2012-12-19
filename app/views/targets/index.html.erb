@@ -1,18 +1,18 @@
 <h2>List of targets</h2>
 
 <div class="rowlist_page">
-
-  <%= form_tag targets_path(:page=>1) do  -%>
-    <%=  text_field_tag 'target_name', @target_name, :size => 20, :id=> "target_name" %>
-    <%= link_to "Reset filters", reset_targets_path %>
-  <% end -%>
-
+  <div class="form-container">
+    <%= form_tag targets_path(:page=>1) do  -%>
+      <%=  text_field_tag 'target_name', @target_name, :size => 20, :id=> "target_name" %>
+      <%= link_to "Reset filters", reset_targets_path %>
+    <% end -%>
+  </div>
   <p />
 
   <div id="record_list">
     <%= render :partial=>"list" %>
   </div>
-  
+
   <p />
 
   <%= link_to 'New Target', new_target_path %>

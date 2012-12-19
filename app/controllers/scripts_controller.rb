@@ -83,7 +83,7 @@ class ScriptsController < ApplicationController
       :include => {:script_category_assigns => :script_category})
     end
 
-    @script_categories = ScriptCategory.all        
+    @script_categories = ScriptCategory.all(:order => "name")
 
     # If this is an Ajax request (search), render partial template
     if (request.xhr?)

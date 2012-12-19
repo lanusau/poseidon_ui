@@ -82,7 +82,7 @@ class TargetsControllerTest < ActionController::TestCase
         assert_select "input#target_inactive_until", 1, "Should have field for target inactive_until"
         # Selects
         assert_select "select", 3, "Should have three select in the form"
-        # Nested form for target hostnames
+        # Nested form for target host names
         (0..@target.target_hostnames.size-1).each do |index|
           assert_select "input#target_target_hostnames_attributes_#{index}_hostname",1,
             "Should be a field for hostname for nested record #{index}"
@@ -97,6 +97,44 @@ class TargetsControllerTest < ActionController::TestCase
       inactive_until: "01-01-2012 00:00:01"
     }
     assert_redirected_to targets_path
+  end
+
+  test "nested form should mark deleted fields" do
+    # Mark one of the target hosts as destroyed, then submit form
+    # with mandatory field (name) missing
+
+    target_one_host_one = target_hostname(:target_one_host_one)
+    target_one_host_two = target_hostname(:target_one_host_two)
+
+    put :update, id: @target, target: {
+      name: '',
+      hostname: 'target1.com',
+      database_name: 'test',
+      port_number: '1521',
+      target_hostnames_attributes: {
+          '0' => {
+            id: target_one_host_one.id,
+            hostname: target_one_host_one.hostname,
+          },
+          '1' => {
+            id: target_one_host_two.id,
+            hostname: target_one_host_two.hostname,
+            _destroy: '1'
+          }
+        }
+    }
+
+    # Should be no redirect
+    assert_response :success
+    
+    # Should have form container div with form
+    assert_select 'div.form-container' do
+      assert_select 'form' do
+        # Should have one DIV of class "marked_for_destruction"
+        assert_select 'div.marked_for_destruction',1,
+          'Should have div of class marked_for_destruction for deleted record in nested form'
+      end
+    end
   end
 
   test "should destroy target" do
