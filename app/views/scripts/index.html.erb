@@ -3,18 +3,18 @@
 </h2>
 
 <div class="rowlist_page">
-
-  <%= form_tag scripts_path(:page=>1) do  -%>
-    <select id="script_category_id" name="script_category_id" >
-      <option <%=  "selected" if @script_category_id.nil? || @script_category_id.downcase.to_sym == :all%> value="all">All</option>
-      <% @script_categories.each do | cat | %>
-        <option <%= "selected" if @script_category_id == cat.id.to_s %> value="<%= cat.id %>"><%= cat.name %></option>
-      <% end %>
-    </select>
-    <%=  text_field_tag 'script_search_name', @script_search_name, :size => 20, :id=> "script_search_name" %>
-    <%= link_to "Reset filters", reset_scripts_path %>
-  <% end -%>
-
+  <div class="form-container">
+    <%= form_tag scripts_path(:page=>1) do  -%>
+      <select id="script_category_id" name="script_category_id" >
+        <option <%=  "selected" if @script_category_id.nil? || @script_category_id.downcase.to_sym == :all%> value="all">All</option>
+        <% @script_categories.each do | cat | %>
+          <option <%= "selected" if @script_category_id == cat.id.to_s %> value="<%= cat.id %>"><%= cat.name %></option>
+        <% end %>
+      </select>
+      <%=  text_field_tag 'script_search_name', @script_search_name, :size => 20, :id=> "script_search_name" %>
+      <%= link_to "Reset filters", reset_scripts_path %>
+    <% end -%>
+  </div>
   <p />
 
   <div id="record_list">
