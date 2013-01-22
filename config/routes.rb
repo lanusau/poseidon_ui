@@ -53,6 +53,8 @@ PoseidonV3::Application.routes.draw do
       post "test_query"
       post "test_expression"
       get  "test_message"
+      get 'clone'
+      post 'clone_create'
     end
     collection do
       get "reset"

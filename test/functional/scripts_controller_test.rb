@@ -225,4 +225,31 @@ class ScriptsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select "span.error_text",0, "There should be no error messages"
   end
+
+  test "should render form for clone" do
+    get :clone, id: @script
+    assert_response :success
+
+    # Should have form container div with form
+    assert_select "div.form-container" do
+      assert_select "form" do
+        # Input fields
+        assert_select "input#script_name", 1, "Should have field for script_name"
+        assert_select "textarea#script_description", 1, "Should have textarea for target script_description"
+      end
+    end
+  end
+
+  test "should clone script" do
+    assert_difference('Script.count') do
+      post :clone_create, id: @script, script: {
+        name:  "Clone",
+        description: "Create clone"
+      }
+    end
+
+    new_script = Script.find_by_name("Clone")
+    assert_redirected_to edit_script_path(new_script)
+  end
+
 end

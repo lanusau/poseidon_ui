@@ -190,6 +190,31 @@ class ScriptsController < ApplicationController
     end
   end
 
+  # GET    /scripts/:id/clone
+  def clone
+    @original_script = Script.find(params[:id])
+    @script = Script.new
+  rescue ActiveRecord::RecordNotFound
+    redirect_to scripts_path
+  end
+
+  # POST   /scripts/:id/clone_create
+  def clone_create
+    @original_script = Script.find(params[:id])
+    @script = @original_script.clone_script
+    @script.attributes = params[:script]
+    @script.create_sysdate = DateTime.now()
+    @script.update_sysdate = DateTime.now()
+
+    if @script.save
+      redirect_to edit_script_path(@script), :notice => 'Clone successfull'
+    else
+      render :action=>"clone"
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to scripts_path
+  end
+
   # POST /scripts/:id/test_query
   def test_query
     script = Script.find(params[:id])

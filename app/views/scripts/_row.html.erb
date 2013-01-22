@@ -22,6 +22,8 @@
   |
   <%= link_to 'Logs', script_script_logs_path(script,:page=>1) %>
   |
+  <%= link_to 'Clone', clone_script_path(script) %>
+  |
   <%= link_to 'Delete', script, method: :delete, data: { confirm: 'Are you sure?' } %>
   ]
 </td>

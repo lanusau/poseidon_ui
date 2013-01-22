@@ -88,4 +88,21 @@ class ScriptTest < ActiveSupport::TestCase
     assert !script.save, "Saved record with invalid status_code"
   end
 
+  test "should be able to clone the script" do
+    script = script(:dataguard_check)
+    new_script = script.clone_script
+    new_script.name = 'Dataguard check clone'
+    assert new_script.save, 'Could not save cloned script'
+
+    new_script.reload
+
+    # Check that associations were cloned
+    assert_equal script.script_category_assigns.size, new_script.script_category_assigns.size
+    assert_equal script.script_targets.size, new_script.script_targets.size
+    assert_equal script.script_groups.size, new_script.script_groups.size
+    assert_equal script.query_columns.size, new_script.query_columns.size
+    assert_equal script.script_notifications.size, new_script.script_notifications.size
+    assert_equal script.script_person_notifications.size, new_script.script_person_notifications.size
+  end
+
 end
