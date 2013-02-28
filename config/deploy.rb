@@ -41,8 +41,7 @@ end
 after "deploy:update_code","deploy:check_bundler"
 namespace :deploy do
   desc "Checks if Bundler has all the gems"
-  task :check_bundler, :roles => :app do
-    on_rollback {  logger.important "Please sync up bundler gems from #{bundler_path} to the target" }
+  task :check_bundler, :roles => :app do    
     run "cd #{latest_release} && bundle check --path #{bundler_path}"
   end
 end
