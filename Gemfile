@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-#gem 'rails', '3.2.6'
-gem 'rails', :git => 'https://github.com/rails/rails.git', :branch => '3-2-stable'
+gem 'rails', '3.2.13'
+#gem 'rails', :git => 'https://github.com/rails/rails.git', :branch => '3-2-stable'
 
 # MySQL driver is needed to access repository
 # Other drivers are needed for test query functionality in the script editing page
