@@ -1,6 +1,8 @@
 <td><%= script.name %></td>
 <td>
-  <% script.script_category_assigns.each_with_index do |a,index| %>
+  <% script.script_category_assigns.sort{
+      |a,b| a.script_category.name <=> b.script_category.name
+     }.each_with_index do |a,index| %>
     <%= "|" unless index == 0 %>
     <%= a.script_category.name %>
   <% end %>
