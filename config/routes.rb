@@ -26,7 +26,8 @@ PoseidonV3::Application.routes.draw do
         post "activate"
         post "inactivate"
       end
-    end  
+    end
+    resources :scripts, :only => [:index]
   end
   resources :targets do
     # Additional actions

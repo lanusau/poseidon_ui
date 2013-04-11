@@ -38,3 +38,16 @@ test_target:
   status_code: A
   update_sysdate: 2012-07-30 14:39:56
   create_sysdate: 2012-07-12 14:39:56
+oracle_target_2:
+  target_type: oracle
+  server: production
+  name: oracle@oracle2.com
+  hostname: oracle2.com
+  database_name: test
+  port_number: 1521
+  monitor_username: monitor
+  monitor_password: Pk6GNLh9XEDlbcz8SYY07g==\n
+  salt: 4969826170212300
+  status_code: A
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56

@@ -27,6 +27,7 @@ class ScriptsControllerTest < ActionController::TestCase
     assert_nil(session[:script_search_name])
     assert_nil(session[:script_category_id])
     assert_nil(session[:target_id])
+    assert_nil(session[:target_group_id])
 
     assert_redirected_to scripts_path
   end
@@ -52,10 +53,36 @@ class ScriptsControllerTest < ActionController::TestCase
     get :index, :target_id => target.id
     assert_response :success
     assert_not_nil assigns(:scripts)
+
+    # Should reset some session variables
+    assert_nil(session[:script_category_id])
+    assert_nil(session[:target_group_id])
+
     # Should have matching number of rows in the table plus 1 header row
     assert_select "div.rowlist_page" do
       assert_select "table" do
         script_count = target.script_targets.count
+        assert_select "tr", script_count+1, "There should be #{script_count} rows in the list"
+      end
+    end
+  end
+
+  test "should get index by target_group_id" do
+    target_group = target_group(:production_oracle)
+    assert_routing "/target_groups/#{target_group.id}/scripts",
+      { :controller => 'scripts', :action => "index", :target_group_id => target_group.id.to_s }
+    get :index, :target_group_id => target_group.id
+    assert_response :success
+    assert_not_nil assigns(:scripts)
+
+    # Should reset some session variables
+    assert_nil(session[:script_category_id])
+    assert_nil(session[:target_id])
+
+    # Should have matching number of rows in the table plus 1 header row
+    assert_select "div.rowlist_page" do
+      assert_select "table" do
+        script_count = target_group.script_groups.count
         assert_select "tr", script_count+1, "There should be #{script_count} rows in the list"
       end
     end
