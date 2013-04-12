@@ -10,7 +10,7 @@ class TargetGroupAssignmentsController < ApplicationController
     # If it came from /target_groups then call another method
     return index_for_group if params[:target_group_id].present?
     @target = Target.find(params[:target_id])
-    @target_groups = TargetGroup.all
+    @target_groups = TargetGroup.all(:order=>'name')
   end
 
   # GET    /target_groups/:target_group_id/target_group_assignments
