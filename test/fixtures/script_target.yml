@@ -8,3 +8,8 @@ two:
   target: test_target
   create_sysdate: 2006-10-10 16:49:12
   update_sysdate: 2010-04-07 11:47:32
+three:
+  script: script_for_junit_test
+  target: target_for_junit_test
+  create_sysdate: 2006-10-10 16:49:12
+  update_sysdate: 2010-04-07 11:47:32

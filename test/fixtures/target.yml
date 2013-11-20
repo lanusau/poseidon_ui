@@ -51,3 +51,17 @@ oracle_target_2:
   status_code: A
   update_sysdate: 2012-07-30 14:39:56
   create_sysdate: 2012-07-12 14:39:56
+target_for_junit_test:
+  target_type: mysql
+  server: production
+  name: TargetForJUnit
+  hostname: TargetForJava
+  database_name: poseidon3_test
+  port_number: 3306
+  monitor_username: poseidon3_test
+  monitor_password: wFgBkMJ5nkgSJOtVJo1r7g==
+  salt: 3802852479467620
+  status_code: A
+  inactive_until: 2020-01-02 01:00:00
+  update_sysdate: 2012-07-30 14:39:56
+  create_sysdate: 2012-07-12 14:39:56
