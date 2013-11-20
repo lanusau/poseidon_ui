@@ -55,8 +55,8 @@ target_for_junit_test:
   target_type: mysql
   server: production
   name: TargetForJUnit
-  hostname: TargetForJava
-  database_name: poseidon3_test
+  hostname: SetByJunit
+  database_name: SetByJunit
   port_number: 3306
   monitor_username: poseidon3_test
   monitor_password: wFgBkMJ5nkgSJOtVJo1r7g==
