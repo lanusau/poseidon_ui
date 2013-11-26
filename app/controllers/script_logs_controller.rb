@@ -100,7 +100,7 @@ class ScriptLogsController < ApplicationController
     end
 
     # Paginate
-    @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>:script,
+    @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>[:script,:server],
       :conditions => [conditions.join(" AND "),binds].flatten)
 
   end

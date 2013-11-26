@@ -1,5 +1,6 @@
 dataguard_check_log_one:
   script: dataguard_check
+  server: production
   start_date: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %>
   finish_date: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %>
   status_number: 2
@@ -9,6 +10,7 @@ dataguard_check_log_one:
   update_sysdate: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %>
 dataguard_check_log_two:
   script: dataguard_check
+  server: qa
   start_date: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %>
   finish_date: <%= DateTime.now.strftime('%Y-%m-%d %H:%M:%S') %>
   status_number: 2
