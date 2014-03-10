@@ -31,6 +31,12 @@ class Target < ActiveRecord::Base
 
   datetime_with_default_format :inactive_until, :allow_nil=>true
 
+  # Purge child records in nested form that are marked for deletion
+  before_save :purge_nested_form
+
+  # Validate records in nested form
+  validate :validate_nested_form
+
   # Accessors for encrypted password
   def monitor_password=(password)
     return if password.blank?
@@ -64,5 +70,22 @@ class Target < ActiveRecord::Base
       return read_attribute(:monitor_password)
     end
   end
+
+  # Delete child objects marked for destruction first
+  # This fixes duplicate key issue when record in nested form is removed and
+  # then added again.
+  def purge_nested_form
+    self.target_hostnames.find_all{|r| r.marked_for_destruction?}.each do |c|
+      c.delete
+    end
+  end
+
+  # Check for duplicates in the nested form records
+  def validate_nested_form
+    hostnames = self.target_hostnames.find_all{|r| !r.marked_for_destruction?}.collect{|r|r.hostname}
+
+    errors.add(:base, "Duplicate hostname in the list of additional hostnames") unless
+      hostnames.size == hostnames.uniq.size
+  end    
 
 end
