@@ -84,11 +84,9 @@ class TargetTest < ActiveSupport::TestCase
     assert !target.valid?, 'Invalid date validated'
 
     # This should raise an exception
-    assert_raises(ArgumentError) do 
+    assert_raise(ArgumentError) do 
       target.inactive_until = '08-43-2012 00:00:01'
     end
-
-    assert !target.valid?, 'Invalid date validated'
   end
 
   test "Passwords can be encrypted and decrypted" do
