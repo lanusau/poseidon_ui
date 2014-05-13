@@ -107,15 +107,18 @@ class ScriptsController < ApplicationController
     end
 
     if conditions.size > 0
-      @scripts = Script.paginate(:page => session[:scripts_page],:order=>"name",
-      :conditions => [conditions.join(" AND "),binds].flatten,
-      :include => {:script_category_assigns => :script_category})
+      @scripts = Script.where([conditions.join(" AND "),binds].flatten).
+        order("name").
+        includes(script_category_assigns: :script_category).
+        paginate(:page => session[:scripts_page])
     else
-      @scripts = Script.paginate(:page => session[:scripts_page],:order=>"name",
-      :include => {:script_category_assigns => :script_category})
+      @scripts = Script.all.
+        order("name").
+        includes(script_category_assigns: :script_category).
+        paginate(:page => session[:scripts_page])
     end
 
-    @script_categories = ScriptCategory.all(:order => "name")
+    @script_categories = ScriptCategory.all.order("name")
 
     # If this is an Ajax request (search), render partial template
     if (request.xhr?)

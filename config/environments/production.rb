@@ -1,6 +1,10 @@
 PoseidonV3::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # when true, eager loads all registered config.eager_load_namespaces.
+  # This includes your application, engines, Rails frameworks and any other registered namespace.
+  config.eager_load = true
+
   # Code is not reloaded between requests
   config.cache_classes = true
 

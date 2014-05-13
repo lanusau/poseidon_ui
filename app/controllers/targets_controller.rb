@@ -34,10 +34,13 @@ class TargetsController < ApplicationController
     end
 
     if conditions.size > 0
-      @targets = Target.paginate(:page => session[:targets_page],:order=>"name",
-      :conditions => [conditions.join(" AND "),binds].flatten)
+      @targets = Target.where([conditions.join(" AND "),binds].flatten).
+        order(:name).
+        paginate(:page => session[:targets_page])
     else
-      @targets = Target.paginate(:page => session[:targets_page],:order=>"name")
+      @targets = Target.all.
+        order(:name).
+        paginate(:page => session[:targets_page])
     end
     
     # If this is an Ajax request (search), render partial template

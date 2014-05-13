@@ -12,7 +12,7 @@ class ScriptCategoryAssignsController < ApplicationController
   # GET /scripts/:script_id/script_category_assigns/new
   def new
     @script = Script.find(params[:script_id])
-    @script_categories = ScriptCategory.all(:order => "name")
+    @script_categories = ScriptCategory.all.order(:name)
 
     # Only leave records that are not assigned already
     @additional_categories = Array.new

@@ -12,7 +12,7 @@ class ScriptNotificationsController < ApplicationController
   # GET /scripts/:script_id/script_notifications/new
   def new
     @script = Script.find(params[:script_id])
-    @notify_groups = NotifyGroup.all(:order => "name")
+    @notify_groups = NotifyGroup.all.order(:name)
 
     # Only leave records that are not assigned already
     @additional_notify_groups = Array.new

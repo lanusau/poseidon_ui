@@ -12,7 +12,7 @@ class ScriptGroupsController < ApplicationController
   # GET /scripts/:script_id/script_groups/new
   def new
     @script = Script.find(params[:script_id])
-    @target_groups = TargetGroup.all(:order => "name")
+    @target_groups = TargetGroup.all.order(:name)
 
     # Only leave records that are not assigned already
     @additional_groups = Array.new

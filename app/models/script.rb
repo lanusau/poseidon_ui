@@ -4,7 +4,7 @@ class Script < ActiveRecord::Base
   has_many :script_category_assigns, :dependent => :delete_all
   has_many :script_targets, :dependent => :delete_all
   has_many :script_groups, :dependent => :delete_all
-  has_many :query_columns, :order => "column_position", :dependent => :delete_all
+  has_many :query_columns, -> {order "column_position"}, :dependent => :delete_all
   has_many :script_notifications, :dependent => :delete_all
   has_many :script_person_notifications, :dependent => :delete_all
   has_many :script_logs, :dependent => :delete_all
