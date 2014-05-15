@@ -17,8 +17,10 @@ set :bundler_path, "/u01/dba/apps/railsapps/bundler"
 set :menu_path, "/u01/dba/apps/railsapps/menu"
 set :user, "oracle"
 set :group_writable, false
-set :default_env, {
-  'PATH' => '/u01/dba/apps/ruby-2.1.1/bin:/u01/dba/apps/git/bin:$PATH'
+set :normalize_asset_timestamps, false
+set :use_sudo, false
+set :default_environment, {
+  'PATH' => '/u01/dba/apps/ruby/bin:/u01/dba/apps/git/bin:$PATH'
 }
 set :rake, "bundle exec rake"
 
