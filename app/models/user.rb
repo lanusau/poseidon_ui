@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   @@access_level_map = {
     0 => {:name=>:admin,:label=>"Admin"},
     1 => {:name=>:user,:label=>"User"},
-    8 => {:name=>:misc,:label=>"Misc"},
+    5 => {:name=>:op,:label=>"OpsDB"},    
     9 => {:name=>:guest,:label=>"Guest"}
   }
 
