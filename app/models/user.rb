@@ -28,4 +28,10 @@ class User < ActiveRecord::Base
     return nil
   end
 
+  def User.access_level_reverse_map
+    reverse_map = Hash.new
+    @@access_level_map.each{|key,value| reverse_map[value[:label]]=key}
+    reverse_map
+  end
+
 end

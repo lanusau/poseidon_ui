@@ -27,7 +27,7 @@
 
         <div>
           <%= f.label :access_level, "Access Level" %>
-          <%= f.select :access_level, {"Admin"=>0,"Privileged User"=>1,"Misc. User" => 8} %>
+          <%= f.select :access_level, User.access_level_reverse_map %>
           <p class="note">Access level</p>
         </div>
 
