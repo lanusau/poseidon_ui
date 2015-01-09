@@ -1,5 +1,6 @@
 PoseidonV3::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  config.active_support.test_order = :sorted
 
   # when true, eager loads all registered config.eager_load_namespaces.
   # This includes your application, engines, Rails frameworks and any other registered namespace.
@@ -12,7 +13,7 @@ PoseidonV3::Application.configure do
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
   # Show full error reports and disable caching

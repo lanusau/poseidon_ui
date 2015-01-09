@@ -2,7 +2,7 @@
 
 <div class="rowlist_page">
 
-  <%= form_tag filter_script_logs_path, :method => :get do  -%>
+  <%= form_tag script_logs_path(:script_logs_page => 0), :method => :get do  -%>
     <div class="inline">
 
       <label for="trigger_filter_code" > Trigger</label>
@@ -23,6 +23,8 @@
 
       <label for="date_to" >To</label>
       <input type="text" id="date_to" name="date_to" value="<%= @date_to -%>" size=15  />
+
+      <input type="hidden" id="script_logs_page" name="script_logs_page" value="0" />
 
       <%= submit_tag("Filter") %>
 

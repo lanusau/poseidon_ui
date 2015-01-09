@@ -30,7 +30,7 @@ class ScriptNotificationsControllerTest < ActionController::TestCase
   test "should post new" do
     assert_routing "/scripts/#{@script.id}/script_notifications/new",
       { :controller => 'script_notifications', :action => "new", :script_id => @script.id.to_s }
-    get :new, :script_id => @script.id, :format => 'js'
+    xhr :get, :new, :script_id => @script.id, :format => 'js'
     assert_response :success
   end
 

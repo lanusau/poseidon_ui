@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.4'
+gem 'rails', '4.2.0'
 gem 'protected_attributes'
 
 # MySQL driver is needed to access repository
@@ -16,13 +16,6 @@ gem "nested_form", ">= 0.3.1"
 
 gem 'sass-rails'
 
-#  gem 'coffee-rails', '~> 3.2.1'
-#
-#  gem 'therubyracer', :platforms => :ruby
-#
-#  gem 'uglifier', '>= 1.0.3'
-
-
 # Use JQuery
 gem 'jquery-rails'
 
@@ -34,3 +27,9 @@ gem 'encryptor', '~> 1.3.0'
 
 # Pagination
 gem "will_paginate"
+
+# Debugger
+group :development,:test do
+ gem 'byebug', '~> 3.1.2'
+end
+

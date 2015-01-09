@@ -36,14 +36,6 @@ class ScriptLogsControllerTest < ActionController::TestCase
     assert_nil session[:error_filter_code]    
   end
 
-  test "should reset page number" do
-    assert_routing "/script_logs/filter",
-      {:controller => 'script_logs', :action => 'filter'}
-    get :filter, :trigger_filter_code => 1
-    assert_redirected_to script_logs_path(:trigger_filter_code => 1)
-    assert_nil session[:script_logs_page]
-  end
-
   test "should display notice about invalid date format" do
     get :index, :date_from => "1/1/2001"
     assert_response :success

@@ -29,7 +29,7 @@ class TargetGroupAssignmentsControllerTest < ActionController::TestCase
 
       # But only groups assigned to the target should have check image
       image_count = @target.target_group_assignments.count      
-      assert_select 'img[src=/assets/check.png]', image_count,
+      assert_select 'img[src="/assets/check.png"]', image_count,
         "There should be #{image_count} check images in the list"
     end
   end
@@ -41,13 +41,13 @@ class TargetGroupAssignmentsControllerTest < ActionController::TestCase
 
     # Toggle on
     assert_difference("Target.find(#{@target.id}).target_group_assignments.size") do
-      get :toggle, :target_id => @target.id, :target_group_id => new_target_group.id,:format => 'js'
+      xhr :get, :toggle, :target_id => @target.id, :target_group_id => new_target_group.id,:format => 'js'
     end
     assert_response :success
     
     # Toggle off
     assert_difference("Target.find(#{@target.id}).target_group_assignments.size",-1) do
-      get :toggle, :target_id => @target.id, :target_group_id => new_target_group.id,:format => 'js'
+      xhr :get, :toggle, :target_id => @target.id, :target_group_id => new_target_group.id,:format => 'js'
     end
     assert_response :success
     
@@ -76,7 +76,7 @@ class TargetGroupAssignmentsControllerTest < ActionController::TestCase
       # The number of rows in this page should be number of targets minus
       # number of assigned targets      
       num_available_targets = Target.count - assigned_target_count
-      assert_select "tr[class=?]", /even|odd/ ,num_available_targets,
+      assert_select "tr[class=even], tr[class=odd]" ,num_available_targets,
         "There should be #{num_available_targets} rows in the list of available targets"
     end
   end

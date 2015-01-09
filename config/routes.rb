@@ -71,7 +71,6 @@ PoseidonV3::Application.routes.draw do
   resources :script_logs, :only => [:index] do
     collection do
       get "reset"
-      get "filter"
     end
     resources :script_target_logs,:as => "target_logs", :only => [:index]
   end  
