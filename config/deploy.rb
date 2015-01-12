@@ -42,7 +42,7 @@ after "deploy:update_code","deploy:check_bundler"
 namespace :deploy do
   desc "Checks if Bundler has all the gems"
   task :check_bundler, :roles => :app do    
-    run "cd #{latest_release} && bundle check --path #{bundler_path}"
+    run "cd #{latest_release} && bundle install --without test development  --path #{bundler_path}"
   end
 end
 
