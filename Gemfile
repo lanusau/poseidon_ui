@@ -30,6 +30,6 @@ gem "will_paginate"
 
 # Debugger
 group :development,:test do
- gem 'byebug', '~> 3.1.2'
+ gem 'byebug', '~> 3.5.0'
 end
 
