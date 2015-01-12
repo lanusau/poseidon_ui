@@ -1,5 +1,6 @@
 PoseidonV3::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  config.log_level = :info
 
   # when true, eager loads all registered config.eager_load_namespaces.
   # This includes your application, engines, Rails frameworks and any other registered namespace.
