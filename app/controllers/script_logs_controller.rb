@@ -16,15 +16,6 @@ class ScriptLogsController < ApplicationController
     redirect_to script_logs_path
   end
 
-  # GET    /script_logs/filter
-  def filter
-    # Need to reset page number when running new filter
-    session.delete(:script_logs_page)
-    # Just forward to index with the same parameters (without action)
-    params.delete(:action)
-    redirect_to script_logs_path(params)
-  end
-  
   # GET    /script_logs
   # GET    /scripts/:script_id/script_logs
   def index
@@ -100,8 +91,10 @@ class ScriptLogsController < ApplicationController
     end
 
     # Paginate
-    @script_logs = ScriptLog.paginate(:page => session[:script_logs_page],:order=>"start_date desc",:include =>:script,
-      :conditions => [conditions.join(" AND "),binds].flatten)
+    @script_logs = ScriptLog.where([conditions.join(" AND "),binds].flatten).
+      order('start_date desc').
+      includes([:script,:server]).
+      paginate(:page => session[:script_logs_page])
 
   end
 end

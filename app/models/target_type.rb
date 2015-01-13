@@ -1,7 +1,7 @@
 class TargetType < ActiveRecord::Base
   attr_accessible :name, :url_ruby, :url_jdbc
 
-  has_many :targets, :dependent => :restrict
+  has_many :targets, :dependent => :restrict_with_exception
 
   validates :name,:presence=>true,
             :uniqueness => {:case_sensitive =>false, :message => "- duplicate name"}

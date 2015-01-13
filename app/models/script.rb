@@ -4,7 +4,7 @@ class Script < ActiveRecord::Base
   has_many :script_category_assigns, :dependent => :delete_all
   has_many :script_targets, :dependent => :delete_all
   has_many :script_groups, :dependent => :delete_all
-  has_many :query_columns, :order => "column_position", :dependent => :delete_all
+  has_many :query_columns, -> {order "column_position"}, :dependent => :delete_all
   has_many :script_notifications, :dependent => :delete_all
   has_many :script_person_notifications, :dependent => :delete_all
   has_many :script_logs, :dependent => :delete_all
@@ -71,6 +71,48 @@ class Script < ActiveRecord::Base
     end
 
     return target
+
+  end
+
+  # Clone this script to new object
+  def clone_script
+    new_script = self.dup
+
+    # Clone category assignments
+    self.script_category_assigns.each do | r |
+      new_script.script_category_assigns.build(:script_category_id => r.script_category_id)
+    end
+
+    # Clone script targets
+    self.script_targets.each do | r |
+      new_script.script_targets.build(:target_id => r.target_id)
+    end
+
+    # Clone script groups
+    self.script_groups.each do | r |
+      new_script.script_groups.build(:target_group_id => r.target_group_id)
+    end
+
+    # Clone script query columns
+    self.query_columns.each do | r |
+      new_script.query_columns.build(
+        {
+          :column_position => r.column_position,
+          :column_name_str => r.column_name_str
+        })
+    end
+
+    # Clone script notifications
+    self.script_notifications.each do | r |
+      new_script.script_notifications.build(:notify_group_id => r.notify_group_id)
+    end
+
+    # Clone script personal notifications
+    self.script_person_notifications.each do | r |
+      new_script.script_person_notifications.build(:email_address => r.email_address)
+    end
+
+    return new_script
 
   end
 end

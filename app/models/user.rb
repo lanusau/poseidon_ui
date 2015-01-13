@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   @@access_level_map = {
     0 => {:name=>:admin,:label=>"Admin"},
     1 => {:name=>:user,:label=>"User"},
+    5 => {:name=>:op,:label=>"OpsDB"},    
     9 => {:name=>:guest,:label=>"Guest"}
   }
 
@@ -25,6 +26,12 @@ class User < ActiveRecord::Base
   def User.access_level_lookup(name)
     @@access_level_map.each{|key,value| return key if value[:name] == name}
     return nil
+  end
+
+  def User.access_level_reverse_map
+    reverse_map = Hash.new
+    @@access_level_map.each{|key,value| reverse_map[value[:label]]=key}
+    reverse_map
   end
 
 end

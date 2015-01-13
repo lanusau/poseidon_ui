@@ -27,6 +27,7 @@ class ScriptsControllerTest < ActionController::TestCase
     assert_nil(session[:script_search_name])
     assert_nil(session[:script_category_id])
     assert_nil(session[:target_id])
+    assert_nil(session[:target_group_id])
 
     assert_redirected_to scripts_path
   end
@@ -52,10 +53,36 @@ class ScriptsControllerTest < ActionController::TestCase
     get :index, :target_id => target.id
     assert_response :success
     assert_not_nil assigns(:scripts)
+
+    # Should reset some session variables
+    assert_nil(session[:script_category_id])
+    assert_nil(session[:target_group_id])
+
     # Should have matching number of rows in the table plus 1 header row
     assert_select "div.rowlist_page" do
       assert_select "table" do
         script_count = target.script_targets.count
+        assert_select "tr", script_count+1, "There should be #{script_count} rows in the list"
+      end
+    end
+  end
+
+  test "should get index by target_group_id" do
+    target_group = target_group(:production_oracle)
+    assert_routing "/target_groups/#{target_group.id}/scripts",
+      { :controller => 'scripts', :action => "index", :target_group_id => target_group.id.to_s }
+    get :index, :target_group_id => target_group.id
+    assert_response :success
+    assert_not_nil assigns(:scripts)
+
+    # Should reset some session variables
+    assert_nil(session[:script_category_id])
+    assert_nil(session[:target_id])
+
+    # Should have matching number of rows in the table plus 1 header row
+    assert_select "div.rowlist_page" do
+      assert_select "table" do
+        script_count = target_group.script_groups.count
         assert_select "tr", script_count+1, "There should be #{script_count} rows in the list"
       end
     end
@@ -225,4 +252,31 @@ class ScriptsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select "span.error_text",0, "There should be no error messages"
   end
+
+  test "should render form for clone" do
+    get :clone, id: @script
+    assert_response :success
+
+    # Should have form container div with form
+    assert_select "div.form-container" do
+      assert_select "form" do
+        # Input fields
+        assert_select "input#script_name", 1, "Should have field for script_name"
+        assert_select "textarea#script_description", 1, "Should have textarea for target script_description"
+      end
+    end
+  end
+
+  test "should clone script" do
+    assert_difference('Script.count') do
+      post :clone_create, id: @script, script: {
+        name:  "Clone",
+        description: "Create clone"
+      }
+    end
+
+    new_script = Script.find_by_name("Clone")
+    assert_redirected_to edit_script_path(new_script)
+  end
+
 end

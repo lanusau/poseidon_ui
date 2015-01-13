@@ -5,7 +5,7 @@ class TargetGroupsController < ApplicationController
 
   # GET /target_group
   def index
-    @target_groups = TargetGroup.all
+    @target_groups = TargetGroup.all.order(:name)
   end
 
   # GET /target_group/new

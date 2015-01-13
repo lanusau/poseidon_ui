@@ -20,7 +20,8 @@ PoseidonV3::Application.routes.draw do
         post "activate"
         post "inactivate"
       end
-    end  
+    end
+    resources :scripts, :only => [:index]
   end
   resources :targets do
     # Additional actions
@@ -47,6 +48,8 @@ PoseidonV3::Application.routes.draw do
       post "test_query"
       post "test_expression"
       get  "test_message"
+      get 'clone'
+      post 'clone_create'
     end
     collection do
       get "reset"
@@ -62,7 +65,6 @@ PoseidonV3::Application.routes.draw do
   resources :script_logs, :only => [:index] do
     collection do
       get "reset"
-      get "filter"
     end
     resources :script_target_logs,:as => "target_logs", :only => [:index]
   end  

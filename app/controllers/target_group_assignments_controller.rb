@@ -10,7 +10,7 @@ class TargetGroupAssignmentsController < ApplicationController
     # If it came from /target_groups then call another method
     return index_for_group if params[:target_group_id].present?
     @target = Target.find(params[:target_id])
-    @target_groups = TargetGroup.all
+    @target_groups = TargetGroup.all.order(:name)
   end
 
   # GET    /target_groups/:target_group_id/target_group_assignments
@@ -120,7 +120,7 @@ private
 
     # Find all targets that are not assigned to particular group
     def find_available_targets(target_group)
-      targets = Target.find(:all,:order => "server_id,name")
+      targets = Target.all.order('server_id,name')
       available_targets = Array.new
       targets.each do |target|
         available_targets.push(target) unless target_group.target_group_assignments.detect {|a| a.target_id == target.target_id }

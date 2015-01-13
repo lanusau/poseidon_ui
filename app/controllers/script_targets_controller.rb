@@ -12,7 +12,7 @@ class ScriptTargetsController < ApplicationController
   # GET /scripts/:script_id/script_targets/new
   def new
     @script = Script.find(params[:script_id])
-    @targets = Target.all(:order => "name")
+    @targets = Target.all.order(:name)
 
     # Only leave records that are not assigned already
     @additional_targets = Array.new

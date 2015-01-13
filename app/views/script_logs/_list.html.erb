@@ -1,6 +1,7 @@
 <table class="rowlist_table">
   <tr>
     <th>Script Name</th>
+    <th>Server</th>
     <th>Start Date</th>
     <th>End Date</th>
     <th>Status</th>
@@ -13,6 +14,7 @@
       <td>
         <%= link_to script_log.script.name[0,30],edit_script_path(script_log.script)  %>
       </td>
+      <td><%= script_log.server.name %> </td>
       <td>
         <%=  script_log.start_date %>
       </td>

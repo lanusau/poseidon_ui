@@ -29,7 +29,7 @@ class ScriptGroupsControllerTest < ActionController::TestCase
   test "should post new" do
     assert_routing "/scripts/#{@script.id}/script_groups/new",
       { :controller => 'script_groups', :action => "new", :script_id => @script.id.to_s }
-    get :new, :script_id => @script.id, :format => 'js'
+    xhr :get, :new, :script_id => @script.id, :format => 'js'
     assert_response :success
   end
 

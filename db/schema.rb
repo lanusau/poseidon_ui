@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917224551) do
+ActiveRecord::Schema.define(:version => 20131126174845) do
 
   create_table "notify_group", :primary_key => "notify_group_id", :force => true do |t|
     t.string   "name",           :limit => 200, :null => false
@@ -98,14 +98,15 @@ ActiveRecord::Schema.define(:version => 20120917224551) do
   add_index "script_group", ["target_group_id", "script_id"], :name => "psd_script_group_u1", :unique => true
 
   create_table "script_log", :primary_key => "script_log_id", :force => true do |t|
-    t.integer  "script_id",           :null => false
-    t.datetime "start_date",          :null => false
+    t.integer  "script_id",                          :null => false
+    t.integer  "server_id",           :default => 1, :null => false
+    t.datetime "start_date",                         :null => false
     t.datetime "finish_date"
-    t.integer  "status_number",       :null => false
-    t.integer  "error_status_code",   :null => false
-    t.integer  "trigger_status_code", :null => false
-    t.datetime "create_sysdate",      :null => false
-    t.datetime "update_sysdate",      :null => false
+    t.integer  "status_number",                      :null => false
+    t.integer  "error_status_code",                  :null => false
+    t.integer  "trigger_status_code",                :null => false
+    t.datetime "create_sysdate",                     :null => false
+    t.datetime "update_sysdate",                     :null => false
   end
 
   add_index "script_log", ["create_sysdate"], :name => "psd_script_log_n2"

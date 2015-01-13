@@ -1,7 +1,8 @@
 class Server < ActiveRecord::Base
   attr_accessible :heartbeat_date, :location, :name, :status_code
 
-  has_many :targets, :dependent => :restrict
+  has_many :targets, :dependent => :restrict_with_exception
+  has_many :script_logs, :dependent => :delete_all
 
   validates :status_code, :presence=>true, :inclusion => {:in =>%w( A I)}
   validates :name,:presence=>true,

@@ -12,22 +12,35 @@ class ScriptsController < ApplicationController
     session.delete(:script_search_name)
     session.delete(:script_category_id)
     session.delete(:target_id)
+    session.delete(:target_group_id)
     
     redirect_to scripts_path
   end
 
   # GET /scripts
   # GET /targets/:target_id/scripts
+  # GET /target_groups/:target_group_id/scripts
   def index
 
     session[:scripts_page] = params[:page] if params[:page]
     session[:script_search_name] = params[:script_search_name] if params[:script_search_name]
     session[:script_category_id] = params[:script_category_id] if params[:script_category_id]
-    session[:target_id] = params[:target_id] if params[:target_id]
+    if params[:target_id]
+      session[:target_id] = params[:target_id]
+      session.delete(:script_category_id)
+      session.delete(:target_group_id)
+    end
+    if params[:target_group_id]
+      session[:target_group_id] = params[:target_group_id]
+      session.delete(:script_category_id)
+      session.delete(:target_id)
+    end
+    
 
     @script_search_name = session[:script_search_name]
     @script_category_id = session[:script_category_id]
     @target_id = session[:target_id]
+    @target_group_id = session[:target_group_id]
 
     # Build an array of various conditions
     conditions = Array.new
@@ -69,21 +82,43 @@ class ScriptsController < ApplicationController
         # 2 binds, the same target_id in both
         binds << @target_id
         binds << @target_id
-      rescue Exception => e
+      rescue 
         @target_id = ""
       end
-    end    
-
-    if conditions.size > 0
-      @scripts = Script.paginate(:page => session[:scripts_page],:order=>"name",
-      :conditions => [conditions.join(" AND "),binds].flatten,
-      :include => {:script_category_assigns => :script_category})
-    else
-      @scripts = Script.paginate(:page => session[:scripts_page],:order=>"name",
-      :include => {:script_category_assigns => :script_category})
     end
 
-    @script_categories = ScriptCategory.all(:order => "name")
+    # Filter on particular target group
+    if @target_group_id.present?
+      begin
+        
+        @target_group = TargetGroup.find(@target_group_id)
+        conditions << %q{
+          exists ( select *
+                   from psd_script_group g
+                   where g.script_id = psd_script.script_id
+                   and g.target_group_id = ?
+                 )
+          }
+
+        binds << @target_group_id
+      rescue
+        @target_group_id = ''
+      end
+    end
+
+    if conditions.size > 0
+      @scripts = Script.where([conditions.join(" AND "),binds].flatten).
+        order("name").
+        includes(script_category_assigns: :script_category).
+        paginate(:page => session[:scripts_page])
+    else
+      @scripts = Script.all.
+        order("name").
+        includes(script_category_assigns: :script_category).
+        paginate(:page => session[:scripts_page])
+    end
+
+    @script_categories = ScriptCategory.all.order("name")
 
     # If this is an Ajax request (search), render partial template
     if (request.xhr?)
@@ -188,6 +223,31 @@ class ScriptsController < ApplicationController
     respond_to do |format|
       format.js {render "activate"}
     end
+  end
+
+  # GET    /scripts/:id/clone
+  def clone
+    @original_script = Script.find(params[:id])
+    @script = Script.new
+  rescue ActiveRecord::RecordNotFound
+    redirect_to scripts_path
+  end
+
+  # POST   /scripts/:id/clone_create
+  def clone_create
+    @original_script = Script.find(params[:id])
+    @script = @original_script.clone_script
+    @script.attributes = params[:script]
+    @script.create_sysdate = DateTime.now()
+    @script.update_sysdate = DateTime.now()
+
+    if @script.save
+      redirect_to edit_script_path(@script), :notice => 'Clone successfull'
+    else
+      render :action=>"clone"
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to scripts_path
   end
 
   # POST /scripts/:id/test_query

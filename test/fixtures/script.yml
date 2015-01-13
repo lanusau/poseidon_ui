@@ -53,6 +53,30 @@ dataguard_check:
   status_code: A
   create_sysdate: 2006-10-10 16:49:12
   update_sysdate: 2010-04-07 11:47:32  
+session_check:
+  name: Session check
+  description: Check number of sessions
+  schedule_min: 0/5
+  schedule_hour: "*"
+  schedule_day: "*"
+  schedule_month: "*"
+  schedule_week: "?"
+  query_type: 1
+  query_text: "select count(*) from v$session"
+  timeout_sec: 300
+  fixed_severity: 1
+  severity_column_position: ~
+  value_med_severity: ~
+  value_high_severity: ~
+  expression_text: "%0 > 100"
+  message_format: 0
+  message_subject: "[%t] Session count"
+  message_header: ~
+  message_text_str: "Number of sessions is %0"
+  message_footer: ~
+  status_code: A
+  create_sysdate: 2013-04-11 16:49:12
+  update_sysdate: 2013-04-11 11:47:32
 query_test_script:
   name: Query Test
   description: Check query test functionality
@@ -64,6 +88,28 @@ query_test_script:
   query_type: 1
   query_text: |
     select * from psd_target
+  timeout_sec: 300
+  fixed_severity: 1
+  expression_text: "%0 > 1"
+  message_format: 0
+  message_subject: "[%t] Test"
+  message_header: ~
+  message_text_str: "Testing 123 "
+  message_footer: ~
+  status_code: A
+  create_sysdate: 2006-10-10 16:49:12
+  update_sysdate: 2010-04-07 11:47:32
+script_for_junit_test:
+  name: ScriptForJUnit
+  description: test poseidon server (java program)
+  schedule_min: 0/1
+  schedule_hour: "*"
+  schedule_day: "*"
+  schedule_month: "*"
+  schedule_week: "?"
+  query_type: 1
+  query_text: |
+    select count(*) from psd_target
   timeout_sec: 300
   fixed_severity: 1
   expression_text: "%0 > 1"

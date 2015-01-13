@@ -1,5 +1,6 @@
 class ScriptLog < ActiveRecord::Base
   belongs_to :script
+  belongs_to :server
   has_many :script_target_logs, :dependent => :destroy
 
   # Printable value of status number
