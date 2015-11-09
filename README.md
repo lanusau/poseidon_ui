@@ -1,10 +1,10 @@
 # Poseidon UI
 
-This is a Rails 3.2 application to provide web based UI for Poseidon database monitoring server. 
+This is a Rails 4.2 application to provide web based UI for Poseidon database monitoring server. 
 
 ## Requirements 
 
-* Ruby 1.9.2 or later. Rails 3.2 does support Ruby 1.8.7, so it may work as well, but application was tested on 1.9.2 only
+* Ruby (version that is supported by Rails version)
 * Ruby gems
 * Bundler gem
 * Oracle instant client - basic and devel
