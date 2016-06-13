@@ -5,10 +5,10 @@ gem 'protected_attributes'
 
 # MySQL driver is needed to access repository
 # Other drivers are needed for test query functionality in the script editing page
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.21'
 gem "dbd-pg", "~> 0.3.9"
 gem "dbd-mysql", "~> 0.4.4"
-gem "ruby-oci8", "~> 2.1.2"
+gem "ruby-oci8", "~> 2.2.0"
 
 # Use nested forms
 gem "nested_form", ">= 0.3.1"
